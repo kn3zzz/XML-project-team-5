@@ -1,12 +1,12 @@
 package api
 
 import (
-	pb "common/proto/catalogue_service"
-	"users_service/domain"
+	pb "common/proto/connection_service"
+	"connection_service/domain"
 )
 
-func mapUser(user *domain.User) *pb.User {
-	productPb := &pb.User{
+func mapConnection(connection *domain.Connection) *pb.Connection {
+	productPb := &pb.Connection{
 		Id            user.Id.Hex(),
 		Name          user.Name,
 		Lastname      user.Lastname,

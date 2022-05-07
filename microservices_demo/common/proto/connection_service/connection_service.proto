@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option go_package = "github.com/tamararankovic/microservices_demo/common/connection";
+
+package connection;
+
+import "google/api/annotations.proto";
+
+service ConnectionService{
+        rpc Get(GetRequest) returns(GetResponse) {
+        	option (google.api.http) = {
+			get: "/connection/{username}"
+		};
+        }
+
+}
+
+message GetRequest {
+        string id = 1;
+}
+
+message GetResponse {
+        Connection product = 1;
+}
+
+message GetAllRequest {
+}
+
+message GetAllResponse {
+        repeated Connection products = 1;
+}
+message Connection {
+
+}
+
+
