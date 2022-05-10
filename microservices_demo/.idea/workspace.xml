@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="496076c3-8e59-4ff5-a136-46292990b2de" name="Changes" comment="" />
+    <list default="true" id="496076c3-8e59-4ff5-a136-46292990b2de" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/common/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/common/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/proto/connection_service/connection_service.proto" beforeDir="false" afterPath="$PROJECT_DIR$/common/proto/connection_service/connection_service.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate.sh" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,10 +46,13 @@
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
     "WebServerToolWindowFactoryState": "false",
+    "configurable..is.expanded": "false",
+    "configurable.GoLibrariesConfigurable.is.expanded": "true",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "C:/Users/brani/Downloads/XML-project-team-5/microservices_demo/common/proto/connection_service",
-    "nodejs_package_manager_path": "npm"
+    "last_opened_file_path": "C:/Users/brani/Downloads/XML-project-team-5/microservices_demo/common/proto/connection_service/google/api",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "google.protobuf.language"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -53,8 +62,11 @@
       <recent name="C:\Users\brani\Downloads\XML-project-team-5\microservices_demo\connection_service\infrastructure\persistence" />
       <recent name="C:\Users\brani\Downloads\XML-project-team-5\microservices_demo\connection_service" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\brani\Downloads\XML-project-team-5\microservices_demo\common" />
+    </key>
   </component>
-  <component name="RunManager" selected="Shell Script.generate.sh">
+  <component name="RunManager" selected="Shell Script.generate.sh (1)">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="microservices_demo" />
       <working_directory value="$PROJECT_DIR$" />
@@ -100,10 +112,25 @@
       <framework value="gobench" />
       <method v="2" />
     </configuration>
+    <configuration name="generate.sh (1)" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/common/generate.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/common" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="generate.sh" type="ShConfigurationType" temporary="true">
       <option name="SCRIPT_TEXT" value="" />
       <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
-      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/generate.sh" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/common/generate.sh" />
       <option name="SCRIPT_OPTIONS" value="" />
       <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
       <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -117,6 +144,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Shell Script.generate.sh (1)" />
         <item itemvalue="Shell Script.generate.sh" />
         <item itemvalue="Go Test.gobench common" />
         <item itemvalue="Go Test.go test common" />
@@ -127,6 +155,17 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
