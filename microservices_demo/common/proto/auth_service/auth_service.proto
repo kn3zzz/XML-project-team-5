@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option go_package = "github.com/tamararankovic/microservices_demo/common/auth";
+
+package auth;
+
+import "google/api/annotations.proto";
+
+service AuthService{
+  rpc GetAll(GetAllUsers) returns(GetAllResponse){
+    option (google.api.http) = {
+      get: "/users"
+    };
+  }
+  rpc AddNewUser(AddUser) returns(User){
+    option(google.api.http) = {
+      post: "/users"
+    };
+  }
+}
+
+message GetAllUsers{
+}
+
+message GetAllResponse{
+  repeated User users = 1;
+}
+
+message User{
+  string username = 1;
+  string name = 2;
+  string surname = 3;
+}
+
+message AddUser{
+  string username = 1;
+  string password = 2;
+  string name = 3;
+  string surname = 4;
+}
