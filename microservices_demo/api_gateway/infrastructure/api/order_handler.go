@@ -9,6 +9,7 @@ import (
 	catalogue "github.com/tamararankovic/microservices_demo/common/proto/catalogue_service"
 	ordering "github.com/tamararankovic/microservices_demo/common/proto/ordering_service"
 	shipping "github.com/tamararankovic/microservices_demo/common/proto/shipping_service"
+
 	"net/http"
 )
 

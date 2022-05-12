@@ -10,6 +10,7 @@ import (
 	inventoryGw "github.com/tamararankovic/microservices_demo/common/proto/inventory_service"
 	orderingGw "github.com/tamararankovic/microservices_demo/common/proto/ordering_service"
 	shippingGw "github.com/tamararankovic/microservices_demo/common/proto/shipping_service"
+	usersGw "github.com/tamararankovic/microservices_demo/common/proto/users_service"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"log"
@@ -33,33 +34,38 @@ func NewServer(config *cfg.Config) *Server {
 
 func (server *Server) initHandlers() {
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	catalogueEmdpoint := fmt.Sprintf("%s:%s", server.config.CatalogueHost, server.config.CataloguePort)
-	err := catalogueGw.RegisterCatalogueServiceHandlerFromEndpoint(context.TODO(), server.mux, catalogueEmdpoint, opts)
+	catalogueEndpoint := fmt.Sprintf("%s:%s", server.config.CatalogueHost, server.config.CataloguePort)
+	err := catalogueGw.RegisterCatalogueServiceHandlerFromEndpoint(context.TODO(), server.mux, catalogueEndpoint, opts)
 	if err != nil {
 		panic(err)
 	}
-	orderingEmdpoint := fmt.Sprintf("%s:%s", server.config.OrderingHost, server.config.OrderingPort)
-	err = orderingGw.RegisterOrderingServiceHandlerFromEndpoint(context.TODO(), server.mux, orderingEmdpoint, opts)
+	orderingEndpoint := fmt.Sprintf("%s:%s", server.config.OrderingHost, server.config.OrderingPort)
+	err = orderingGw.RegisterOrderingServiceHandlerFromEndpoint(context.TODO(), server.mux, orderingEndpoint, opts)
 	if err != nil {
 		panic(err)
 	}
-	shippingEmdpoint := fmt.Sprintf("%s:%s", server.config.ShippingHost, server.config.ShippingPort)
-	err = shippingGw.RegisterShippingServiceHandlerFromEndpoint(context.TODO(), server.mux, shippingEmdpoint, opts)
+	shippingEndpoint := fmt.Sprintf("%s:%s", server.config.ShippingHost, server.config.ShippingPort)
+	err = shippingGw.RegisterShippingServiceHandlerFromEndpoint(context.TODO(), server.mux, shippingEndpoint, opts)
 	if err != nil {
 		panic(err)
 	}
-	inventoryEmdpoint := fmt.Sprintf("%s:%s", server.config.InventoryHost, server.config.InventoryPort)
-	err = inventoryGw.RegisterInventoryServiceHandlerFromEndpoint(context.TODO(), server.mux, inventoryEmdpoint, opts)
+	inventoryEndpoint := fmt.Sprintf("%s:%s", server.config.InventoryHost, server.config.InventoryPort)
+	err = inventoryGw.RegisterInventoryServiceHandlerFromEndpoint(context.TODO(), server.mux, inventoryEndpoint, opts)
+	if err != nil {
+		panic(err)
+	}
+	usersEndpoint := fmt.Sprintf("%s:%s", server.config.UsersHost, server.config.UsersPort)
+	err = usersGw.RegisterUsersServiceHandlerFromEndpoint(context.TODO(), server.mux, usersEndpoint, opts)
 	if err != nil {
 		panic(err)
 	}
 }
 
 func (server *Server) initCustomHandlers() {
-	catalogueEmdpoint := fmt.Sprintf("%s:%s", server.config.CatalogueHost, server.config.CataloguePort)
-	orderingEmdpoint := fmt.Sprintf("%s:%s", server.config.OrderingHost, server.config.OrderingPort)
-	shippingEmdpoint := fmt.Sprintf("%s:%s", server.config.ShippingHost, server.config.ShippingPort)
-	orderingHandler := api.NewOrderingHandler(orderingEmdpoint, catalogueEmdpoint, shippingEmdpoint)
+	catalogueEndpoint := fmt.Sprintf("%s:%s", server.config.CatalogueHost, server.config.CataloguePort)
+	orderingEndpoint := fmt.Sprintf("%s:%s", server.config.OrderingHost, server.config.OrderingPort)
+	shippingEndpoint := fmt.Sprintf("%s:%s", server.config.ShippingHost, server.config.ShippingPort)
+	orderingHandler := api.NewOrderingHandler(orderingEndpoint, catalogueEndpoint, shippingEndpoint)
 	orderingHandler.Init(server.mux)
 }
 

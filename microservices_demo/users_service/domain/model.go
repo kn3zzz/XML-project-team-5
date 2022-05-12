@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type Gender int64
+type Gender int8
 
 const (
 	Female Gender = iota
@@ -23,14 +23,14 @@ func (gender Gender) String() string {
 }
 
 type User struct {
-	Id            primitive.ObjectID `bson:"_id"`
-	Name          string             `bson:"name"`
-	LastName	  string             `bson:"last_name"`
-	Email         string             `bson:"email"`
-	PhoneNumber	  string			 `bson:"phone_number"`
-	Gender		  Gender			 `bson:"gender"`
-	BirthDate	  time.Time	 		 `bson:"birth_date"`
-	Username	  string			 `bson:"username"`
-	Password	  string 		     `bson:"password"`
-	Biography	  string			 `bson:"biography"`
+	Id          primitive.ObjectID `bson:"_id"`
+	Name        string             `bson:"name"`
+	LastName    string             `bson:"last_name"`
+	Email       string             `bson:"email"`
+	PhoneNumber string             `bson:"phone_number"`
+	Gender      Gender             `bson:"gender"`
+	BirthDate   time.Time          `bson:"birth_date"`
+	Username    string             `bson:"username"`
+	Password    string             `bson:"password"`
+	Biography   string             `bson:"biography"`
 }

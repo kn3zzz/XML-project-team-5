@@ -17,6 +17,26 @@ services:
     networks:
       - network
 
+  users_service:
+    image: users_service
+    container_name: users_service
+    build:
+      context: .
+      dockerfile: ./users_service/Dockerfile
+    restart: on-failure
+    environment:
+      USERS_DB_HOST: ${USERS_DB_HOST}
+      USERS_DB_PORT: ${USERS_DB_PORT}
+      USERS_SERVICE_PORT: ${USERS_SERVICE_PORT}
+      NATS_HOST: ${NATS_HOST}
+      NATS_PORT: ${NATS_PORT}
+      NATS_USER: ${NATS_USER}
+      NATS_PASS: ${NATS_PASS}
+    depends_on:
+      - users_db
+    networks:
+      - network
+
   ordering_service:
     image: ordering_service
     container_name: ordering_service
@@ -105,6 +125,15 @@ services:
       SHIPPING_SERVICE_PORT: ${SHIPPING_SERVICE_PORT}
       INVENTORY_SERVICE_HOST: ${INVENTORY_SERVICE_HOST}
       INVENTORY_SERVICE_PORT: ${INVENTORY_SERVICE_PORT}
+      USERS_SERVICE_HOST: ${USERS_SERVICE_HOST}
+      USERS_SERVICE_PORT: ${USERS_SERVICE_PORT}
+    networks:
+      - network
+
+  users_db:
+    image: mongo
+    container_name: users_db
+    restart: on-failure
     networks:
       - network
 

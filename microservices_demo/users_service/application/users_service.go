@@ -1,8 +1,8 @@
 package application
 
 import (
-	"users_service/domain"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"users_service/domain"
 )
 
 type UsersService struct {
@@ -21,4 +21,8 @@ func (service *UsersService) Get(id primitive.ObjectID) (*domain.User, error) {
 
 func (service *UsersService) GetAll() ([]*domain.User, error) {
 	return service.store.GetAll()
+}
+
+func (service *UsersService) Insert(user *domain.User) error {
+	return service.store.Insert(user)
 }
