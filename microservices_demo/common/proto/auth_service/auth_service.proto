@@ -7,34 +7,52 @@ package auth;
 import "google/api/annotations.proto";
 
 service AuthService{
-  rpc GetAll(GetAllUsers) returns(GetAllResponse){
+  rpc Register(RegisterRequest) returns (RegisterResponse) {
     option (google.api.http) = {
-      get: "/users"
-    };
-  }
-  rpc AddNewUser(AddUser) returns(User){
-    option(google.api.http) = {
-      post: "/users"
-    };
-  }
+      post: "/register"
+      body:"data"
+    };}
+//  rpc Login(LoginRequest) returns (LoginResponse) {
+//    option (google.api.http) = {
+//      post: "/login"
+//      body: "data"
+//    };
+//  }
 }
 
-message GetAllUsers{
+// Register
+
+message RegisterRequest {
+  RegisterRequestData data=1;
 }
 
-message GetAllResponse{
-  repeated User users = 1;
-}
-
-message User{
-  string username = 1;
-  string name = 2;
-  string surname = 3;
-}
-
-message AddUser{
+message RegisterRequestData{
   string username = 1;
   string password = 2;
-  string name = 3;
-  string surname = 4;
+}
+
+message RegisterResponse {
+  int64 status = 1;
+  string error = 2;
+  string userID = 3;
+}
+
+// Login
+
+message LoginRequest {
+  LoginData data = 1;
+}
+
+message LoginData{
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  int64 status = 1;
+  string error = 2;
+  string token = 3;
+  string username=4;
+  string role=5;
+  string userID = 6;
 }

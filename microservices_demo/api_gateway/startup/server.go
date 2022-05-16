@@ -6,6 +6,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/tamararankovic/microservices_demo/api_gateway/infrastructure/api"
 	cfg "github.com/tamararankovic/microservices_demo/api_gateway/startup/config"
+	authGw "github.com/tamararankovic/microservices_demo/common/proto/auth_service"
 	catalogueGw "github.com/tamararankovic/microservices_demo/common/proto/catalogue_service"
 	inventoryGw "github.com/tamararankovic/microservices_demo/common/proto/inventory_service"
 	orderingGw "github.com/tamararankovic/microservices_demo/common/proto/ordering_service"
@@ -53,6 +54,11 @@ func (server *Server) initHandlers() {
 	if err != nil {
 		panic(err)
 	}
+	AuthEndpoint := fmt.Sprintf("%s:%s", server.config.AuthHost, server.config.AuthPort)
+	err = authGw.RegisterAuthServiceHandlerFromEndpoint(context.TODO(), server.mux, AuthEndpoint, opts)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func (server *Server) initCustomHandlers() {
@@ -61,6 +67,11 @@ func (server *Server) initCustomHandlers() {
 	shippingEmdpoint := fmt.Sprintf("%s:%s", server.config.ShippingHost, server.config.ShippingPort)
 	orderingHandler := api.NewOrderingHandler(orderingEmdpoint, catalogueEmdpoint, shippingEmdpoint)
 	orderingHandler.Init(server.mux)
+
+	authEmdpoint := fmt.Sprintf("%s:%s", server.config.AuthHost, server.config.AuthPort)
+
+	registerHandler := api.NewRegistrationHandler(authEmdpoint)
+	registerHandler.Init(server.mux)
 }
 
 func (server *Server) Start() {

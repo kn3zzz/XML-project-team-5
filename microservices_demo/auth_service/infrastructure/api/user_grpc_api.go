@@ -2,13 +2,16 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"github.com/mihailomajstorovic47/XML-project-team-5/microservices_demo/auth_service/application"
-	ab "github.com/tamararankovic/microservices_demo/common/proto/auth_service"
+	"github.com/mihailomajstorovic47/XML-project-team-5/microservices_demo/auth_service/domain"
+	pb "github.com/tamararankovic/microservices_demo/common/proto/auth_service"
+	"net/http"
 	_ "net/http"
 )
 
 type UserHandler struct {
-	ab.UnimplementedAuthServiceServer
+	pb.UnimplementedAuthServiceServer
 	service *application.AuthService
 }
 
@@ -18,12 +21,31 @@ func NewUserHandler(service *application.AuthService) *UserHandler {
 	}
 }
 
-func (handler *UserHandler) GetAll(ctx context.Context, request *ab.GetAllUsers) (*ab.GetAllUsers, error) {
-	users, err := handler.service.GetAll()
+func (handler *UserHandler) Register(ctx context.Context, request *pb.RegisterRequest) (*pb.RegisterResponse, error) {
+
+	var user domain.User
+	user1, _ := handler.service.GetByUsername(ctx, request.Data.Username)
+	if user1 != nil {
+		return &pb.RegisterResponse{
+			Status: http.StatusUnprocessableEntity,
+			Error:  "Username is not unique",
+			UserID: "",
+		}, nil
+	}
+	user.Username = request.Data.GetUsername()
+	user.Password = request.Data.GetPassword()
+
+	userID, err := handler.service.Create(ctx, &user) //userID
 	if err != nil {
-		return nil, err
+		fmt.Println(err.Error())
+		return &pb.RegisterResponse{
+			Status: http.StatusUnauthorized,
+			UserID: "",
+		}, err
 	}
-	response := &ab.GetAllUsers{
-		users: []*ab.User{},
-	}
+	return &pb.RegisterResponse{
+		Status: http.StatusCreated,
+		UserID: userID,
+	}, nil
+
 }

@@ -2,16 +2,14 @@ package persistence
 
 import (
 	"context"
-	"fmt"
 	"github.com/mihailomajstorovic47/XML-project-team-5/microservices_demo/auth_service/domain"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"log"
 )
 
 const (
-	DATABASE   = "auth"
+	DATABASE   = "user"
 	COLLECTION = "users"
 )
 
@@ -26,37 +24,59 @@ func NewUserMongoDBStore(client *mongo.Client) domain.UsersStore {
 	}
 }
 
-func (store *UserMongoDBStore) AddNew(user *domain.User) {
-	insertResult, err := store.users.InsertOne(context.TODO(), user)
+func (store *UserMongoDBStore) Get(ctx context.Context, id primitive.ObjectID) (*domain.User, error) {
+	filter := bson.M{"_id": id}
+	return store.filterOne(filter)
+}
+
+func (store *UserMongoDBStore) GetByUsername(ctx context.Context, username string) (*domain.User, error) {
+	filter := bson.M{"username": username}
+	return store.filterOne(filter)
+}
+
+func (store *UserMongoDBStore) GetAll(ctx context.Context) ([]*domain.User, error) {
+	filter := bson.D{{}}
+	return store.filter(filter)
+}
+
+func (store *UserMongoDBStore) Insert(ctx context.Context, product *domain.User) (error, string) {
+	result, err := store.users.InsertOne(context.TODO(), product)
 	if err != nil {
-		log.Fatal(err)
+		return err, ""
 	}
-	fmt.Println("Inserted a single document: ", insertResult.InsertedID)
+	product.Id = result.InsertedID.(primitive.ObjectID)
+	return nil, product.Id.Hex()
+}
+
+func (store *UserMongoDBStore) DeleteAll(ctx context.Context) {
+	store.users.DeleteMany(context.TODO(), bson.D{{}})
+}
+
+func (store *UserMongoDBStore) filter(filter interface{}) ([]*domain.User, error) {
+	cursor, err := store.users.Find(context.TODO(), filter)
+	defer cursor.Close(context.TODO())
+
+	if err != nil {
+		return nil, err
+	}
+	return decode(cursor)
+}
+
+func (store *UserMongoDBStore) filterOne(filter interface{}) (product *domain.User, err error) {
+	result := store.users.FindOne(context.TODO(), filter)
+	err = result.Decode(&product)
 	return
 }
 
-func (store *UserMongoDBStore) FindByUsername(username string) (domain.User, error) {
-	var user domain.User
-	filter := bson.D{{"username", username}}
-	err := store.users.FindOne(context.TODO(), filter).Decode(&user)
-	return user, err
-}
-
-func (store *UserMongoDBStore) FindAll() ([]domain.User, error) {
-	cur, err := store.users.Find(context.TODO(), bson.D{{}}, options.Find())
-	if err != nil {
-		log.Fatal(err)
-	}
-	var users []domain.User
-	for cur.Next(context.TODO()) {
-		var elem domain.User
-		err := cur.Decode(&elem)
+func decode(cursor *mongo.Cursor) (users []*domain.User, err error) {
+	for cursor.Next(context.TODO()) {
+		var product domain.User
+		err = cursor.Decode(&product)
 		if err != nil {
-			log.Fatal(err)
+			return
 		}
-		users = append(users, elem)
+		users = append(users, &product)
 	}
-	cur.Close(context.TODO())
-	fmt.Println(users)
-	return users, err
+	err = cursor.Err()
+	return
 }
