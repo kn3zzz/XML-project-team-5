@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"fmt"
+	"github.com/go-playground/validator/v10"
 	"github.com/mihailomajstorovic47/XML-project-team-5/microservices_demo/auth_service/application"
 	"github.com/mihailomajstorovic47/XML-project-team-5/microservices_demo/auth_service/domain"
 	"github.com/mihailomajstorovic47/XML-project-team-5/microservices_demo/auth_service/utils"
@@ -10,6 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
 	_ "net/http"
+	"regexp"
 )
 
 type UserHandler struct {
@@ -37,6 +39,19 @@ func (handler *UserHandler) Register(ctx context.Context, request *pb.RegisterRe
 	}
 	user.Username = request.Data.GetUsername()
 	user.Password = request.Data.GetPassword()
+
+	v := validator.New()
+	handler.ValidatePassword(ctx, v)
+	handler.ValidateUsername(ctx, v)
+	errV := v.Struct(user)
+
+	if errV != nil {
+		return &pb.RegisterResponse{
+			Status: http.StatusNotAcceptable,
+			Error:  "Validation error" + " " + errV.Error(),
+			UserID: "",
+		}, errV
+	}
 
 	userID, err := handler.service.Create(ctx, &user) //userID
 	if err != nil {
@@ -129,4 +144,48 @@ func getObjectId(id string) primitive.ObjectID {
 		return objectId
 	}
 	return primitive.NewObjectID()
+}
+
+func (handler *UserHandler) ValidatePassword(ctx context.Context, v *validator.Validate) {
+	_ = v.RegisterValidation("password_validation", func(fl validator.FieldLevel) bool {
+		if len(fl.Field().String()) < 8 {
+			fmt.Println("Password must contain 8 characters or more!")
+			return false
+		}
+		result, _ := regexp.MatchString("(.*[a-z].*)", fl.Field().String())
+		if !result {
+			fmt.Println("Password must contain lower case characters!")
+		}
+		result, _ = regexp.MatchString("(.*[A-Z].*)", fl.Field().String())
+		if !result {
+			fmt.Println("Password must contain upper case characters!")
+		}
+		result, _ = regexp.MatchString("(.*[0-9].*)", fl.Field().String())
+		if !result {
+			fmt.Println("Password must contain numbers!")
+		}
+
+		result, _ = regexp.MatchString("(.*[!@#$%^&*(){}\\[:;\\]<>,\\.?~_+\\-\\\\=|/].*)", fl.Field().String())
+		if !result {
+			fmt.Println("Password must contain special characters!")
+		}
+		return result
+	})
+
+}
+
+func (handler *UserHandler) ValidateUsername(ctx context.Context, v *validator.Validate) {
+
+	_ = v.RegisterValidation("username_validation", func(fl validator.FieldLevel) bool {
+		if len(fl.Field().String()) < 4 || len(fl.Field().String()) > 16 {
+			fmt.Println("Your username must be between 4 and 16 characters long.")
+			return false
+		}
+		result, _ := regexp.MatchString("(.*[!@#$%^&*(){}\\[:;\\]<>,\\.?~_+\\-\\\\=|/].*)", fl.Field().String())
+		if result {
+			fmt.Println("Username contains special characters that are not allowed!")
+		}
+		return !result
+	})
+
 }
