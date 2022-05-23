@@ -12,12 +12,12 @@ service AuthService{
       post: "/register"
       body:"data"
     };}
-//  rpc Login(LoginRequest) returns (LoginResponse) {
-//    option (google.api.http) = {
-//      post: "/login"
-//      body: "data"
-//    };
-//  }
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/login"
+      body: "data"
+    };
+  }
 }
 
 // Register
@@ -55,4 +55,24 @@ message LoginResponse {
   string username=4;
   string role=5;
   string userID = 6;
+}
+
+// Validate
+
+message ValidateRequest { string token = 1; }
+
+message ValidateResponse {
+  int64 status = 1;
+  string error = 2;
+  string userId = 3;
+}
+
+//Extract Data
+message ExtractDataFromTokenResponse{
+  string id=1;
+  string username=2;
+}
+
+message ExtractDataFromTokenRequest{
+  string token=1;
 }
