@@ -2,17 +2,22 @@ package application
 
 import (
 	"context"
+	"fmt"
 	"github.com/mihailomajstorovic47/XML-project-team-5/microservices_demo/auth_service/domain"
+	authService "github.com/tamararankovic/microservices_demo/common/proto/auth_service"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"time"
 )
 
 type AuthService struct {
-	store domain.UsersStore
+	store        domain.UsersStore
+	emailService *EmailService
 }
 
-func NewAuthService(store domain.UsersStore) *AuthService {
+func NewAuthService(store domain.UsersStore, emailService *EmailService) *AuthService {
 	return &AuthService{
-		store: store,
+		store:        store,
+		emailService: emailService,
 	}
 }
 
@@ -34,4 +39,38 @@ func (service *AuthService) GetAll(ctx context.Context) ([]*domain.User, error) 
 
 func (service *AuthService) GetByUsername(ctx context.Context, username string) (*domain.User, error) {
 	return service.store.GetByUsername(ctx, username)
+}
+
+func (service *AuthService) Update(ctx context.Context, user *domain.User) error {
+	return service.store.Update(ctx, user)
+}
+
+func (service *AuthService) SendVerification(ctx context.Context, user *domain.User) error {
+	fmt.Println("SendVerification to: ", user.Email)
+	return service.emailService.SendVerificationEmail(user.Email, user.Username, user.VerificationCode)
+}
+
+func (service *AuthService) Verify(ctx context.Context, username string, code string) (*authService.VerifyResponse, error) {
+	user, err := service.store.GetByUsername(ctx, username)
+	if err != nil {
+		return &authService.VerifyResponse{Verified: false, Msg: "User not found"}, err
+	}
+
+	if user.Verified {
+		return &authService.VerifyResponse{Verified: true, Msg: "The user has already been verified"}, nil
+	}
+
+	if user.VerificationCodeTime.Add(10 * time.Minute).Before(time.Now()) {
+		return &authService.VerifyResponse{Verified: false, Msg: "The verification code is no longer valid"}, nil
+	}
+
+	if user.VerificationCode == code {
+		user.Verified = true
+		errUpdate := service.store.Update(ctx, user)
+		if errUpdate != nil {
+			return &authService.VerifyResponse{Verified: false, Msg: "error"}, errUpdate
+		}
+		return &authService.VerifyResponse{Verified: true, Msg: "you have successfully verified your account"}, nil
+	}
+	return &authService.VerifyResponse{Verified: false, Msg: "error"}, nil
 }

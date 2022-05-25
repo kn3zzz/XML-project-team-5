@@ -18,6 +18,11 @@ service AuthService{
       body: "data"
     };
   }
+  rpc Verify(VerifyRequest) returns (VerifyResponse){
+    option(google.api.http) = {
+      get: "/verify/{username}/{code}"
+    };
+  }
 }
 
 // Register
@@ -29,6 +34,7 @@ message RegisterRequest {
 message RegisterRequestData{
   string username = 1;
   string password = 2;
+  string email = 3;
 }
 
 message RegisterResponse {
@@ -55,6 +61,15 @@ message LoginResponse {
   string username=4;
   string role=5;
   string userID = 6;
+}
+
+message VerifyRequest {
+  string username = 1;
+  string code = 2;
+}
+message VerifyResponse{
+  bool verified = 1;
+  string msg = 2;
 }
 
 // Validate

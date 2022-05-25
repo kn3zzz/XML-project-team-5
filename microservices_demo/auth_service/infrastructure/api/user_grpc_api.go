@@ -12,6 +12,7 @@ import (
 	"net/http"
 	_ "net/http"
 	"regexp"
+	"time"
 )
 
 type UserHandler struct {
@@ -39,6 +40,14 @@ func (handler *UserHandler) Register(ctx context.Context, request *pb.RegisterRe
 	}
 	user.Username = request.Data.GetUsername()
 	user.Password = request.Data.GetPassword()
+	user.Email = request.Data.GetEmail()
+
+	token, err := utils.GenerateRandomStringURLSafe(32)
+	if err != nil {
+		panic(err)
+	}
+	user.VerificationCode = token
+	user.VerificationCodeTime = time.Now()
 
 	v := validator.New()
 	handler.ValidatePassword(ctx, v)
@@ -61,6 +70,12 @@ func (handler *UserHandler) Register(ctx context.Context, request *pb.RegisterRe
 			UserID: "",
 		}, err
 	}
+
+	errSendVerification := handler.service.SendVerification(ctx, &user)
+	if errSendVerification != nil {
+		fmt.Println("Error:", errSendVerification.Error())
+	}
+
 	return &pb.RegisterResponse{
 		Status: http.StatusCreated,
 		UserID: userID,
@@ -68,26 +83,71 @@ func (handler *UserHandler) Register(ctx context.Context, request *pb.RegisterRe
 
 }
 
+func (handler *UserHandler) Verify(ctx context.Context, req *pb.VerifyRequest) (*pb.VerifyResponse, error) {
+	return handler.service.Verify(ctx, req.Username, req.Code)
+}
+
 func (handler *UserHandler) Login(ctx context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
 
-	user, err := handler.service.GetByUsername(ctx, req.Data.Username)
+	user, err := handler.service.GetByUsername(ctx, req.Data.GetUsername())
 	if err != nil {
 		return &pb.LoginResponse{
 			Status: http.StatusNotFound,
-			Error:  "User not found",
+			Error:  "Username or password is incorrect",
 		}, nil
 	}
 
-	match := req.Data.Password == user.Password
+	if user.Locked {
+		return &pb.LoginResponse{
+			Status: http.StatusForbidden,
+			Error:  user.LockReason,
+		}, nil
+	}
+
+	if !user.Verified {
+		return &pb.LoginResponse{
+			Status: http.StatusForbidden,
+			Error:  "Your Acc is not verified",
+		}, nil
+	}
+
+	if user.NumOfErrTryLogin == 5 && !user.LastErrTryLoginTime.Add(1*time.Hour).Before(time.Now()) {
+		return &pb.LoginResponse{
+			Status: http.StatusForbidden,
+			Error:  fmt.Sprint(user.NumOfErrTryLogin) + " failed login attempts, you will be able to login after " + fmt.Sprintf("%f", user.LastErrTryLoginTime.Add(1*time.Hour).Sub(time.Now()).Minutes()) + " minutes",
+		}, nil
+	} else if user.NumOfErrTryLogin == 4 && !user.LastErrTryLoginTime.Add(15*time.Minute).Before(time.Now()) {
+		return &pb.LoginResponse{
+			Status: http.StatusForbidden,
+			Error:  fmt.Sprint(user.NumOfErrTryLogin) + " failed login attempts, you will be able to login after " + fmt.Sprintf("%f", user.LastErrTryLoginTime.Add(15*time.Minute).Sub(time.Now()).Minutes()) + " minutes",
+		}, nil
+	} else if user.NumOfErrTryLogin == 3 && !user.LastErrTryLoginTime.Add(3*time.Minute).Before(time.Now()) {
+		return &pb.LoginResponse{
+			Status: http.StatusForbidden,
+			Error:  fmt.Sprint(user.NumOfErrTryLogin) + " failed login attempts, you will be able to login after " + fmt.Sprintf("%f", user.LastErrTryLoginTime.Add(3*time.Minute).Sub(time.Now()).Minutes()) + " minutes",
+		}, nil
+	}
+
+	match := req.Data.GetPassword() == user.Password
 
 	if !match {
+		user.NumOfErrTryLogin += 1
+		user.LastErrTryLoginTime = time.Now()
+		if user.NumOfErrTryLogin >= 6 {
+			user.Locked = true
+			user.LockReason = "your account is locked, due to many incorrect login attempts"
+		}
+		handler.service.Update(ctx, user)
 		return &pb.LoginResponse{
 			Status: http.StatusNotFound,
-			Error:  "User not found",
+			Error:  "Username or password is incorrect",
 		}, nil
 	}
 
 	token, _ := handler.Jwt.GenerateToken(user)
+
+	user.NumOfErrTryLogin = 0
+	handler.service.Update(ctx, user)
 
 	return &pb.LoginResponse{
 		Status:   http.StatusOK,

@@ -28,6 +28,9 @@ services:
       AUTH_DB_HOST: ${AUTH_DB_HOST}
       AUTH_DB_PORT: ${AUTH_DB_PORT}
       AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT}
+      DISLINKT_EMAIL: ${DISLINKT_EMAIL}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      API_GATEWAY_HOST: ${API_GATEWAY_HOST}
     depends_on:
       - auth_db
     networks:
