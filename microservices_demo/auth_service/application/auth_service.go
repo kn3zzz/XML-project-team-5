@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/mihailomajstorovic47/XML-project-team-5/microservices_demo/auth_service/domain"
+	"github.com/mihailomajstorovic47/XML-project-team-5/microservices_demo/auth_service/utils"
 	authService "github.com/tamararankovic/microservices_demo/common/proto/auth_service"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"net/http"
 	"time"
 )
 
@@ -73,4 +75,60 @@ func (service *AuthService) Verify(ctx context.Context, username string, code st
 		return &authService.VerifyResponse{Verified: true, Msg: "you have successfully verified your account"}, nil
 	}
 	return &authService.VerifyResponse{Verified: false, Msg: "error"}, nil
+}
+
+func (service *AuthService) Recovery(ctx context.Context, username string) (*authService.RecoveryResponse, error) {
+	user, err := service.store.GetByUsername(ctx, username)
+	if err != nil {
+		return &authService.RecoveryResponse{Status: 1, Msg: "User not found"}, err
+	}
+
+	if !user.Verified {
+		return &authService.RecoveryResponse{Status: 5, Msg: "Recovery error: Your Acc is not verified"}, nil
+	}
+
+	recoveryCode, err := utils.GenerateRandomString(8)
+	if err != nil {
+		return nil, err
+	}
+
+	user.RecoveryPasswordCode = recoveryCode
+	user.RecoveryPasswordCodeTime = time.Now()
+
+	errSendEmail := service.emailService.SendRecoveryEmail(user.Email, user.Username, recoveryCode)
+	if errSendEmail != nil {
+		return &authService.RecoveryResponse{Status: 2, Msg: "Error sending email"}, errSendEmail
+	}
+
+	errUpdate := service.Update(ctx, user)
+	if errUpdate != nil {
+		return &authService.RecoveryResponse{Status: 3, Msg: "Error"}, errUpdate
+	}
+
+	return &authService.RecoveryResponse{Status: 4, Msg: "Check your email, we sent you recovery code"}, nil
+}
+
+func (service *AuthService) Recover(ctx context.Context, req *authService.RecoveryRequestData) (*authService.LoginResponse, error) {
+	if req.Data.NewPassword != req.Data.ConfirmNewPassword {
+		return &authService.LoginResponse{Status: http.StatusBadRequest, Error: "passwords do not match"}, nil
+	}
+	user, err := service.store.GetByUsername(ctx, req.Data.Username)
+	if err != nil {
+		return &authService.LoginResponse{Status: http.StatusBadRequest, Error: "User not found"}, err
+	}
+	if user.RecoveryPasswordCodeTime.Add(5 * time.Minute).Before(time.Now()) {
+		return &authService.LoginResponse{Status: http.StatusNotAcceptable, Error: "The recovery code is no longer valid"}, nil
+	}
+
+	if user.RecoveryPasswordCode == req.Data.RecoveryCode {
+		if user.Locked {
+			user.Locked = false
+			user.LockReason = ""
+		}
+		user.NumOfErrTryLogin = 0
+		user.Password = req.Data.NewPassword
+		service.Update(ctx, user)
+		return &authService.LoginResponse{Status: http.StatusOK, Error: ""}, nil
+	}
+	return &authService.LoginResponse{Error: "Error"}, nil
 }

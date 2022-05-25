@@ -87,6 +87,22 @@ func (handler *UserHandler) Verify(ctx context.Context, req *pb.VerifyRequest) (
 	return handler.service.Verify(ctx, req.Username, req.Code)
 }
 
+func (handler *UserHandler) Recovery(ctx context.Context, req *pb.RecoveryRequest) (*pb.RecoveryResponse, error) {
+	return handler.service.Recovery(ctx, req.Username)
+}
+
+func (handler *UserHandler) Recover(ctx context.Context, req *pb.RecoveryRequestData) (*pb.LoginResponse, error) {
+	response, err := handler.service.Recover(ctx, req)
+	if err != nil {
+		return response, err
+	}
+	if response.Error != "" {
+		return response, nil
+	}
+	p := &pb.LoginData{Username: req.Data.Username, Password: req.Data.NewPassword}
+	return handler.Login(ctx, &pb.LoginRequest{Data: p})
+}
+
 func (handler *UserHandler) Login(ctx context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
 
 	user, err := handler.service.GetByUsername(ctx, req.Data.GetUsername())

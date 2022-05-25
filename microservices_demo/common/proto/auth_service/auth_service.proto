@@ -23,6 +23,17 @@ service AuthService{
       get: "/verify/{username}/{code}"
     };
   }
+  rpc Recovery(RecoveryRequest) returns(RecoveryResponse){
+    option(google.api.http) = {
+      get:"/login/recovery/{username}"
+    };
+  }
+  rpc Recover(RecoveryRequestData) returns (LoginResponse) {
+    option(google.api.http) = {
+      post: "/login/recovery"
+      body: "data"
+    };
+  }
 }
 
 // Register
@@ -70,6 +81,26 @@ message VerifyRequest {
 message VerifyResponse{
   bool verified = 1;
   string msg = 2;
+}
+
+message RecoveryRequest {
+  string username = 1;
+}
+
+message RecoveryResponse{
+  int32 status = 1;
+  string msg = 2;
+}
+
+message RecoveryRequestData {
+  RecoveryRequestLogin data = 1;
+}
+
+message RecoveryRequestLogin {
+  string username = 1;
+  string recoveryCode = 2;
+  string newPassword = 3;
+  string confirmNewPassword = 4;
 }
 
 // Validate
