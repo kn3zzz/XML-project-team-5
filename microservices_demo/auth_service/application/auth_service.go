@@ -132,3 +132,17 @@ func (service *AuthService) Recover(ctx context.Context, req *authService.Recove
 	}
 	return &authService.LoginResponse{Error: "Error"}, nil
 }
+
+func (service *AuthService) CheckIfAdmin(role string) (retVal bool) {
+	if role == "ADMIN" {
+		return true
+	}
+	return false
+}
+
+func (service *AuthService) CheckIfUser(role string) (retVal bool) {
+	if role == "USER" {
+		return true
+	}
+	return false
+}

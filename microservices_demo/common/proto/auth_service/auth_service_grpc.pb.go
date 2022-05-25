@@ -27,6 +27,7 @@ type AuthServiceClient interface {
 	Verify(ctx context.Context, in *VerifyRequest, opts ...grpc.CallOption) (*VerifyResponse, error)
 	Recovery(ctx context.Context, in *RecoveryRequest, opts ...grpc.CallOption) (*RecoveryResponse, error)
 	Recover(ctx context.Context, in *RecoveryRequestData, opts ...grpc.CallOption) (*LoginResponse, error)
+	Admin(ctx context.Context, in *GetAdmins, opts ...grpc.CallOption) (*AdminResponse, error)
 }
 
 type authServiceClient struct {
@@ -82,6 +83,15 @@ func (c *authServiceClient) Recover(ctx context.Context, in *RecoveryRequestData
 	return out, nil
 }
 
+func (c *authServiceClient) Admin(ctx context.Context, in *GetAdmins, opts ...grpc.CallOption) (*AdminResponse, error) {
+	out := new(AdminResponse)
+	err := c.cc.Invoke(ctx, "/auth.AuthService/Admin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type AuthServiceServer interface {
 	Verify(context.Context, *VerifyRequest) (*VerifyResponse, error)
 	Recovery(context.Context, *RecoveryRequest) (*RecoveryResponse, error)
 	Recover(context.Context, *RecoveryRequestData) (*LoginResponse, error)
+	Admin(context.Context, *GetAdmins) (*AdminResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedAuthServiceServer) Recovery(context.Context, *RecoveryRequest
 }
 func (UnimplementedAuthServiceServer) Recover(context.Context, *RecoveryRequestData) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Recover not implemented")
+}
+func (UnimplementedAuthServiceServer) Admin(context.Context, *GetAdmins) (*AdminResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Admin not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 
@@ -216,6 +230,24 @@ func _AuthService_Recover_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_Admin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAdmins)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).Admin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.AuthService/Admin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).Admin(ctx, req.(*GetAdmins))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Recover",
 			Handler:    _AuthService_Recover_Handler,
+		},
+		{
+			MethodName: "Admin",
+			Handler:    _AuthService_Admin_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -9,9 +9,13 @@ import (
 	"github.com/mihailomajstorovic47/XML-project-team-5/microservices_demo/auth_service/utils"
 	pb "github.com/tamararankovic/microservices_demo/common/proto/auth_service"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 	"net/http"
 	_ "net/http"
 	"regexp"
+	"strings"
 	"time"
 )
 
@@ -205,12 +209,14 @@ func (handler *UserHandler) ExtractDataFromToken(ctx context.Context, req *pb.Ex
 		return &pb.ExtractDataFromTokenResponse{
 			Id:       "",
 			Username: "",
+			Role:     "",
 		}, err
 	}
 
 	return &pb.ExtractDataFromTokenResponse{
 		Id:       claims.Id,
 		Username: claims.Username,
+		Role:     claims.Role,
 	}, nil
 
 }
@@ -231,19 +237,23 @@ func (handler *UserHandler) ValidatePassword(ctx context.Context, v *validator.V
 		result, _ := regexp.MatchString("(.*[a-z].*)", fl.Field().String())
 		if !result {
 			fmt.Println("Password must contain lower case characters!")
+			return false
 		}
 		result, _ = regexp.MatchString("(.*[A-Z].*)", fl.Field().String())
 		if !result {
 			fmt.Println("Password must contain upper case characters!")
+			return false
 		}
 		result, _ = regexp.MatchString("(.*[0-9].*)", fl.Field().String())
 		if !result {
 			fmt.Println("Password must contain numbers!")
+			return false
 		}
 
 		result, _ = regexp.MatchString("(.*[!@#$%^&*(){}\\[:;\\]<>,\\.?~_+\\-\\\\=|/].*)", fl.Field().String())
 		if !result {
 			fmt.Println("Password must contain special characters!")
+			return false
 		}
 		return result
 	})
@@ -264,4 +274,36 @@ func (handler *UserHandler) ValidateUsername(ctx context.Context, v *validator.V
 		return !result
 	})
 
+}
+
+func extractHeader(ctx context.Context, header string) (string, error) {
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		return "", status.Error(codes.Unauthenticated, "no headers in request")
+	}
+
+	authHeaders, ok := md[header]
+	if !ok {
+		return "", status.Error(codes.Unauthenticated, "no header in request")
+	}
+
+	if len(authHeaders) != 1 {
+		return "", status.Error(codes.Unauthenticated, "more than 1 header in request")
+	}
+
+	return authHeaders[0], nil
+}
+
+func (handler *UserHandler) Admin(ctx context.Context, req *pb.GetAdmins) (*pb.AdminResponse, error) {
+	fmt.Println("WELCOME")
+	header, _ := extractHeader(ctx, "authorization")
+	var prefix = "Bearer "
+	var token = strings.TrimPrefix(header, prefix)
+	claims, _ := handler.Jwt.ValidateToken(token)
+	fmt.Println(claims.Role)
+	//PROVERA ULOGE
+	if handler.service.CheckIfUser(claims.Role) == false {
+		return nil, status.Error(codes.Unauthenticated, "Your role doesn't allow you this method.")
+	}
+	return &pb.AdminResponse{Msg: "svaka cast admine"}, nil
 }

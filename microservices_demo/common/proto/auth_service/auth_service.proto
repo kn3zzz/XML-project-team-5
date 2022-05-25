@@ -34,6 +34,11 @@ service AuthService{
       body: "data"
     };
   }
+  rpc Admin(GetAdmins) returns (AdminResponse){
+    option (google.api.http) = {
+      get: "/adminMethod"
+    };
+  }
 }
 
 // Register
@@ -117,8 +122,17 @@ message ValidateResponse {
 message ExtractDataFromTokenResponse{
   string id=1;
   string username=2;
+  string role=3;
 }
 
 message ExtractDataFromTokenRequest{
   string token=1;
+}
+
+//Admin Method
+
+message GetAdmins{}
+
+message AdminResponse{
+  string msg = 1;
 }
