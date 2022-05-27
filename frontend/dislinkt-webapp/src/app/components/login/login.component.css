@@ -1,0 +1,28 @@
+mat-card {
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+mat-form-field {
+  display: block;
+}
+
+.forgotPass {
+  width: 120px;
+  margin-right: auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+.link:hover {
+  cursor: pointer;
+}
+
+.link {
+  color: blue;
+  width: 80px;
+  margin-right: auto;
+}

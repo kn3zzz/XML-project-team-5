@@ -108,7 +108,7 @@ func (handler *UserHandler) Recover(ctx context.Context, req *pb.RecoveryRequest
 }
 
 func (handler *UserHandler) Login(ctx context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
-
+	fmt.Println("Welcome")
 	user, err := handler.service.GetByUsername(ctx, req.Data.GetUsername())
 	if err != nil {
 		return &pb.LoginResponse{

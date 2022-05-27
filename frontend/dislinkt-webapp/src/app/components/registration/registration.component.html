@@ -1,0 +1,82 @@
+<app-navbar></app-navbar>
+<mat-card>
+  <mat-card-content>
+    <form #loginForm="ngForm" (ngSubmit)="submitForm()">
+      <h2>Registration</h2>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Username"
+          [(ngModel)]="username"
+          name="username"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Name"
+          [(ngModel)]="name"
+          name="name"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Surname"
+          [(ngModel)]="surname"
+          name="surname"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Email"
+          [(ngModel)]="email"
+          name="email"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          [(ngModel)]="password"
+          name="password"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="password"
+          placeholder="Repeat password"
+          [(ngModel)]="repeatedPassword"
+          name="repeatedPassword"
+          required
+        />
+      </mat-form-field>
+      <mat-error class="my-2" *ngIf="errorMessage != ''">
+        {{ errorMessage }}
+      </mat-error>
+      <button
+        class="btn btn-primary"
+        mat-raised-button
+        color="primary"
+        [disabled]="
+          username == '' ||
+          password == '' ||
+          repeatedPassword == '' ||
+          name == '' ||
+          surname == '' ||
+          email == ''
+        "
+      >
+        Sign up!
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,31 @@
+<app-navbar></app-navbar>
+<mat-card *ngIf="logged">
+  <h3>You are already logged in.</h3>
+</mat-card>
+<mat-card *ngIf="!logged">
+  <mat-card-content *ngIf="!passwordless">
+    <form #loginForm="ngForm" (ngSubmit)="submitForm()">
+      <h2>Log In</h2>
+      <mat-form-field>
+        <input matInput placeholder="Username" [(ngModel)]="username" name="username" required />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+      </mat-form-field>
+      <div class="mb-3 forgotPass">
+        <a href="/forgot-password">Forgot password?</a>
+      </div>
+      <p class="my-3" style="color: red">{{ errorMessage }}</p>
+      <button class="btn btn-primary" mat-raised-button color="primary" [disabled]="username == '' || password == ''">
+        Login
+      </button>
+      <button
+        class="btn btn-primary mx-2"
+        *ngIf="!logged"
+        routerLink="/registration"
+      >
+        Sign Up
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

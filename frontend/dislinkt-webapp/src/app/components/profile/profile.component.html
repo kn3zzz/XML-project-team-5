@@ -1,0 +1,558 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div>
+      <div
+        style="
+          background-color: #e8e8e8;
+          border-radius: 20px;
+          margin-top: 30px;
+          margin-left: 20px;
+          margin-right: 20px;
+          padding: 10px;
+        "
+      >
+        <div id="coverphoto"></div>
+        <div style="margin-left: 90px">
+          <img
+            src="..//..//../assets/user.png"
+            style="width: 150px; display: inline; margin-top: -100px"
+          />
+          <img
+            src="..//..//../assets/edit.png"
+            style="
+              width: 30px;
+              display: inline;
+              margin-top: -10px;
+              margin-right: 40px;
+              float: right;
+            "
+            data-bs-toggle="modal"
+            data-bs-target="#modalDialog"
+          />
+          <h1 style="text-align: left; display: inline; padding-left: 30px">
+            {{ user.name }} {{ user.surname }}
+          </h1>
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            value="{{ followBtn }}"
+            style="display: inline; margin-left: 20px; margin-top: -10px"
+          ></button>
+          <h3 style="text-align: left; padding-left: 15px; padding-top: 15px">
+            {{ user.biography }}
+          </h3>
+          <h3
+            style="
+              text-align: left;
+              padding-left: 15px;
+              padding-top: 15px;
+              display: inline;
+            "
+          >
+            Followers:
+          </h3>
+          <h3
+            style="
+              text-align: left;
+              padding-left: 15px;
+              padding-top: 15px;
+              display: inline;
+            "
+          >
+            Following:
+          </h3>
+        </div>
+      </div>
+
+      <div
+        style="
+          background-color: #e8e8e8;
+          border-radius: 20px;
+          margin-top: 10px;
+          margin-left: 20px;
+          margin-right: 20px;
+          padding: 10px;
+        "
+      >
+        <div style="margin-left: 40px">
+          <h2>About</h2>
+          <div class="mb-3">
+            <label class="form-label" style="display: inline">Email:</label>
+            <label class="form-label" style="display: inline">{{
+              user.email
+            }}</label>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" style="display: inline">Telephone:</label>
+            <label class="form-label" style="display: inline">{{
+              user.telephone
+            }}</label>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" style="display: inline">Gender:</label>
+            <label class="form-label" style="display: inline">{{
+              user.gender
+            }}</label>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" style="display: inline"
+              >Date of birth:</label
+            >
+            <label class="form-label" style="display: inline">{{
+              user.birthdate
+            }}</label>
+          </div>
+        </div>
+      </div>
+
+      <div
+        style="
+          background-color: #e8e8e8;
+          border-radius: 20px;
+          margin-top: 10px;
+          margin-left: 20px;
+          margin-right: 20px;
+          padding: 10px;
+        "
+      >
+        <h2 style="margin-left: 40px; display: inline">Experience</h2>
+        <img
+          src="..//..//../assets/add.png"
+          style="width: 20px; display: inline; float: right; margin-right: 40px"
+          data-bs-toggle="modal"
+          data-bs-target="#modalDialogNewExperience"
+        />
+        <div class="list-group" *ngIf="user.experiences.length != 0">
+          <a
+            *ngFor="let experience of user.experiences"
+            class="list-group-item list-group-item-action flex-column align-items-start"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ experience.text }}</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div
+        style="
+          background-color: #e8e8e8;
+          border-radius: 20px;
+          margin-top: 10px;
+          margin-left: 20px;
+          margin-right: 20px;
+          padding: 10px;
+        "
+      >
+        <h2 style="margin-left: 40px; display: inline">Education</h2>
+        <img
+          src="..//..//../assets/add.png"
+          style="width: 20px; display: inline; float: right; margin-right: 40px"
+          data-bs-toggle="modal"
+          data-bs-target="#modalDialogNewEducation"
+        />
+        <div class="list-group">
+          <a
+            *ngFor="let education of user.educations"
+            class="list-group-item list-group-item-action flex-column align-items-start"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ education.text }}</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div
+        style="
+          background-color: #e8e8e8;
+          border-radius: 20px;
+          margin-top: 10px;
+          margin-left: 20px;
+          margin-right: 20px;
+          padding: 10px;
+        "
+      >
+        <h2 style="margin-left: 40px; display: inline">Skills</h2>
+        <img
+          src="..//..//../assets/add.png"
+          style="width: 20px; display: inline; float: right; margin-right: 40px"
+          data-bs-toggle="modal"
+          data-bs-target="#modalDialogNewSkill"
+        />
+        <div class="list-group">
+          <a
+            *ngFor="let skill of user.skills"
+            class="list-group-item list-group-item-action flex-column align-items-start"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ skill.text }}</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div
+        style="
+          background-color: #e8e8e8;
+          border-radius: 20px;
+          margin-top: 10px;
+          margin-left: 20px;
+          margin-right: 20px;
+          margin-bottom: 20px;
+          padding: 10px;
+        "
+      >
+        <h2 style="margin-left: 40px; display: inline">Interests</h2>
+        <img
+          src="..//..//../assets/add.png"
+          style="width: 20px; display: inline; float: right; margin-right: 40px"
+          data-bs-toggle="modal"
+          data-bs-target="#modalDialogNewInterest"
+        />
+        <div class="list-group">
+          <a
+            *ngFor="let interest of user.interests"
+            class="list-group-item list-group-item-action flex-column align-items-start"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ interest.text }}</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="modalDialog"
+  tabindex="-1"
+  aria-labelledby="modalDialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" data-target="#modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalDialog">
+          Update my profile information
+        </h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <ng-container [formGroup]="this.updateFormGroup">
+              <div class="mb-2">
+                <label for="name" class="form-label">Name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  formControlName="name"
+                  value="{{ user.name }}"
+                />
+              </div>
+              <div class="mb-2">
+                <label for="surname" class="form-label">Surname:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="surname"
+                  formControlName="surname"
+                  value="{{ user.surname }}"
+                />
+              </div>
+              <div class="mb-2">
+                <label for="email" class="form-label">Email:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="email"
+                  formControlName="email"
+                  value="{{ user.email }}"
+                />
+              </div>
+              <div class="mb-2">
+                <label for="telephone" class="form-label">Telephone:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="telephone"
+                  formControlName="telephone"
+                  value="{{ user.telephone }}"
+                />
+              </div>
+              <div class="mb-2">
+                <label for="gender" class="form-label">Gender:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="gender"
+                  formControlName="gender"
+                  value="{{ user.gender }}"
+                />
+              </div>
+              <div class="mb-2">
+                <label for="birthdate" class="form-label">Date of birth:</label>
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="birthdate"
+                  formControlName="birthdate"
+                  value="{{ user.birthdate }}"
+                />
+              </div>
+              <div class="mb-2">
+                <label for="biography" class="form-label">Biography:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="biography"
+                  formControlName="biography"
+                  value="{{ user.biography }}"
+                />
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          id="submitButton"
+          type="submit"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="update()"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="modalDialogNewExperience"
+  tabindex="-1"
+  aria-labelledby="modalDialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" data-target="#modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalDialog">Add experience</h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <ng-container [formGroup]="this.experienceFormGroup">
+              <div class="mb-2">
+                <label for="experience" class="form-label"
+                  >Experience info:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="experience"
+                  formControlName="experience"
+                />
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          id="submitButton"
+          type="submit"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="addNewExperience()"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="modalDialogNewEducation"
+  tabindex="-1"
+  aria-labelledby="modalDialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" data-target="#modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalDialog">Add education</h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <ng-container [formGroup]="this.educationFormGroup">
+              <div class="mb-2">
+                <label for="education" class="form-label"
+                  >Education info:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="education"
+                  formControlName="education"
+                />
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          id="submitButton"
+          type="submit"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="addNewEducation()"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="modalDialogNewSkill"
+  tabindex="-1"
+  aria-labelledby="modalDialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" data-target="#modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalDialog">Add skill</h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <ng-container [formGroup]="this.skillFormGroup">
+              <div class="mb-2">
+                <label for="skill" class="form-label">Skill:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="skill"
+                  formControlName="skill"
+                />
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          id="submitButton"
+          type="submit"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="addNewSkill()"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="modalDialogNewInterest"
+  tabindex="-1"
+  aria-labelledby="modalDialog"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" data-target="#modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalDialog">Add interest</h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <ng-container [formGroup]="this.interestFormGroup">
+              <div class="mb-2">
+                <label for="interest" class="form-label">Interest info:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="interest"
+                  formControlName="interest"
+                />
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          id="submitButton"
+          type="submit"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="addNewInterest()"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

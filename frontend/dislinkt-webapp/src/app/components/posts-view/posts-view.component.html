@@ -1,0 +1,192 @@
+<app-navbar></app-navbar>
+<div class="row">
+  <div class="col-8 mx-auto">
+    <div class="px-3">
+      <hr />
+    </div>
+    <h1 class="my-3" *ngIf="!passwordless" style="text-align: center">Posts</h1>
+    <mat-spinner *ngIf="passwordless" style="width: 100px; margin: auto;"></mat-spinner>
+    <div class="px-3">
+      <hr />
+    </div>
+  </div>
+</div>
+<div class="row" style="margin-top: 2rem" *ngIf="!passwordless">
+  <div class="col-8 mx-auto">
+    <div class="card shadow-sm mb-3" *ngFor="let post of posts">
+      <div>
+        <div class="row mx-5 my-2 mt-5">
+          <div class="col-11">
+            <div class="d-inline-flex">
+              <h2>User:</h2>
+              <h2 style="font-weight: bold; margin-left: 1rem">
+                {{ post.Username }}
+              </h2>
+            </div>
+          </div>
+        </div>
+        <div class="row mx-5 my-2 bg-light">
+          <div class="col-11">
+            <div class="d-inline-flex mt-3">
+              <h3 style="color: #f59494; margin-right: 1rem">Posted On:</h3>
+              <h3>{{ post.CreatedOn }}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="row mx-5 my-3 bg-light">
+          <div class="col-11">
+            <div class="d-inline-flex mt-3">
+              <h3 style="font-weight: 400">"{{ post.Text }}"</h3>
+            </div>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="d-flex justify-content-center">
+            <img *ngIf="post.ImageUrl != ''" src="{{ post.ImageUrl }}" alt="picture" style="height: 500px" />
+          </div>
+        </div>
+        <div class="row my-3 mx-5">
+          <div class="col-6">
+            <div class="d-flex-inline justify-content-start mt-3">
+              <i class="fas fa-thumbs-up fa-lg me-3" style="color: #b4e197">
+                <a href="" data-bs-toggle="modal" data-bs-target="#allLikesModal" (click)="liked = post.Liked"
+                  style="text-decoration: none; color: #b4e197">
+                  {{ post.Likes }}</a></i>
+              <i class="fas fa-thumbs-down fa-lg me-3" style="color: #b33030">
+                <a href="" data-bs-toggle="modal" data-bs-target="#allDislikesModal" (click)="disliked = post.Disliked"
+                  style="text-decoration: none; color: #b33030">
+                  {{ post.Dislikes }}</a></i>
+              <i class="far fa-comment fa-lg me-2" style="color: gray"> </i>
+              <a href="" data-bs-toggle="modal" data-bs-target="#allCommentsModal"
+                (click)="comments = post.Comments">(See comments)</a>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-secondary me-2" (click)="likePost(post._id)">
+                Like
+              </button>
+              <button class="btn btn-secondary me-2" (click)="dislikePost(post._id)">
+                Dislike
+              </button>
+              <button class="btn btn-secondary" style="background: #f59494" data-bs-toggle="modal"
+                data-bs-target="#commentModal" (click)="commentOnPost = post._id">
+                Comment
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal For Comment -->
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Comment post</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Add your comment</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="commentText"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-primary" (click)="commentPost()" data-bs-dismiss="modal"
+          [disabled]="commentText == ''">
+          Comment
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal For Displaying Comments -->
+<div class="modal fade" id="allCommentsModal" tabindex="-1" aria-labelledby="exampleModalLabell" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabell">All Comments</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row my-2" *ngFor="let comment of comments">
+          <div class="d-flex justify-content-center">
+            <h3>
+              "{{ comment.Text }}" (<b>{{ comment.Username }}</b>)
+            </h3>
+          </div>
+          <hr />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal For Displaying Dislikes -->
+<div class="modal fade" id="allDislikesModal" tabindex="-1" aria-labelledby="exampleModalLabell" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabell">People who disliked</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row my-2" *ngFor="let dislike of disliked">
+          <div class="d-flex justify-content-center">
+            <h3>
+              <i class="fas fa-user-circle fa-lg me-2" style="color: #f59494"></i>
+              {{ dislike }}
+            </h3>
+          </div>
+          <hr />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal For Displaying Likes -->
+<div class="modal fade" id="allLikesModal" tabindex="-1" aria-labelledby="exampleModalLabell" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabell">People who liked</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row my-2" *ngFor="let like of liked">
+          <div class="d-flex justify-content-center">
+            <h3>
+              <i class="fas fa-user-circle fa-lg me-2" style="color: #f59494"></i>
+              {{ like }}
+            </h3>
+          </div>
+          <hr />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

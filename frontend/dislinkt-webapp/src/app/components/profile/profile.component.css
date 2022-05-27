@@ -1,0 +1,8 @@
+#coverphoto {
+    color: aliceblue; 
+    height: 200px;
+    background-image: url('..//..//../assets/coverphoto1.jpg');
+    background-repeat: no-repeat;
+    border-radius: 20px;
+    margin: 30px;
+}
