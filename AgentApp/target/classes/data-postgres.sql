@@ -1,0 +1,3 @@
+INSERT INTO POST (id, content) VALUES (1, 'USER');
+INSERT INTO POST (id, content) VALUES (2, 'ADMIN');
+INSERT INTO POST (id, content) VALUES (3, 'BOATOWNER');
