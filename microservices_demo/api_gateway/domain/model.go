@@ -1,25 +1,9 @@
 package domain
 
-import "time"
+import "go.mongodb.org/mongo-driver/bson/primitive"
 
-type Product struct {
-	Id            string
-	Name          string
-	ClothingBrand string
-	ColorCode     string
-	ColorName     string
-}
-
-type OrderItem struct {
-	Product  Product
-	Quantity uint16
-}
-
-type OrderDetails struct {
-	Id              string
-	CreatedAt       time.Time
-	Status          string
-	ShippingAddress string
-	ShippingStatus  string
-	OrderItems      []OrderItem
+type User struct {
+	Id       primitive.ObjectID
+	Username string
+	Password string
 }
