@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="496076c3-8e59-4ff5-a136-46292990b2de" name="Changes" comment="" />
+    <list default="true" id="496076c3-8e59-4ff5-a136-46292990b2de" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../AgentApp/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../AgentApp/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AgentApp/target/classes/META-INF/maven/com.example/AgentApp/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../AgentApp/target/classes/META-INF/maven/com.example/AgentApp/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AgentApp/target/classes/META-INF/maven/com.example/AgentApp/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../AgentApp/target/classes/META-INF/maven/com.example/AgentApp/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AgentApp/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../AgentApp/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,7 +55,7 @@
     "configurable.GoLibrariesConfigurable.is.expanded": "true",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "D:/XML-project-team-5/microservices_demo/catalogue_service/main.go",
+    "last_opened_file_path": "C:/Users/Korisnik",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "goland.project.structure"
   }
@@ -65,7 +72,7 @@
       <recent name="C:\Users\brani\Downloads\XML-project-team-5\microservices_demo\common" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.catalogue_service">
+  <component name="RunManager" selected="Go Build.users_service">
     <configuration name="api_gateway" type="GoApplicationRunConfiguration" factoryName="Go Application" singleton="false">
       <module name="microservices_demo" />
       <working_directory value="$PROJECT_DIR$" />

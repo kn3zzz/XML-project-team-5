@@ -21,25 +21,25 @@ services:
     networks:
       - network
 
-profile_service:
-  image: profile_service
-  container_name: profile_service
-  build:
-    context: .
-    dockerfile: ./profile_service/Dockerfile
-  restart: on-failure
-  environment:
-    PROFILE_DB_HOST: ${PROFILE_DB_HOST}
-    PROFILE_DB_PORT: ${PROFILE_DB_PORT}
-    PROFILE_SERVICE_PORT: ${PROFILE_SERVICE_PORT}
-    NATS_HOST: ${NATS_HOST}
-    NATS_PORT: ${NATS_PORT}
-    NATS_USER: ${NATS_USER}
-    NATS_PASS: ${NATS_PASS}
-  depends_on:
-    - profile_db
-  networks:
-    - network
+  profile_service:
+    image: profile_service
+    container_name: profile_service
+    build:
+      context: .
+      dockerfile: ./profile_service/Dockerfile
+    restart: on-failure
+    environment:
+      PROFILE_DB_HOST: ${PROFILE_DB_HOST}
+      PROFILE_DB_PORT: ${PROFILE_DB_PORT}
+      PROFILE_SERVICE_PORT: ${PROFILE_SERVICE_PORT}
+      NATS_HOST: ${NATS_HOST}
+      NATS_PORT: ${NATS_PORT}
+      NATS_USER: ${NATS_USER}
+      NATS_PASS: ${NATS_PASS}
+    depends_on:
+      - profile_db
+    networks:
+      - network
 
   api_gateway:
     image: api_gateway
