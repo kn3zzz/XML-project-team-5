@@ -207,4 +207,24 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public User(long id, String name, String lastname, String username, String password, String email, String phoneNumber, Role role, Gender gender, Date birthDate, boolean profilePrivacy) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.profilePrivacy = profilePrivacy;
+        this.biography = "";
+        this.education = "";
+        this.workingExperience = "";
+        this.photo = "";
+        this.skills = "";
+        this.notificationsOn = true;
+        this.interests = "";
+    }
 }

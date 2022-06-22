@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package com.dislinkt.apigateway.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.dislinkt.apigateway.grpc";
+
+message UserRegister {
+  string name = 1;
+  string lastname = 2;
+  string username = 3;
+  string password = 4;
+  string email = 5;
+  string phoneNumber = 6;
+  string gender = 7;
+  string birthDate = 8;
+  bool privateProfile = 9;
+}
+
+message UserRegisterResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message UserLoginResponse {
+  string token = 1;
+  int64 expiresIn = 2;
+  string role = 3;
+  bool notificationsOn = 4;
+  string username = 5;
+  int64 id = 6;
+}
+
+message UserLogin {
+  string username = 1;
+  string password = 2;
+}
+
+service AuthenticationService {
+  rpc registerUser(UserRegister) returns (UserRegisterResponse){}
+  rpc login(UserLogin) returns (UserLoginResponse){}
+}
