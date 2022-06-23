@@ -5,8 +5,9 @@ import com.dislinkt.apigateway.grpc.*;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.springframework.stereotype.Component;
 
-@GrpcService
+@Component
 public class AuthenticationService implements IAuthenticationService {
 
     @GrpcClient("authenticationgrpcservice")
