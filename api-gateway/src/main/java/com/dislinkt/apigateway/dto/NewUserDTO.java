@@ -16,5 +16,18 @@ public class NewUserDTO {
     public String birthDate;
     public boolean privateProfile;
 
-
+    @Override
+    public String toString() {
+        return "NewUserDTO{" +
+                "name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", privateProfile=" + privateProfile +
+                '}';
+    }
 }

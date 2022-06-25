@@ -5,7 +5,7 @@ import com.dislinkt.apigateway.grpc.*;
 
 public interface IAuthenticationService {
 
-    UserRegisterResponse register (NewUserDTO newUserDTO);
+    UserRegisterResponse registerUser (NewUserDTO newUserDTO);
 
     UserLoginResponse login (String username, String password);
 }
