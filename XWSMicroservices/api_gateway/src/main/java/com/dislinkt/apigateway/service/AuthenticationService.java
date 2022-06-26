@@ -1,22 +1,19 @@
 package com.dislinkt.apigateway.service;
 
+import com.dislinkt.apigateway.dto.LoginDTO;
 import com.dislinkt.apigateway.dto.NewUserDTO;
-import com.dislinkt.apigateway.grpc.*;
+import com.dislinkt.grpc.*;
 import com.google.protobuf.Descriptors;
-import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.client.inject.GrpcClient;
-import net.devh.boot.grpc.server.service.GrpcService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Map;
 
-@Component
-public class AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImplBase{
-
+@Service
+public class AuthenticationService {
     @GrpcClient("authentication-grpc-service")
-    private AuthenticationServiceGrpc.AuthenticationServiceBlockingStub authStub;
+    AuthenticationServiceGrpc.AuthenticationServiceBlockingStub authStub;
 
     public Map<Descriptors.FieldDescriptor, Object> registerUser(@RequestBody NewUserDTO user) {
         UserRegister req = UserRegister.newBuilder()
@@ -34,13 +31,12 @@ public class AuthenticationService extends AuthenticationServiceGrpc.Authenticat
         return  res.getAllFields();
     }
 
-    @Override
-    public void registerUser(UserRegister request, StreamObserver<UserRegisterResponse> responseObserver) {
-        System.out.println("HELLO");
-    }
-
-    @Override
-    public void login(UserLogin request, StreamObserver<UserLoginResponse> responseObserver) {
-        System.out.println("HELLO");
+    public Map<Descriptors.FieldDescriptor, Object> login(@RequestBody LoginDTO login) {
+        UserLogin req = UserLogin.newBuilder()
+                .setUsername(login.username)
+                .setPassword(login.password)
+                .build();
+        UserLoginResponse res = authStub.login(req);
+        return  res.getAllFields();
     }
 }

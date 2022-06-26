@@ -1,7 +1,9 @@
 package com.dislinkt.apigateway.controller;
 
+import com.dislinkt.apigateway.dto.LoginDTO;
 import com.dislinkt.apigateway.dto.NewUserDTO;
 import com.dislinkt.apigateway.service.AuthenticationService;
+import com.dislinkt.grpc.UserRegisterResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,5 +22,10 @@ public class AuthenticationController {
     @PostMapping("/addUser")
     public ResponseEntity<?> saveUser(@RequestBody NewUserDTO user){
         return new ResponseEntity<>(authenticationService.registerUser(user), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDTO login){
+        return new ResponseEntity<>(authenticationService.login(login), HttpStatus.OK);
     }
 }
