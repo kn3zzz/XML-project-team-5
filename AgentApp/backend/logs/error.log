@@ -1,0 +1,2 @@
+{level:"ERROR", timestamp:"2022-06-26 14:28:23,311", file:"AuthController.java", line:"85", message:"Failed login. User: jovanprcko@gmail.com, Account not activated."}
+{level:"ERROR", timestamp:"2022-06-26 14:28:30,664", file:"AuthController.java", line:"85", message:"Failed login. User: jovanprcko@gmail.com, Account not activated."}
