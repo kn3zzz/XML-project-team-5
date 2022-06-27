@@ -7,6 +7,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { MyInfoComponent } from './my-info/my-info.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { FollowRequestsComponent } from './follow-requests/follow-requests.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { MyInfoComponent } from './my-info/my-info.component';
     NavbarComponent,
     RegisterComponent,
     LoginComponent,
-    MyInfoComponent
+    MyInfoComponent,
+    HomepageComponent,
+    FollowRequestsComponent
   ],
   imports: [
     BrowserModule,
