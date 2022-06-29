@@ -1,3 +1,5 @@
+package com.dislinkt.postservice;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -5,5 +7,5 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class, DataSourceAutoConfiguration.class })
 public class PostServiceApplication {
-    public static void main(String[] args) { SpringApplication.run(PostServiceApplication.class, args);}
+    public static void main(String[] args) { SpringApplication.run(PostServiceApplication.class, args); }
 }

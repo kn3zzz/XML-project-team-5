@@ -3,8 +3,11 @@ grpc:
     authentication-grpc-service:
       address: static://localhost:9001
       negotiationType: plaintext
-   post-grpc-service:
+    post-grpc-service:
       address: static://localhost:9003
       negotiationType: plaintext
 server:
   port: 8000
+
+
+
