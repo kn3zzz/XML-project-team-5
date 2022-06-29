@@ -5,12 +5,12 @@
             <br>
             <h2 style="color: grey; margin-left: 50%;">SEARCH PROFILES</h2>
             <br><br>
-            <input class="form-control form-control-lg" type="text" placeholder="Profile name or username" aria-label=".form-control-lg example">
+            <input class="form-control form-control-lg" [(ngModel)]="query" type="text" placeholder="Profile name or username" aria-label=".form-control-lg example">
             <br>
         </div>
         <div class="col-sm-2">
             <br><br><br><br><br>
-            <button type="button" style="margin-left: 20%;" class="btn btn-lg btn-outline-primary">Search profiles</button>
+            <button type="button" style="margin-left: 20%;" (click)="search()" class="btn btn-lg btn-outline-primary">Search profiles</button>
         </div>
         <div class="col-sm-2"></div>
     </div>
@@ -18,25 +18,16 @@
     <div class="row">
         <div class="col-sm-2"></div>
         <div class="col-sm-8">
-            <div class="card">
+            <div *ngFor="let profile of profiles;" class="card" style="margin-top: 5%;">
                 <div class="card-body">
-                  <h5 class="card-title">Milos Markovic - milos1701</h5>
-                  <p class="card-text">Ovde idu interesovanja i tako to djfbuwnoebgiuerngerbgirgiebrugoebrugbeu</p>
-                  <p class="card-text">Ovde moze jos nesto od informacija</p>
-                  <a href="#" class="btn btn-outline-primary">Visit profile</a>
-                  <button style="margin-left: 3%;" type="button" class="btn btn-primary">Send follow request</button>
+                  <h5 class="card-title">{{profile.name}} {{profile.lastname}} - {{profile.username}}</h5>
+                  <p class="card-text">{{profile.biography}}</p>
+                  <p class="card-text">{{profile.interests}}</p>
+                  <button class="btn btn-outline-primary">Visit profile</button>
+                  <button style="margin-left: 3%;" type="button" (click)="sendFollow(profile.id)" class="btn btn-primary">Send follow request</button>
                 </div>
               </div>
-              <br><br>
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Milos Markovic - milos1701</h5>
-                  <p class="card-text">Ovde idu interesovanja i tako to djfbuwnoebgiuerngerbgirgiebrugoebrugbeu</p>
-                  <p class="card-text">Ovde moze jos nesto od informacija</p>
-                  <a href="#" class="btn btn-outline-primary">Visit profile</a>
-                  <button style="margin-left: 3%;" type="button" class="btn btn-primary">Send follow request</button>
-                </div>
-              </div>
+
         </div>
         <div class="col-sm-2"></div>
     </div>

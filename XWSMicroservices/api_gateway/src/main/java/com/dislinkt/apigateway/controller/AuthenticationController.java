@@ -26,20 +26,23 @@ public class AuthenticationController {
         return new ResponseEntity<>(authenticationService.login(login), HttpStatus.OK);
     }
 
-    @PostMapping("/search/{query}")
+    @GetMapping("/search/{query}")
     public ResponseEntity<?> search(@PathVariable("query") String searchQuery){
         return new ResponseEntity<>(authenticationService.searchProfile(searchQuery), HttpStatus.OK);
     }
 
+    @GetMapping("/profiles")
+    public ResponseEntity<?> profiles(){
+        return new ResponseEntity<>(authenticationService.searchProfile(" "), HttpStatus.OK);
+    }
+
     @PostMapping("/updateUser")
     public ResponseEntity<?> updateUser(@RequestBody UserInfoChangeDTO info){
-        System.out.println(info);
         return new ResponseEntity<>(authenticationService.updateUser(info), HttpStatus.OK);
     }
 
     @GetMapping("/getUser/{id}")
     public ResponseEntity<?> updateUser(@PathVariable("id") long id){
-        System.out.println(id);
         return new ResponseEntity<>(authenticationService.getUser(id), HttpStatus.OK);
     }
 

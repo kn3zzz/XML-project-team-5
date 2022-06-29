@@ -11,42 +11,49 @@
     <div class="row">
         <div class="col-sm-6">
             <br><br>
-            <input class="form-control form-control-lg" type="text" disabled placeholder="Name" aria-label=".form-control-lg example">
+            <input class="form-control form-control-lg" [(ngModel)]="myInfo.name" type="text" placeholder="Name*" aria-label=".form-control-lg example">
             <br>
-            <input class="form-control form-control-lg" type="text" disabled placeholder="Lastname" aria-label=".form-control-lg example">
+            <input class="form-control form-control-lg" [(ngModel)]="myInfo.lastname" type="text" placeholder="Lastname*" aria-label=".form-control-lg example">
             <br>
-            <input class="form-control form-control-lg" type="text" disabled placeholder="Username" aria-label=".form-control-lg example">
+            <input class="form-control form-control-lg" [(ngModel)]="myInfo.username" type="text" placeholder="Username*" aria-label=".form-control-lg example">
             <br>
-            <input class="form-control form-control-lg" type="email" disabled placeholder="E-mail" aria-label=".form-control-lg example">
+            <input class="form-control form-control-lg" [(ngModel)]="myInfo.email" type="email" placeholder="E-mail*" aria-label=".form-control-lg example">
             <br>
-            <input class="form-control form-control-lg" type="password" disabled placeholder="Phone number" aria-label=".form-control-lg example">
+            <input class="form-control form-control-lg" [(ngModel)]="myInfo.phoneNumber" type="text" placeholder="Phone number*" aria-label=".form-control-lg example">
             <br>
-            <select disabled class="form-select form-select-lg" aria-label="Default select example">
-                <option selected>Choose your gender</option>
-                <option value="MALE">Male</option>
+            <select  *ngIf="myInfo.gender == 'MALE'" class="form-select form-select-lg" [(ngModel)]="myInfo.gender" aria-label="Default select example">
+                <option disabled>Choose your gender</option>
+                <option selected value="MALE">Male</option>
                 <option value="FEMALE">Female</option>
+              </select>
+              <select  *ngIf="myInfo.gender == 'FEMALE'" class="form-select form-select-lg" [(ngModel)]="myInfo.gender" aria-label="Default select example">
+                <option disabled>Choose your gender</option>
+                <option value="MALE">Male</option>
+                <option selected value="FEMALE">Female</option>
               </select>
             <br>
             <div class="row">
               <div class="col-sm-1"></div>
               <div class="col-sm-3">
-                <h3 style="color: grey;">Birth date:</h3>
+                <h3 style="color: grey;">Birth date:*</h3>
               </div>
               <div class="col-sm-8">
-                <input class="form-control form-control-lg" type="date" disabled placeholder="Birth date" aria-label=".form-control-lg example">
+                <input class="form-control form-control-lg" [(ngModel)]="myInfo.birthDate" type="date" placeholder="Birth date" aria-label=".form-control-lg example">
               </div>
             </div>
             <br><br>
             <div class="row">
               <div class="col-sm-6">
                 <div style="margin-left: 15%;" class="form-check form-switch">
-                  <input class="form-check-input" disabled style="width: 4em; height: 2em;margin-right: 3%;" type="checkbox" id="flexSwitchCheckDefault">
+                  <input *ngIf="myInfo.privateProfile" class="form-check-input" checked style="width: 4em; height: 2em;margin-right: 3%;" type="checkbox" id="private">
+                  <input *ngIf="!myInfo.privateProfile" class="form-check-input" style="width: 4em; height: 2em;margin-right: 3%;" type="checkbox" id="private">
                   <label class="form-check-label" for="flexSwitchCheckDefault" style="color: grey;font-size: x-large;">Private profile</label>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div style="margin-left: 5%;" class="form-check form-switch">
-                  <input class="form-check-input" disabled style="width: 4em; height: 2em;margin-right: 3%;" type="checkbox" id="flexSwitchCheckDefault">
+                  <input *ngIf="myInfo.notificationsOn" class="form-check-input"  checked style="width: 4em; height: 2em;margin-right: 3%;" type="checkbox" id="notifications">
+                  <input *ngIf="!myInfo.notificationsOn" class="form-check-input"  style="width: 4em; height: 2em;margin-right: 3%;" type="checkbox" id="notifications">
                   <label class="form-check-label" for="flexSwitchCheckDefault" style="color: grey;font-size: x-large;">Notifications</label>
                 </div>
               </div>
@@ -57,27 +64,27 @@
               <div class="row">
                 <div class="col-sm-5"></div>
                   <div class="col-sm-2">
-                    <button type="button" class="btn btn-lg btn-secondary">Edit Info</button>
+                    
                   </div>
                   <div class="col-sm-5"></div>
               </div>
         </div>
         <div class="col-sm-6">
             <br><br>
-            <textarea class="form-control" placeholder="Biography" disabled id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" [(ngModel)]="myInfo.biography" placeholder="Biography"  id="exampleFormControlTextarea1" rows="3"></textarea>
             <br>
-            <textarea class="form-control" placeholder="Working experience" disabled id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" [(ngModel)]="myInfo.workingExperience" placeholder="Working experience"  id="exampleFormControlTextarea1" rows="3"></textarea>
             <br>
-            <textarea class="form-control" placeholder="Education" disabled id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" [(ngModel)]="myInfo.education" placeholder="Education"  id="exampleFormControlTextarea1" rows="3"></textarea>
             <br>
-            <textarea class="form-control" placeholder="Skills" disabled id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" [(ngModel)]="myInfo.skills" placeholder="Skills"  id="exampleFormControlTextarea1" rows="3"></textarea>
             <br>
-            <textarea class="form-control" placeholder="Interests" disabled id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" [(ngModel)]="myInfo.interests" placeholder="Interests"  id="exampleFormControlTextarea1" rows="3"></textarea>
             <br><br><br><br>
             <div class="row">
                 <div class="col-sm-5"></div>
                   <div class="col-sm-3">
-                    <button type="button" disabled class="btn btn-lg btn-outline-primary">Save Changes</button>
+                    <button type="button" (click)="saveChanges()" class="btn btn-lg btn-outline-primary">Save Changes</button>
                   </div>
                   <div class="col-sm-4"></div>
               </div>

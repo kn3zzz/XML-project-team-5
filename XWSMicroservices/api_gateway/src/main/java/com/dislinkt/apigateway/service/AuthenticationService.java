@@ -5,7 +5,9 @@ import com.dislinkt.grpc.*;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -14,6 +16,7 @@ public class AuthenticationService {
     AuthenticationServiceGrpc.AuthenticationServiceBlockingStub authStub;
 
     public Boolean registerUser(NewUserDTO user) {
+        System.out.println(user);
         UserRegister req = UserRegister.newBuilder()
                 .setName(user.name)
                 .setLastname(user.lastname)
@@ -54,13 +57,13 @@ public class AuthenticationService {
                 .setName(info.name)
                 .setLastname(info.lastname)
                 .setBiography(info.biography)
-                .setBirthDate(info.gender)
+                .setBirthDate(info.birthDate)
                 .setEmail(info.email)
                 .setGender(info.gender)
-                .setEmail(info.email)
                 .setUsername(info.username)
                 .setEducation(info.education)
                 .setId(info.id)
+                .setPhoneNumber(info.phoneNumber)
                 .setWorkingExperience(info.workingExperience)
                 .setNotificationsOn(info.notificationsOn)
                 .setPrivateProfile(info.privateProfile)

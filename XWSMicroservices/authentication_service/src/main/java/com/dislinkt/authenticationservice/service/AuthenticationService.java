@@ -11,8 +11,10 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.NoSuchElementException;
 
 
 @EnableMongoRepositories("com.dislinkt.authenticationservice.repository")
@@ -24,25 +26,33 @@ AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImp
 
     @Override
     public void registerUser(UserRegister request, StreamObserver<UserRegisterResponse> responseObserver) {
+        UserRegisterResponse res;
         Date birthDate;
+        Gender gender = Gender.MALE;
+        if (request.getGender().equalsIgnoreCase("FEMALE"))
+            gender = Gender.FEMALE;
         try {
             birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getBirthDate());
         } catch (Exception e){
             birthDate = new Date();
         }
-        userRepository.save(new User(
-                2,
-                request.getName(),
-                request.getLastname(),
-                request.getUsername(),
-                request.getPassword(),
-                request.getEmail(),
-                request.getPhoneNumber(),
-                Role.USER,
-                Gender.MALE,
-                birthDate,
-                request.getPrivateProfile()));
-        UserRegisterResponse res = UserRegisterResponse.newBuilder().setMessage("Success").setSuccess(true).build();
+        if (userRepository.getUserByUsername(request.getUsername()) == null) {
+            userRepository.save(new User(
+                    generateUserId(),
+                    request.getName(),
+                    request.getLastname(),
+                    request.getUsername(),
+                    request.getPassword(),
+                    request.getEmail(),
+                    request.getPhoneNumber(),
+                    Role.USER,
+                    gender,
+                    birthDate,
+                    request.getPrivateProfile()));
+            res = UserRegisterResponse.newBuilder().setMessage("Success").setSuccess(true).build();
+        } else {
+            res = UserRegisterResponse.newBuilder().setMessage("Error").setSuccess(false).build();
+        }
         responseObserver.onNext(res);
         responseObserver.onCompleted();
     }
@@ -51,12 +61,15 @@ AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImp
     public void login(UserLogin request, StreamObserver<UserLoginResponse> responseObserver) {
         User user = userRepository.getUserByUsername(request.getUsername());
         UserLoginResponse res = null;
-        if (user.getUsername().equalsIgnoreCase(request.getUsername()) && user.getPassword().equals(request.getPassword())) {
+        if (user != null && user.getUsername().equalsIgnoreCase(request.getUsername()) && user.getPassword().equals(request.getPassword())) {
             res = UserLoginResponse.newBuilder()
                     .setId(user.getId())
                     .setRole(user.getRole().toString())
                     .setNotificationsOn(user.isNotificationsOn())
                     .setUsername(user.getUsername()).build();
+        } else {
+            res = UserLoginResponse.newBuilder()
+                    .setRole("NO USER").build();
         }
         responseObserver.onNext(res);
         responseObserver.onCompleted();
@@ -92,6 +105,13 @@ AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImp
     @Override
     public void changeUserInfo(UserInfoChange request, StreamObserver<UserInfoChangeResponse> responseObserver) {
         UserInfoChangeResponse res;
+        Date birthDate;
+        System.out.println(request.getBirthDate());
+        try {
+            birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getBirthDate());
+        } catch (Exception e){
+            birthDate = new Date();
+        }
         try {
             User u = userRepository.findById(request.getId()).get();
             u.setUsername(request.getUsername());
@@ -109,7 +129,7 @@ AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImp
             u.setWorkingExperience(request.getWorkingExperience());
             u.setNotificationsOn(request.getNotificationsOn());
             u.setProfilePrivacy(request.getPrivateProfile());
-            //dodaj rodjendan
+            u.setBirthDate(birthDate);
             userRepository.save(u);
             System.out.println(u);
 
@@ -126,6 +146,7 @@ AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImp
     @Override
     public void getUser(UserID request, StreamObserver<UserResponse> responseObserver) {
         UserResponse res;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             User u = userRepository.findById(request.getId()).get();
             res = UserResponse.newBuilder()
@@ -142,7 +163,7 @@ AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImp
             .setWorkingExperience(u.getWorkingExperience())
             .setNotificationsOn(u.isNotificationsOn())
             .setPrivateProfile(u.isProfilePrivacy())
-            .setBirthDate(u.getBirthDate().toString())
+            .setBirthDate(dateFormat.format(u.getBirthDate()))
             .setId(request.getId())
             .build();
         } catch (Exception e){
@@ -152,5 +173,16 @@ AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImp
         }
         responseObserver.onNext(res);
         responseObserver.onCompleted();
+    }
+
+    private long generateUserId() {
+        for (long i = 1; i < 1000000000; i++) {
+            try {
+                userRepository.findById(i).get();
+            } catch (NoSuchElementException e){
+                return i;
+            }
+        }
+        return 0;
     }
 }
