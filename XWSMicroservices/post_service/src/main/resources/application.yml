@@ -1,0 +1,12 @@
+grpc:
+  server:
+    port: 9003
+
+server:
+  port: 8003
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: posts
