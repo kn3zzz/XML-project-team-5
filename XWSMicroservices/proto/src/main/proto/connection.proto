@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package com.dislinkt.grpc;
+option java_multiple_files = true;
+option java_package = "com.dislinkt.grpc";
+
+message CreateConnection{
+    int64 sender = 1;
+    int64 receiver = 2;
+    string state = 3;
+}
+
+message CreateConnectionResponse{
+  string message = 1;
+  bool success = 2;
+}
+
+
+service ConnectionService{
+  rpc createConnection(CreateConnection) returns (CreateConnectionResponse){}
+}
