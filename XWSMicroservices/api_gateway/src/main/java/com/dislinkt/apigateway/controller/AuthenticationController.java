@@ -37,4 +37,10 @@ public class AuthenticationController {
         return new ResponseEntity<>(authenticationService.updateUser(info), HttpStatus.OK);
     }
 
+    @GetMapping("/getUser/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable("id") long id){
+        System.out.println(id);
+        return new ResponseEntity<>(authenticationService.getUser(id), HttpStatus.OK);
+    }
+
 }

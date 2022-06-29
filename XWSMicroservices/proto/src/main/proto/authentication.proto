@@ -81,9 +81,32 @@ message UserInfoChangeResponse {
   bool success = 2;
 }
 
+message UserID {
+  int64 id = 1;
+}
+
+message UserResponse {
+  string name = 1;
+  string lastname = 2;
+  string username = 3;
+  string email = 4;
+  string phoneNumber = 5;
+  string gender = 6;
+  string birthDate = 7;
+  string biography = 8;
+  string workingExperience = 9;
+  string education = 10;
+  string skills = 11;
+  string interests = 12;
+  bool privateProfile = 13;
+  bool notificationsOn = 14;
+  int64 id = 15;
+}
+
 service AuthenticationService {
   rpc registerUser(UserRegister) returns (UserRegisterResponse){}
   rpc login(UserLogin) returns (UserLoginResponse){}
   rpc searchProfile(SearchProfile) returns (SearchProfileResponse){}
   rpc changeUserInfo(UserInfoChange) returns (UserInfoChangeResponse){}
+  rpc getUser(UserID) returns (UserResponse){}
 }

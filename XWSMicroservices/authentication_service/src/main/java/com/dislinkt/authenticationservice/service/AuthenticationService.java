@@ -121,4 +121,35 @@ public class AuthenticationService extends AuthenticationServiceGrpc.Authenticat
         responseObserver.onNext(res);
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void getUser(UserID request, StreamObserver<UserResponse> responseObserver) {
+        UserResponse res;
+        try {
+            User u = userRepository.findById(request.getId()).get();
+            res = UserResponse.newBuilder()
+            .setUsername(u.getUsername())
+            .setEmail(u.getEmail())
+            .setGender(u.getGender().toString())
+            .setBiography(u.getBiography())
+            .setEducation(u.getEducation())
+            .setInterests(u.getInterests())
+            .setLastname(u.getLastname())
+            .setName(u.getName())
+            .setPhoneNumber(u.getPhoneNumber())
+            .setSkills(u.getSkills())
+            .setWorkingExperience(u.getWorkingExperience())
+            .setNotificationsOn(u.isNotificationsOn())
+            .setPrivateProfile(u.isProfilePrivacy())
+            .setBirthDate(u.getBirthDate().toString())
+            .setId(request.getId())
+            .build();
+        } catch (Exception e){
+            res = UserResponse.newBuilder().build();
+            responseObserver.onNext(res);
+            responseObserver.onCompleted();
+        }
+        responseObserver.onNext(res);
+        responseObserver.onCompleted();
+    }
 }

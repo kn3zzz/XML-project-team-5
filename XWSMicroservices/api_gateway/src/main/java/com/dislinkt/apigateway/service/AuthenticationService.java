@@ -85,4 +85,31 @@ public class AuthenticationService {
         }
         return retList;
     }
+
+    public UserInfoChangeDTO getUser(long id) {
+        UserID userId = UserID.newBuilder()
+                .setId(id)
+                .build();
+        UserInfoChangeDTO res = convertToUserInfoChangeDTO(authStub.getUser(userId));
+        return res;
+    }
+
+    private UserInfoChangeDTO convertToUserInfoChangeDTO(UserResponse res) {
+        return new UserInfoChangeDTO(
+                res.getName(),
+                res.getLastname(),
+                res.getUsername(),
+                res.getEmail(),
+                res.getPhoneNumber(),
+                res.getGender(),
+                res.getBirthDate(),
+                res.getBiography(),
+                res.getWorkingExperience(),
+                res.getEducation(),
+                res.getSkills(),
+                res.getInterests(),
+                res.getPrivateProfile(),
+                res.getNotificationsOn(),
+                res.getId());
+    }
 }
