@@ -11,6 +11,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { FollowRequestsComponent } from './follow-requests/follow-requests.component';
 import { SearchProfilesComponent } from './search-profiles/search-profiles.component';
 import { ProfileComponent } from './profile/profile.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,11 +23,12 @@ import { ProfileComponent } from './profile/profile.component';
     HomepageComponent,
     FollowRequestsComponent,
     SearchProfilesComponent,
-    ProfileComponent
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
