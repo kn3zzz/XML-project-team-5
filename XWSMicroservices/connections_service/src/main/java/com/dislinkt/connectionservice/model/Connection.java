@@ -46,6 +46,8 @@ public class Connection {
         return connectionState;
     }
 
+    public String getConnectionStateString(){return stateToString(this.connectionState); }
+
     public void setConnectionState(ConnectionState connectionState) {
         this.connectionState = connectionState;
     }
@@ -66,6 +68,19 @@ public class Connection {
                 return ConnectionState.CONNECTED;
             default:
                 return ConnectionState.IDLE;
+        }
+    }
+
+    private String stateToString(ConnectionState state){
+        switch (state) {
+            case PENDING:
+                return "PENDING";
+            case BLOCKED:
+                return "BLOCKED";
+            case CONNECTED:
+                return "CONNECTED";
+            default:
+                return "IDLE";
         }
     }
 

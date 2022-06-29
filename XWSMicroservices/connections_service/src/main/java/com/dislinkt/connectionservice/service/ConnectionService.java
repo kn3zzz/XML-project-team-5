@@ -1,5 +1,6 @@
 package com.dislinkt.connectionservice.service;
 
+import com.dislinkt.connectionservice.enums.ConnectionState;
 import com.dislinkt.connectionservice.model.Connection;
 import com.dislinkt.connectionservice.repository.ConnectionRepository;
 import com.dislinkt.grpc.*;
@@ -19,7 +20,6 @@ public class ConnectionService extends ConnectionServiceGrpc.ConnectionServiceIm
 
     @Override
     public void createConnection(CreateConnection request, StreamObserver<CreateConnectionResponse> responseObserver) {
-        //super.createConnection(request, responseObserver);
 
         connectionRepository.save(new Connection(2, request.getSender(), request.getReceiver(), request.getState()));
         CreateConnectionResponse res = CreateConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).build();
@@ -27,5 +27,23 @@ public class ConnectionService extends ConnectionServiceGrpc.ConnectionServiceIm
         responseObserver.onCompleted();
     }
 
-
+    @Override
+    public void getConnections(GetConnections request, StreamObserver<GetConnectionsResponse> responseObserver) {
+        //super.getConnections(request, responseObserver);
+        GetConnectionsResponse.Builder res = GetConnectionsResponse.newBuilder();
+        for(Connection c : connectionRepository.findAll()){
+            if((c.getReceiver() == request.getUserId() || c.getSender() == request.getUserId()) && c.getConnectionState() == ConnectionState.CONNECTED){
+                res.addConnections(ConnectionEntity.newBuilder()
+                        .setId(c.getId())
+                        .setSender(c.getSender())
+                        .setReceiver(c.getReceiver())
+                        .setState(c.getConnectionStateString())
+                        .build()
+                );
+            }
+        }
+        System.out.println(res.getConnectionsCount());
+        responseObserver.onNext(res.build());
+        responseObserver.onCompleted();
+    }
 }
