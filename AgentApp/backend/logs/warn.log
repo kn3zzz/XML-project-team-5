@@ -1,0 +1,4 @@
+{level:"WARN", timestamp:"2022-06-30 23:54:14,383", file:"AuthController.java", line:"91", message:"Failed login. User: user@gmail.com, Bad credentials."}
+{level:"WARN", timestamp:"2022-06-30 23:54:17,252", file:"AuthController.java", line:"91", message:"Failed login. User: user@gmail.com, Bad credentials."}
+{level:"WARN", timestamp:"2022-06-30 23:54:20,325", file:"AuthController.java", line:"91", message:"Failed login. User: user@gmail.com, Bad credentials."}
+{level:"WARN", timestamp:"2022-06-30 23:54:27,343", file:"AuthController.java", line:"91", message:"Failed login. User: user@gmail.com, Bad credentials."}

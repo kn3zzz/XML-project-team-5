@@ -11,6 +11,7 @@ public class CompanyRegistrationMapper {
         company.setDescription(dto.getDescription());
         company.setName(dto.getName());
         company.setPhoneNumber(dto.getPhoneNumber());
+        company.setOwnerEmail(dto.getOwnerEmail());
         return company;
     }
 }

@@ -26,6 +26,7 @@ export class NewCompanyComponent implements OnInit {
         console.log(data)
         if (data != null) {
           alert("User can send only one request!");
+          this.router.navigate(['/user-home'])
         }
     })
       
@@ -33,7 +34,7 @@ export class NewCompanyComponent implements OnInit {
   }
 
   registration(){
-    this.request.userEmail = this.email;
+    this.request.ownerEmail = this.email;
 
     if (this.request.name.trim() != "" && this.request.description.trim() != "" && this.request.phoneNumber.trim() != ""){
       

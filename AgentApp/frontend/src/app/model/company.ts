@@ -3,5 +3,7 @@ export class Company{
     name: string;
     description: string;
     phoneNumber: string;
-    userEmail: string;
+    ownerEmail: string;
+    isActive: boolean;
+    isRejected: boolean;
 }

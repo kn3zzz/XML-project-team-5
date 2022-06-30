@@ -25,7 +25,25 @@ public class CompanyController {
     };
 
     @GetMapping
-    public ResponseEntity<?> getAll( @RequestHeader("Authorization") String jwtToken) {
+    public ResponseEntity<?> getAll() {
         return new ResponseEntity(this.companyService.findAll(), HttpStatus.OK);
+    }
+
+    @PutMapping (value = "/approve_request/{requestId}")
+    public ResponseEntity<?> approveRequest(@PathVariable Long requestId) {
+        boolean approved = this.companyService.approveRequest(requestId);
+        if (approved){
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PutMapping (value = "/reject_request/{requestId}")
+    public ResponseEntity<?> rejectRequest(@PathVariable Long requestId) {
+        boolean rejected = this.companyService.rejectRequest(requestId);
+        if (rejected){
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
