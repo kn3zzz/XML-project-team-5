@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.SimpleTimeZone;
 
 @EnableMongoRepositories("com.dislinkt.connectionservice.repository")
 @GrpcService
@@ -19,10 +20,10 @@ public class ConnectionService extends ConnectionServiceGrpc.ConnectionServiceIm
     private ConnectionRepository connectionRepository;
 
     @Override
-    public void createConnection(CreateConnection request, StreamObserver<CreateConnectionResponse> responseObserver) {
+    public void createConnection(CreateConnection request, StreamObserver<ConnectionResponse> responseObserver) {
 
         connectionRepository.save(new Connection(2, request.getSender(), request.getReceiver(), request.getState()));
-        CreateConnectionResponse res = CreateConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).build();
+        ConnectionResponse res = ConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
     }
@@ -32,7 +33,7 @@ public class ConnectionService extends ConnectionServiceGrpc.ConnectionServiceIm
         //super.getConnections(request, responseObserver);
         GetConnectionsResponse.Builder res = GetConnectionsResponse.newBuilder();
         for(Connection c : connectionRepository.findAll()){
-            if((c.getReceiver() == request.getUserId() || c.getSender() == request.getUserId()) && c.getConnectionState() == ConnectionState.CONNECTED){
+            if((c.getReceiver() == request.getUserId() || c.getSender() == request.getUserId()) && c.getConnectionState() != ConnectionState.IDLE){
                 res.addConnections(ConnectionEntity.newBuilder()
                         .setId(c.getId())
                         .setSender(c.getSender())
@@ -46,4 +47,40 @@ public class ConnectionService extends ConnectionServiceGrpc.ConnectionServiceIm
         responseObserver.onNext(res.build());
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void deleteConnection(ConnectionId request, StreamObserver<ConnectionResponse> responseObserver) {
+
+        Connection entity = connectionRepository.findById(request.getConnectionId()).get();
+        connectionRepository.delete(entity);
+        ConnectionResponse res = ConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).build();
+        responseObserver.onNext(res);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void updateConnection(ConnectionEntity request, StreamObserver<ConnectionResponse> responseObserver) {
+        ConnectionResponse res;
+        try {
+            Connection c = connectionRepository.findById(request.getId()).get();
+            System.out.println(request.getState());
+            c.setConnectionStateString(request.getState());
+            c.setSender(request.getSender());
+            c.setReceiver(request.getReceiver());
+
+            connectionRepository.save(c);
+            System.out.println(c);
+
+        } catch (Exception e){
+            res = ConnectionResponse.newBuilder().setMessage("Failed").setSuccess(false).build();
+            responseObserver.onNext(res);
+            responseObserver.onCompleted();
+            return;
+        }
+        res = ConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).build();
+        responseObserver.onNext(res);
+        responseObserver.onCompleted();
+    }
+
 }
+

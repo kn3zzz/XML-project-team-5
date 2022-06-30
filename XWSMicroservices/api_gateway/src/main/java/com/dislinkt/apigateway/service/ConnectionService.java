@@ -20,7 +20,7 @@ public class ConnectionService {
                 .setReceiver(connection.receiver)
                 .setState(connection.connectionState)
                 .build();
-        CreateConnectionResponse res = authStub.createConnection(req);
+        ConnectionResponse res = authStub.createConnection(req);
         if (res.getSuccess())
             return true;
         return  false;
@@ -34,6 +34,28 @@ public class ConnectionService {
         GetConnectionsResponse response = authStub.getConnections(req);
         return convertToGetConnectionsResponseDTO(response);
     }
+
+    public Boolean deleteConnection(long connectionId){
+        ConnectionId req = ConnectionId.newBuilder().setConnectionId(connectionId).build();
+        ConnectionResponse response = authStub.deleteConnection(req);
+        if (response.getSuccess())
+            return true;
+        return  false;
+    }
+
+    public Boolean updateConnection(ConnectionDTO connection){
+        ConnectionEntity req = ConnectionEntity.newBuilder()
+                .setId(connection.id)
+                .setSender(connection.sender)
+                .setReceiver(connection.receiver)
+                .setState(connection.connectionState)
+                .build();
+        ConnectionResponse response = authStub.updateConnection(req);
+        if (response.getSuccess())
+            return true;
+        return  false;
+    }
+
 
     public List<ConnectionDTO> convertToGetConnectionsResponseDTO(GetConnectionsResponse response) {
         List<ConnectionDTO> retList = new ArrayList<ConnectionDTO>();

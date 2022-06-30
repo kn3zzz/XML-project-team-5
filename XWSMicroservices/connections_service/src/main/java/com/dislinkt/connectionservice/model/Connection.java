@@ -52,6 +52,8 @@ public class Connection {
         this.connectionState = connectionState;
     }
 
+    public void setConnectionStateString(String connectionState) {this.connectionState = this.stringToState(connectionState); }
+
     public Connection(long id, long sender, long receiver, String connectionState){
         this.id = id;
         this.sender = sender;

@@ -17,7 +17,7 @@ message CreateConnection{
   string state = 3;
 }
 
-message CreateConnectionResponse{
+message ConnectionResponse{
   string message = 1;
   bool success = 2;
 }
@@ -30,8 +30,15 @@ message GetConnectionsResponse{
   repeated ConnectionEntity connections = 1;
 }
 
+message ConnectionId{
+  int64 connectionId = 1;
+}
+
 
 service ConnectionService{
-  rpc createConnection(CreateConnection) returns (CreateConnectionResponse){}
+  rpc createConnection(CreateConnection) returns (ConnectionResponse){}
   rpc getConnections(GetConnections) returns (GetConnectionsResponse){}
+  rpc deleteConnection(ConnectionId) returns (ConnectionResponse){}
+  rpc updateConnection(ConnectionEntity) returns (ConnectionResponse){}
+
 }
