@@ -3,3 +3,68 @@
       <div class="container"></div>
     </section>
 </div>
+
+<table mat-table [dataSource]="allCompanies" class="mat-elevation-z8">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef>Description</th>
+    <td mat-cell *matCellDef="let element">{{ element.description }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="phoneNumber">
+    <th mat-header-cell *matHeaderCellDef>Phone number</th>
+    <td mat-cell *matCellDef="let element">{{ element.phoneNumber }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="ownerEmail">
+    <th mat-header-cell *matHeaderCellDef>Owner email</th>
+    <td mat-cell *matCellDef="let element">{{ element.ownerEmail }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="approve">
+    <th mat-header-cell *matHeaderCellDef>Approve</th>
+    <td mat-cell *matCellDef="let element">
+      <section>
+        <button *ngIf="!element.active && !element.rejected" mat-raised-button color="primary" (click)="approve(element.id)">
+          Approve
+        </button>
+      </section>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="reject">
+    <th mat-header-cell *matHeaderCellDef>Reject</th>
+    <td mat-cell *matCellDef="let element">
+      <section>
+        <button *ngIf="!element.active && !element.rejected" mat-raised-button color="primary" (click)="reject(element.id)" >
+          Reject
+        </button>
+      </section>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="state">
+    <th mat-header-cell *matHeaderCellDef>Company state</th>
+    <td mat-cell *matCellDef="let element">
+      <section>
+        <button *ngIf="element.active" mat-raised-button color="warn" [disabled]="true">
+          Approved
+        </button>
+        <button *ngIf="element.rejected" mat-raised-button color="warn" [disabled]="true">
+          Rejected
+        </button>
+        <button *ngIf="!element.active && !element.rejected" mat-raised-button color="warn" [disabled]="true">
+          Pendding
+        </button>
+        
+      </section>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

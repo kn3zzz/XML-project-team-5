@@ -6,6 +6,7 @@ import com.agent.application.repository.CompanyRepository;
 import com.agent.application.mapper.CompanyRegistrationMapper;
 import com.agent.application.model.User;
 import com.agent.application.repository.UserRepository;
+import com.agent.application.service.intereface.UserTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +21,12 @@ public class CompanyService implements com.agent.application.service.intereface.
     @Autowired
     private CompanyRepository companyRepository;
 
+    @Autowired
+    private UserTypeService userTypeService;
+
     @Override
     public boolean saveRegistrationCompany(CompanyRegistrationDTO company) {
-        User user = this.userRepository.findByEmail(company.getUserEmail());
+        User user = this.userRepository.findByEmail(company.getOwnerEmail());
         if(user != null && user.getCompany() == null){
             Company savedCompany = companyRepository.save(new CompanyRegistrationMapper().mapCompanyDtoToCompany(company));
             user.setCompany(savedCompany);
@@ -34,22 +38,41 @@ public class CompanyService implements com.agent.application.service.intereface.
 
     @Override
     public List<Company> findAll() {
-        List<Company> companys = new ArrayList<>();
-        for(Company c : companyRepository.findAll()){
-            if(c.isActive()){
-                companys.add(c);
-            }
-        }
-        return companys;
+        List<Company> companies = companyRepository.findAll();
+//        for(Company c : companyRepository.findAll()){
+//            if(c.isActive()){
+//                companys.add(c);
+//            }
+//        }
+        return companies;
     }
 
     @Override
     public boolean approveRequest(Long requestId) {
+        Company request = this.companyRepository.findCompanyById(requestId);
+        if(request != null){
+            request.setActive(true);
+            updateRole("ROLE_COMPANY_OWNER", request.getOwnerEmail());
+            this.companyRepository.save(request);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean rejectRequest(Long requestId) {
+        Company request = this.companyRepository.findCompanyById(requestId);
+        if(request != null){
+            request.setRejected(true);
+            this.companyRepository.save(request);
+            return true;
+        }
         return false;
+    }
+
+    public void updateRole(String role, String ownerEmail){
+        User user = this.userRepository.findByEmail(ownerEmail);
+        user.setUserType(this.userTypeService.findUserTypeByName(role));
+        this.userRepository.save(user);
     }
 }

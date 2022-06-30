@@ -15,6 +15,14 @@ export class CompanyService {
   }
 
   getAll(){
-    return this._http.get<any>(`${this.companyPath}/`)    
+    return this._http.get<any>(`${this.companyPath}/`);
+  }
+
+  approveRequest(requestId: number){
+    return this._http.put<any>(`${this.companyPath}/approve_request/`+ requestId, undefined)    
+  }
+
+  rejectRequest(requestId: number){
+    return this._http.put<any>(`${this.companyPath}/reject_request/`+ requestId, undefined)    
   }
 }

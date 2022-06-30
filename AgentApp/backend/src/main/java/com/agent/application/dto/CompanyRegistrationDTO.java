@@ -10,5 +10,5 @@ public class CompanyRegistrationDTO {
     private String name;
     private String description;
     private String phoneNumber;
-    private String userEmail;
+    private String ownerEmail;
 }

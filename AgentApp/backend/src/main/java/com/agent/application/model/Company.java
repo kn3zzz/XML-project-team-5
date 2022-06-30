@@ -33,5 +33,9 @@ public class Company {
     @NotBlank(message = "Phone number of company is mandatory!")
     private String phoneNumber;
 
+    private String ownerEmail;
+
     private boolean isActive;
+
+    private boolean isRejected;
 }

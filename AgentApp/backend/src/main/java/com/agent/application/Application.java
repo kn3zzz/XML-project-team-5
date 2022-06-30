@@ -51,6 +51,10 @@ public class Application implements CommandLineRunner {
 		adminRole.setPermissions(adminPermissions);
 		userTypeRepository.save(adminRole);
 
+		UserType companyOwnerRole = new UserType();
+		companyOwnerRole.setName("ROLE_COMPANY_OWNER");
+		userTypeRepository.save(companyOwnerRole);
+
 		User admin = new User(1, "neki@gmail.com", passwordEncoder.encode("123"), adminRole, null, true, 0, Timestamp.from(Instant.now()));
 		userRepository.save(admin);
 
