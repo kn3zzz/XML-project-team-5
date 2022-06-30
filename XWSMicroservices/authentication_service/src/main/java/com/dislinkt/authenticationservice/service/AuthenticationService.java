@@ -17,7 +17,8 @@ import java.util.Date;
 
 @EnableMongoRepositories("com.dislinkt.authenticationservice.repository")
 @GrpcService
-public class AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImplBase {
+public class
+AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImplBase {
     @Autowired
     private UserRepository userRepository;
 
