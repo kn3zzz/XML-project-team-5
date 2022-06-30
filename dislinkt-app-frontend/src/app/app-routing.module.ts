@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ConnectionsComponent } from './connections/connections.component';
 import { FollowRequestsComponent } from './follow-requests/follow-requests.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { LoginComponent } from './login/login.component';
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'home', component: HomepageComponent},
   { path: 'follow-requests', component: FollowRequestsComponent},
   { path: 'search-profiles', component: SearchProfilesComponent},
-  { path: 'profile', component: ProfileComponent}
+  { path: 'profile', component: ProfileComponent},
+  { path: 'connections', component: ConnectionsComponent}
 
 
 ];

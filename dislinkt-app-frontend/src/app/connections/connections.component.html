@@ -1,0 +1,305 @@
+<div class="container-fluid">
+    <br>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <button class="btn-secondary" type="button" (click)="router.navigate(['/profile']);">Back</button>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" 
+                  type="button" role="tab" aria-controls="pills-home" aria-selected="true">Connected</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" 
+                  type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Blocked</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" 
+                  type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Pending</button>
+                </li>
+                
+              </ul>
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="card">
+                        
+
+                        <div class="container">
+                            <div class="row bootstrap snippets bootdey">
+                                <div class="col-md-8 col-xs-12">
+                                  <div class="panel" id="followers">
+                                    <div class="panel-heading">
+                                      <h3 class="panel-title">
+                                        <i class="icon md-check" aria-hidden="true"></i> Connections
+                                      </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                      <ul class="list-group list-group-dividered list-group-full">
+                                        <li class="list-group-item">
+                                          <div class="media">
+                                            <div class="media-left">
+                                              <a class="avatar avatar-online" href="javascript:void(0)">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                <i></i>
+                                              </a>
+                                            </div>
+                                            <div class="media-body">
+                                              <div class="pull-right">
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light">Follow</button>
+                                              </div>
+                                              <div><a class="name" href="javascript:void(0)">Willard Wood</a></div>
+                                              <small>@heavybutterfly920</small>
+                                            </div>
+                                          </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <div class="media">
+                                            <div class="media-left">
+                                              <a class="avatar avatar-away" href="javascript:void(0)">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                <i></i>
+                                              </a>
+                                            </div>
+                                            <div class="media-body">
+                                              <div class="pull-right">
+                                                <button type="button" class="btn btn-success btn-default btn-sm waves-effect waves-light"><i class="icon md-check" aria-hidden="true"></i>Following</button>
+                                              </div>
+                                              <div><a class="name" href="javascript:void(0)">Ronnie Ellis</a></div>
+                                              <small>@kingronnie24</small>
+                                            </div>
+                                          </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <div class="media">
+                                            <div class="media-left">
+                                              <a class="avatar avatar-busy" href="javascript:void(0)">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                <i></i>
+                                              </a>
+                                            </div>
+                                            <div class="media-body">
+                                              <div class="pull-right">
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light">Follow</button>
+                                              </div>
+                                              <div><a class="name" href="javascript:void(0)">Gwendolyn Wheeler</a></div>
+                                              <small>@perttygirl66</small>
+                                            </div>
+                                          </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <div class="media">
+                                            <div class="media-left">
+                                              <a class="avatar avatar-off" href="javascript:void(0)">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                <i></i>
+                                              </a>
+                                            </div>
+                                            <div class="media-body">
+                                              <div class="pull-right">
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light">Follow</button>
+                                              </div>
+                                              <div><a class="name" href="javascript:void(0)">Daniel Russell</a></div>
+                                              <small>@danieltiger08</small>
+                                            </div>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            </div>
+
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="card">
+                        
+                        <div class="container">
+                            <div class="row bootstrap snippets bootdey">
+                                <div class="col-md-8 col-xs-12">
+                                  <div class="panel" id="followers">
+                                    <div class="panel-heading">
+                                      <h3 class="panel-title">
+                                        <i class="icon md-check" aria-hidden="true"></i> Blocked
+                                      </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                      <ul class="list-group list-group-dividered list-group-full">
+                                        <li class="list-group-item">
+                                          <div class="media">
+                                            <div class="media-left">
+                                              <a class="avatar avatar-online" href="javascript:void(0)">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                <i></i>
+                                              </a>
+                                            </div>
+                                            <div class="media-body">
+                                              <div class="pull-right">
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light">Follow</button>
+                                              </div>
+                                              <div><a class="name" href="javascript:void(0)">Willard Wood</a></div>
+                                              <small>@heavybutterfly920</small>
+                                            </div>
+                                          </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <div class="media">
+                                            <div class="media-left">
+                                              <a class="avatar avatar-away" href="javascript:void(0)">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                <i></i>
+                                              </a>
+                                            </div>
+                                            <div class="media-body">
+                                              <div class="pull-right">
+                                                <button type="button" class="btn btn-success btn-default btn-sm waves-effect waves-light"><i class="icon md-check" aria-hidden="true"></i>Following</button>
+                                              </div>
+                                              <div><a class="name" href="javascript:void(0)">Ronnie Ellis</a></div>
+                                              <small>@kingronnie24</small>
+                                            </div>
+                                          </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <div class="media">
+                                            <div class="media-left">
+                                              <a class="avatar avatar-busy" href="javascript:void(0)">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                <i></i>
+                                              </a>
+                                            </div>
+                                            <div class="media-body">
+                                              <div class="pull-right">
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light">Follow</button>
+                                              </div>
+                                              <div><a class="name" href="javascript:void(0)">Gwendolyn Wheeler</a></div>
+                                              <small>@perttygirl66</small>
+                                            </div>
+                                          </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <div class="media">
+                                            <div class="media-left">
+                                              <a class="avatar avatar-off" href="javascript:void(0)">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                <i></i>
+                                              </a>
+                                            </div>
+                                            <div class="media-body">
+                                              <div class="pull-right">
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light">Follow</button>
+                                              </div>
+                                              <div><a class="name" href="javascript:void(0)">Daniel Russell</a></div>
+                                              <small>@danieltiger08</small>
+                                            </div>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            </div>
+                      </div>
+                </div>
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <div class="card">
+                        
+                        <div class="container">
+                            <div class="row bootstrap snippets bootdey">
+                                <div class="col-md-8 col-xs-12">
+                                  <div class="panel" id="followers">
+                                    <div class="panel-heading">
+                                      <h3 class="panel-title">
+                                        <i class="icon md-check" aria-hidden="true"></i> Pending
+                                      </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                      <ul class="list-group list-group-dividered list-group-full">
+                                        <li class="list-group-item">
+                                          <div class="media">
+                                            <div class="media-left">
+                                              <a class="avatar avatar-online" href="javascript:void(0)">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                <i></i>
+                                              </a>
+                                            </div>
+                                            <div class="media-body">
+                                              <div class="pull-right">
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light">Follow</button>
+                                              </div>
+                                              <div><a class="name" href="javascript:void(0)">Willard Wood</a></div>
+                                              <small>@heavybutterfly920</small>
+                                            </div>
+                                          </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <div class="media">
+                                            <div class="media-left">
+                                              <a class="avatar avatar-away" href="javascript:void(0)">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                <i></i>
+                                              </a>
+                                            </div>
+                                            <div class="media-body">
+                                              <div class="pull-right">
+                                                <button type="button" class="btn btn-success btn-default btn-sm waves-effect waves-light"><i class="icon md-check" aria-hidden="true"></i>Following</button>
+                                              </div>
+                                              <div><a class="name" href="javascript:void(0)">Ronnie Ellis</a></div>
+                                              <small>@kingronnie24</small>
+                                            </div>
+                                          </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <div class="media">
+                                            <div class="media-left">
+                                              <a class="avatar avatar-busy" href="javascript:void(0)">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                <i></i>
+                                              </a>
+                                            </div>
+                                            <div class="media-body">
+                                              <div class="pull-right">
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light">Follow</button>
+                                              </div>
+                                              <div><a class="name" href="javascript:void(0)">Gwendolyn Wheeler</a></div>
+                                              <small>@perttygirl66</small>
+                                            </div>
+                                          </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                          <div class="media">
+                                            <div class="media-left">
+                                              <a class="avatar avatar-off" href="javascript:void(0)">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                <i></i>
+                                              </a>
+                                            </div>
+                                            <div class="media-body">
+                                              <div class="pull-right">
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light">Follow</button>
+                                              </div>
+                                              <div><a class="name" href="javascript:void(0)">Daniel Russell</a></div>
+                                              <small>@danieltiger08</small>
+                                            </div>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-1"></div>
+        
+    </div>
+    <br><br>
+   
+</div>
+

@@ -12,6 +12,7 @@ import { FollowRequestsComponent } from './follow-requests/follow-requests.compo
 import { SearchProfilesComponent } from './search-profiles/search-profiles.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule } from '@angular/forms';
+import { ConnectionsComponent } from './connections/connections.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FormsModule } from '@angular/forms';
     FollowRequestsComponent,
     SearchProfilesComponent,
     ProfileComponent,
+    ConnectionsComponent,
   ],
   imports: [
     BrowserModule,
