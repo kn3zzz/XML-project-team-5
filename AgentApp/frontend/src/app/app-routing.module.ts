@@ -11,6 +11,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { RoleGuardService } from './service/role-guard.service';
+import { NewCompanyComponent } from './new-company/new-company.component';
 
 const routes: Routes = [
   {path: "", redirectTo: '/login', pathMatch: 'full'},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: "activate-account/:token", component: AccountActivationComponent},
   {path: "change-password", component: ChangePasswordComponent},
   {path: "recoverypass", component: ForgotPasswordComponent},
+  {path: "new-company", component: NewCompanyComponent},
   {path: "activate-password/:token", component: PasswordRecoveryComponent}
 ];
 

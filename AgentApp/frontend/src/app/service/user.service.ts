@@ -26,6 +26,10 @@ export class UserService {
     return this._http.get<User>(`${this.userPath}/getByEmail/` + email)    
   }
 
+  getCompanyByOwnerUsername(username: string){
+    return this._http.get<any>(`${this.userPath}/`+ username + `/company`)    
+  }
+
   changePassword(body: any){
     const headers = new HttpHeaders({
       'Accept': 'application/json',

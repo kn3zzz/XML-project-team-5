@@ -43,4 +43,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/new-admin'])
   }
 
+  addCompany(){
+    this.router.navigate(['/new-company'])
+  }
+
 }

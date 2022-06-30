@@ -29,6 +29,7 @@ import { TokenInterceptor } from './interceptor/token-interceptor';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { NewCompanyComponent } from './new-company/new-company.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { PasswordRecoveryComponent } from './password-recovery/password-recovery
     ChangePasswordComponent,
     ForgotPasswordComponent,
     PasswordRecoveryComponent,
+    NewCompanyComponent,
   ],
   imports: [
     BrowserModule,
