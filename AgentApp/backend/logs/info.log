@@ -2,3 +2,7 @@
 {level:"INFO", timestamp:"2022-06-26 14:26:31,426", file:"AuthController.java", line:"105", message:"Successful login. User: neki@gmail.com"}
 {level:"INFO", timestamp:"2022-06-26 14:28:10,373", file:"UserServiceImpl.java", line:"88", message:"Successful register. User: jovanprcko@gmail.com"}
 {level:"INFO", timestamp:"2022-06-26 14:29:06,733", file:"AuthController.java", line:"105", message:"Successful login. User: jovanprcko@gmail.com"}
+{level:"INFO", timestamp:"2022-06-27 22:12:03,022", file:"AuthController.java", line:"105", message:"Successful login. User: neki@gmail.com"}
+{level:"INFO", timestamp:"2022-06-30 14:03:09,150", file:"AuthController.java", line:"105", message:"Successful login. User: user@gmail.com"}
+{level:"INFO", timestamp:"2022-06-30 14:03:34,585", file:"AuthController.java", line:"105", message:"Successful login. User: user@gmail.com"}
+{level:"INFO", timestamp:"2022-06-30 17:51:57,758", file:"AuthController.java", line:"105", message:"Successful login. User: user@gmail.com"}

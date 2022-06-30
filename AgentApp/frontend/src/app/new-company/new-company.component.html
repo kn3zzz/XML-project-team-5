@@ -1,0 +1,25 @@
+<body>
+    <div>
+        <h1 style="display: flex; justify-content: center; margin: auto; margin-top: 30px; margin-bottom: 30px;">
+            Add new company
+        </h1>
+        <mat-form-field style="background: white;">
+            <mat-label>Enter company name</mat-label>
+            <input matInput placeholder="Company name"  [(ngModel)] = "request.name">
+        </mat-form-field>
+        
+
+        <mat-form-field style="background: white;" >
+            <mat-label>Enter description</mat-label>
+            <textarea matInput style="height: 10vw;" name="desc" [(ngModel)] = "request.description" placeholder="Company description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field style="background: white;">
+            <mat-label>Enter phone number ("+123456789")</mat-label>
+            <input matInput type="tel" name="phoneNumber" class="form-control" [(ngModel)] = "request.phoneNumber" placeholder="Enter phone number"/>
+        </mat-form-field>
+
+        <button style="display: flex; justify-content: center; margin: auto; margin-top: 20px;"
+         mat-raised-button color="primary" (click)="registration()">Confirm</button>
+    </div>
+</body> 
