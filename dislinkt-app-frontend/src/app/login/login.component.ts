@@ -17,31 +17,38 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   loginData = {username: "", password: ""}
-  response = {};
 
   login() {
     if (this.loginData.username.trim() != "" && this.loginData.password.trim() != "") {
       axios.post(environment.api + '/users/login', this.loginData)
         .then(response => {
-          this.response = response.data
-          localStorage.setItem("id", response.data.id)
-          localStorage.setItem("username", response.data.username)
-          localStorage.setItem("role", response.data.role)
-          localStorage.setItem("notificationsOn", response.data.notificationsOn)
-          Swal.fire({
-            icon: 'success',
-            title: 'You have successfully logged in !',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          this.router.navigate(['/home'])
+          if (response.data.role != "NO USER") {
+            localStorage.setItem("id", response.data.id)
+            localStorage.setItem("username", response.data.username)
+            localStorage.setItem("role", response.data.role)
+            localStorage.setItem("notificationsOn", response.data.notificationsOn)
+            Swal.fire({
+              icon: 'success',
+              title: 'You have successfully logged in !',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.router.navigate(['/home'])
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Your credentials are wrong. Please, try again.',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
         })
         .catch(e => {
           Swal.fire({
             icon: 'error',
-            title: 'Your credentials are wrong. Please, try again.',
+            title: 'Something went wrong. Please, try again later.',
             showConfirmButton: false,
-            timer: 2000
+            timer: 1500
           })
         })
     } else {
