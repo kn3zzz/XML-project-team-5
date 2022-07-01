@@ -66,3 +66,6 @@
 {level:"INFO", timestamp:"2022-07-01 20:29:11,891", file:"AuthController.java", line:"105", message:"Successful login. User: neki@gmail.com"}
 {level:"INFO", timestamp:"2022-07-01 20:29:27,085", file:"AuthController.java", line:"105", message:"Successful login. User: user@gmail.com"}
 {level:"INFO", timestamp:"2022-07-01 21:11:56,956", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-02 00:00:03,646", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-02 01:03:30,994", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-02 01:15:42,386", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
