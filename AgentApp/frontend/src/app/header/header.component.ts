@@ -27,7 +27,14 @@ export class HeaderComponent implements OnInit {
     } else {
       return false;
     }
-    
+  } 
+
+  isCompanyOwner(){
+    if(localStorage.getItem('role') == "ROLE_COMPANY_OWNER"){
+      return true;
+    } else {
+      return false;
+    }
   } 
 
   logout(){
@@ -45,6 +52,10 @@ export class HeaderComponent implements OnInit {
 
   addCompany(){
     this.router.navigate(['/new-company'])
+  }
+
+  myCompany(){
+    this.router.navigate(['/my-company'])
   }
 
 }

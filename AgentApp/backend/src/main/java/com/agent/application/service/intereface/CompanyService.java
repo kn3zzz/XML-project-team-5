@@ -13,4 +13,6 @@ public interface CompanyService {
     boolean approveRequest(Long requestId);
 
     boolean rejectRequest(Long requestId);
+
+    boolean updateCompanyInfo(Company OldCompany);
 }

@@ -25,4 +25,8 @@ export class CompanyService {
   rejectRequest(requestId: number){
     return this._http.put<any>(`${this.companyPath}/reject_request/`+ requestId, undefined)    
   }
+
+  updateCompanyInfo(dto){
+    return this._http.put<any>(`${this.companyPath}/updateCompanyInfo`, dto)    
+  }
 }

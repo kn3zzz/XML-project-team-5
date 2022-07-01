@@ -70,6 +70,21 @@ public class CompanyService implements com.agent.application.service.intereface.
         return false;
     }
 
+    @Override
+    public boolean updateCompanyInfo(Company oldCompany) {
+        Company c = companyRepository.findCompanyById(oldCompany.getId());
+
+        if(c != null){
+            c.setName(oldCompany.getName());
+            c.setDescription(oldCompany.getDescription());
+            c.setPhoneNumber(oldCompany.getPhoneNumber());
+            companyRepository.save(c);
+            return true;
+        }
+
+        return false;
+    }
+
     public void updateRole(String role, String ownerEmail){
         User user = this.userRepository.findByEmail(ownerEmail);
         user.setUserType(this.userTypeService.findUserTypeByName(role));

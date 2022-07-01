@@ -1,8 +1,10 @@
 package com.agent.application;
 
 
+import com.agent.application.model.Company;
 import com.agent.application.model.Permission;
 import com.agent.application.model.UserType;
+import com.agent.application.repository.CompanyRepository;
 import com.agent.application.repository.UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,6 +33,9 @@ public class Application implements CommandLineRunner {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired
+	private CompanyRepository companyRepository;
+
 	public static void main(String[] args)  {
 		SpringApplication.run(Application.class, args);
 	}
@@ -40,6 +45,7 @@ public class Application implements CommandLineRunner {
 
 		Set<Permission> adminPermissions = getAdminPermissions();
 		Set<Permission> userPermissions = getUserPermissions();
+		Set<Permission> companyOwnerPermissions = getCompanyOwnerPermissions();
 
 		UserType userRole = new UserType();
 		userRole.setName("ROLE_USER");
@@ -53,7 +59,11 @@ public class Application implements CommandLineRunner {
 
 		UserType companyOwnerRole = new UserType();
 		companyOwnerRole.setName("ROLE_COMPANY_OWNER");
+		companyOwnerRole.setPermissions(companyOwnerPermissions);
 		userTypeRepository.save(companyOwnerRole);
+
+		Company newCo = new Company(1L, "Knjaz", "Voda", "+381623456", "o@gmail.com", true, false);
+		companyRepository.save(newCo);
 
 		User admin = new User(1, "neki@gmail.com", passwordEncoder.encode("123"), adminRole, null, true, 0, Timestamp.from(Instant.now()));
 		userRepository.save(admin);
@@ -61,6 +71,8 @@ public class Application implements CommandLineRunner {
 		User user = new User(2, "user@gmail.com", passwordEncoder.encode("123"), userRole, null, true, 0, Timestamp.from(Instant.now()));
 		userRepository.save(user);
 
+		User owner = new User(2, "o@gmail.com", passwordEncoder.encode("123"), companyOwnerRole, newCo, true, 0, Timestamp.from(Instant.now()));
+		userRepository.save(owner);
 	}
 
 	private Set<Permission> getUserPermissions(){
@@ -79,6 +91,24 @@ public class Application implements CommandLineRunner {
 //		userPermissions.add(revokeCerificate);
 
 		return userPermissions;
+	}
+
+	private Set<Permission> getCompanyOwnerPermissions(){
+		Set<Permission> companyOwnerPermissions = new HashSet<>();
+
+		Permission findAll = new Permission("findAll");
+		companyOwnerPermissions.add(findAll);
+
+//		Permission downloadCertificate = new Permission("downloadCertificate");
+//		userPermissions.add(downloadCertificate);
+//
+//		Permission issueCertificate = new Permission("issueCertificate");
+//		userPermissions.add(issueCertificate);
+//
+//		Permission revokeCerificate = new Permission("revokeCerificate");
+//		userPermissions.add(revokeCerificate);
+
+		return companyOwnerPermissions;
 	}
 
 	private Set<Permission> getAdminPermissions(){
