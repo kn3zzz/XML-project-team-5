@@ -1,0 +1,31 @@
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center cottage-border">
+        <div class="col-md-2 mt-5 pt-5 z-depth-5 ">
+        </div>
+
+        <div class="col-md-7 pt-5 z-depth-3">
+            <h2 class="text-center">{{ company.name }}</h2>
+            <div class="row">
+                <p class="font-weight-bold">Company name: </p>
+                <p class="text-muted" [ngClass]="edit ? 'is-active' : 'is-not-active'">{{ company.name }}</p>
+                <input type="text" class="form-control w-50" aria-describedby="basic-addon1" [(ngModel)]="company.name" [ngClass]="edit ? 'is-not-active' : 'is-active'">
+                <p class="font-weight-bold">Company description: </p>
+                <p class="text-muted" [ngClass]="edit ? 'is-active' : 'is-not-active'">{{ company.description }}</p>
+                <input type="text" class="form-control w-50" aria-describedby="basic-addon1" [(ngModel)]="company.description"
+                    [ngClass]="edit ? 'is-not-active' : 'is-active'">
+                <p class="font-weight-bold">Enter phone number: </p>
+                <p class="text-muted" [ngClass]="edit ? 'is-active' : 'is-not-active'">{{ company.phoneNumber }}</p>
+                <input type="text" class="form-control w-50" aria-describedby="basic-addon1" [(ngModel)]="company.phoneNumber"
+                    [ngClass]="edit ? 'is-not-active' : 'is-active'">
+            </div>
+        </div>
+
+        <div class="col-md-3 mt-5 ml-5 pt-5 z-depth-3">
+            <button class="btn btn-outline-primary btn-block w-50 mb-3" (click)='doEdit()'>Edit</button>
+            <button class="btn btn-primary mt-3 btn-block w-50 mb-3" (click)='doEditPost()' [ngClass]="edit ? 'is-not-active' : 'is-active'">Save</button>
+            <button class="btn btn-danger btn-block w-50 mb-3" [ngClass]="edit ? 'is-not-active' : 'is-active'"
+                (click)='doEdit()'>Cancel</button>
+        </div>
+        
+    </div>
+</div>

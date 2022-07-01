@@ -1,6 +1,7 @@
 package com.agent.application.controller;
 
 import com.agent.application.dto.CompanyRegistrationDTO;
+import com.agent.application.model.Company;
 import com.agent.application.service.intereface.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,13 @@ public class CompanyController {
         if (rejected){
             return new ResponseEntity(HttpStatus.OK);
         }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PutMapping (value = "/updateCompanyInfo")
+    public ResponseEntity<?> updateCompanyInfo(@RequestBody Company oldCompany) {
+        boolean updated = this.companyService.updateCompanyInfo(oldCompany);
+        if (updated){return new ResponseEntity(HttpStatus.OK);}
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
