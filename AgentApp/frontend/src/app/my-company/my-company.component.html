@@ -13,7 +13,7 @@
                 <p class="text-muted" [ngClass]="edit ? 'is-active' : 'is-not-active'">{{ company.description }}</p>
                 <input type="text" class="form-control w-50" aria-describedby="basic-addon1" [(ngModel)]="company.description"
                     [ngClass]="edit ? 'is-not-active' : 'is-active'">
-                <p class="font-weight-bold">Enter phone number: </p>
+                <p class="font-weight-bold">Phone number: </p>
                 <p class="text-muted" [ngClass]="edit ? 'is-active' : 'is-not-active'">{{ company.phoneNumber }}</p>
                 <input type="text" class="form-control w-50" aria-describedby="basic-addon1" [(ngModel)]="company.phoneNumber"
                     [ngClass]="edit ? 'is-not-active' : 'is-active'">
@@ -21,10 +21,85 @@
         </div>
 
         <div class="col-md-3 mt-5 ml-5 pt-5 z-depth-3">
-            <button class="btn btn-outline-primary btn-block w-50 mb-3" (click)='doEdit()'>Edit</button>
+            <button class="btn btn-outline-primary btn-block w-50 mb-3" (click)='doEdit()'>Edit</button><br>
+            <button class="btn btn-primary btn-block w-50 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">New job</button>
             <button class="btn btn-primary mt-3 btn-block w-50 mb-3" (click)='doEditPost()' [ngClass]="edit ? 'is-not-active' : 'is-active'">Save</button>
-            <button class="btn btn-danger btn-block w-50 mb-3" [ngClass]="edit ? 'is-not-active' : 'is-active'"
-                (click)='doEdit()'>Cancel</button>
+            <button class="btn btn-danger btn-block w-50 mb-3" [ngClass]="edit ? 'is-not-active' : 'is-active'" (click)='doEdit()'>Cancel</button>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLabel">Add new job </h2>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="display: flex; justify-content: center;">  
+                            <div class="row" style="margin-bottom: -1vw;">
+                                <div class="form-outline; col-md-12 mb-4 pb-2">
+                                    <input type="text" name="userInfo" class="form-control" [(ngModel)]="user.email" disabled/>
+                                    &nbsp;&nbsp; <label style="font-size: small;"> Company owner </label>    
+                                </div>
+                            </div>
+                    
+                            <div class="row" style="margin-bottom: -1vw;">
+                                <div class="form-outline; col-md-12 mb-4 pb-2">
+                                    <input type="text" name="companyName" class="form-control" [(ngModel)]="company.name" disabled/>
+                                    &nbsp;&nbsp; <label style="font-size: small;"> Company name </label>    
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="row" style="display: flex; justify-content: center;">  
+                            <div class="row" style="margin-bottom: -1vw;">
+                                <div class="form-outline; col-md-12 mb-4 pb-2">
+                                    <input type="text" name="positionName" class="form-control" [(ngModel)]="jobOffer.position.name" placeholder="Enter position name"/>
+                                    &nbsp;&nbsp; <label style="font-size: small;"> Position name </label>    
+                                </div>
+                            </div>
+                    
+                            <div class="row" style="margin-bottom: -1vw;">
+                                <div class="form-outline; col-md-12 mb-4 pb-2">
+                                    <input type="text" name="positionPay" class="form-control" [(ngModel)]="jobOffer.position.pay" placeholder="Enter position pay"/>
+                                    &nbsp;&nbsp; <label style="font-size: small;"> Position pay </label>    
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="row"  style="margin-bottom: -2vw;">
+                            <div class="col-md-12 mb-4 pb-2" style="display: flex; justify-content: center;">
+                                <mat-form-field class="example-full-width" appearance="outline" style="width: 29vw;">  
+                                    <textarea matInput style="height: 4vw;" name="desc" [(ngModel)]="jobOffer.jobDescription" placeholder="Job description"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    
+                        <div class="row"  style="margin-bottom: -2vw;">
+                            <div class="col-md-12 mb-4 pb-2" style="display: flex; justify-content: center;">
+                                <mat-form-field class="example-full-width" appearance="outline" style="width: 29vw;">  
+                                    <textarea matInput style="height: 4vw;" name="dailyActivities" [(ngModel)]="jobOffer.dailyActivities" placeholder="Daily activities"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    
+                        <!-- <div class="row"  style="margin-bottom: -1vw; margin-top: -2vw;">
+                            <div class="col-md-12 mb-4 pb-2" style="display: flex; margin-left: 1vw; float: left;">
+                                <input type="checkbox" id="myCheck" name="myCheck"  [(ngModel)]="promoteJobOffer" (click)="promoteJobOfferOnDislinkt()"> Promote job Offer on Dislinkt
+                            </div>
+                        </div> -->
+                        
+                        <!-- <div class="col-md-12 mb-4 pb-2" *ngIf="promoteJobOffer">
+                            <mat-form-field class="example-full-width" appearance="outline" style="width: 30vw;">  
+                                <textarea matInput style="height: 10vw;" name="apiToken" [(ngModel)]="apiToken" placeholder="Enter API token" [disabled]="!promoteJobOffer"></textarea>
+                            </mat-form-field>
+                        </div> -->
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="saveJobOffer()">Add</button>
+                    </div>
+              </div>
+            </div>
         </div>
         
     </div>
