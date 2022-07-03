@@ -23,6 +23,7 @@ public class PostService {
                 .setUserId(post.userId)
                 .setPostText(post.postText)
                 .setImageString(post.imageString)
+                .setDateCreated(post.dateCreated)
                 .build();
         PostCreateResponse res = postStub.createPost(req);
         return  res.getAllFields();
@@ -49,6 +50,7 @@ public class PostService {
                 .setPostId(post.postId)
                 .setUserId(post.userId)
                 .setContent(post.content)
+                .setContent(post.dateCreated)
                 .build();
         PostCommentResponse res = postStub.commentPost(req);
         return res.getAllFields();

@@ -13,7 +13,7 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <textarea class="form-control" placeholder="Write post here..." id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea class="form-control"  [(ngModel)]="newPost.postText" placeholder="Write post here..." id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
                 <img *ngIf="imgSrc != ''" [src]="imgSrc" class="card-img-bottom" alt="...">
                 <hr>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-sm-2"></div>
                     <div class="col">
-                            <button style="margin-bottom: 5%;" class="btn btn-primary" type="button">
+                            <button style="margin-bottom: 5%;" class="btn btn-primary" (click)="createPost()" type="button">
                                 Post
                             </button>
                     </div>

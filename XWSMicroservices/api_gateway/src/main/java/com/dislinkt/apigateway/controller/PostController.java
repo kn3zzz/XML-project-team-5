@@ -21,7 +21,9 @@ public class PostController {
     private PostService postService;
 
     @PostMapping("/createPost")
-    public ResponseEntity<?> saveUser(@RequestBody CreatePostDTO post){
+    public ResponseEntity<?> createPost(@RequestBody CreatePostDTO post){
+        System.out.println(post.postText);
+        System.out.println(post.dateCreated);
         return new ResponseEntity<>(postService.createPost(post), HttpStatus.OK);
     }
     @PostMapping("/likePost")

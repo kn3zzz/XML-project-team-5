@@ -10,5 +10,6 @@ public class CreatePostDTO {
     public long userId;
     public String postText;
     public String imageString;
+    public String dateCreated;
 
 }
