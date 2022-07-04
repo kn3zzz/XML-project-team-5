@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package com.dislinkt.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.dislinkt.grpc";
+
+message PostCreate {
+  int64 postId = 1;
+  int64 userId = 2;
+  string postText = 3;
+  string imageString = 4;
+}
+message PostCreateResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message LikePost{
+  int64 postId = 1;
+  int64 userId = 2;
+}
+
+message LikePostResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message DisLikePost{
+  int64 postId = 1;
+  int64 userId = 2;
+}
+
+message DisLikePostResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message PostComment {
+  int64 postId = 1;
+  int64 userId = 2;
+  string content = 3;
+}
+message PostCommentResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+//kreiranje posta, lajkovanje, dislajkovanje, komentarisanje
+service PostService {
+  rpc createPost(PostCreate) returns (PostCreateResponse){}
+  rpc likePost(LikePost) returns (LikePostResponse){}
+  rpc dislikePost(DisLikePost) returns (DisLikePostResponse){}
+  rpc commentPost(PostComment) returns (PostCommentResponse){}
+
+}

@@ -123,6 +123,7 @@
                 </executions>
             </plugin>
         </plugins>
+        <finalName>post_service</finalName>
     </build>
 
 </project>

@@ -108,6 +108,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>api_gateway</finalName>
     </build>
 
 
