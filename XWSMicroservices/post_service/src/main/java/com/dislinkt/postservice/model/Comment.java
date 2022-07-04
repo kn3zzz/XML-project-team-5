@@ -38,4 +38,12 @@ public class Comment {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

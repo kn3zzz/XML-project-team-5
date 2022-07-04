@@ -74,29 +74,35 @@ public class PostService  extends PostServiceGrpc.PostServiceImplBase {
         responseObserver.onNext(res);
         responseObserver.onCompleted();
     }
-    /*
+
+    @Override
     public void getPosts( GetPosts request, StreamObserver<GetPostListResponse> responseObserver){
         GetPostListResponse.Builder res = GetPostListResponse.newBuilder();
-        ArrayList<Comment> comments = new ArrayList<>();
+        List<PostProto> postsProto = new ArrayList<>();
         for (Post p : postRepository.findAll()) {
-            int i = 0;
+            if(p.getUserId()==request.getUserId()) {
+                List<CommentProto> commentsProto = new ArrayList<>();
+                for (Comment c : p.getComments()) {
+                    commentsProto.add(CommentProto.newBuilder().setUserId(c.getUserId()).setDateCreated(c.getDate().toString()).setPostId(p.getId()).setContent(c.getContent()).build());
+                }
 
-                res.addPosts(GetPostsResponse.newBuilder()
+                postsProto.add(PostProto.newBuilder()
                         .setId(p.getId())
                         .setUserId(p.getUserId())
                         .setPostText(p.getPostText())
                         .setImageString(p.getImageString())
-                        .setComments(p.getComments())
-                        .setLikedPostUsers(p.getLikedPostUsers())
-                        .setDislikedPostUsers(p.getDislikedPostUsers())
+                        .addAllComments(commentsProto)
+                        .addAllLikedPostUsers(p.getLikedPostUsers())
+                        .addAllDislikedPostUsers(p.getDislikedPostUsers())
+                        .setDateCreated(p.getDate().toString())
                         .build());
-
+            }
         }
-
+        res.addAllPosts(postsProto);
+        System.out.println(res);
         responseObserver.onNext(res.build());
         responseObserver.onCompleted();
-
     }
 
-     */
+
 }

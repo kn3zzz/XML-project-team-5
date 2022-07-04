@@ -1,9 +1,6 @@
 package com.dislinkt.apigateway.service;
 
-import com.dislinkt.apigateway.dto.CommentDTO;
-import com.dislinkt.apigateway.dto.CreatePostDTO;
-import com.dislinkt.apigateway.dto.NewUserDTO;
-import com.dislinkt.apigateway.dto.ReactionPostDTO;
+import com.dislinkt.apigateway.dto.*;
 import com.dislinkt.grpc.*;
 import com.google.protobuf.Descriptors;
 import net.devh.boot.grpc.client.inject.GrpcClient;
@@ -50,9 +47,15 @@ public class PostService {
                 .setPostId(post.postId)
                 .setUserId(post.userId)
                 .setContent(post.content)
-                .setContent(post.dateCreated)
+                .setDateCreated(post.dateCreated)
                 .build();
         PostCommentResponse res = postStub.commentPost(req);
+        return res.getAllFields();
+    }
+
+    public Map<Descriptors.FieldDescriptor, Object> getPosts(long id) {
+        GetPosts req = GetPosts.newBuilder().setUserId(id).build();
+        GetPostListResponse res = postStub.getPosts(req);
         return res.getAllFields();
     }
 }

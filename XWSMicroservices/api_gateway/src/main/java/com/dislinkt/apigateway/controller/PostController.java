@@ -1,17 +1,11 @@
 package com.dislinkt.apigateway.controller;
 
-import com.dislinkt.apigateway.dto.CommentDTO;
-import com.dislinkt.apigateway.dto.CreatePostDTO;
-import com.dislinkt.apigateway.dto.NewUserDTO;
-import com.dislinkt.apigateway.dto.ReactionPostDTO;
+import com.dislinkt.apigateway.dto.*;
 import com.dislinkt.apigateway.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/posts")
@@ -37,5 +31,9 @@ public class PostController {
     @PostMapping("/commentPost")
     public ResponseEntity<?> commentPost(@RequestBody CommentDTO post){
         return new ResponseEntity<>(postService.commentPost(post), HttpStatus.OK);
+    }
+    @GetMapping("/getAllPosts/{id}")
+    public ResponseEntity<?> getPosts(@PathVariable("id") long id){
+        return new ResponseEntity<>(postService.getPosts(id),HttpStatus.OK);
     }
 }

@@ -85,6 +85,9 @@ message GetPostsResponse{
 message GetPostListResponse{
   repeated Post posts = 1;
 }
+message GetCommentListResponse{
+  repeated Comment comment = 1;
+}
 
 
 //kreiranje posta, lajkovanje, dislajkovanje, komentarisanje
