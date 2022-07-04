@@ -8,5 +8,8 @@ server:
 spring:
   data:
     mongodb:
+      host: mongodb
       uri: mongodb://localhost:27017
       database: users
+      repositories:
+        enabled: true
