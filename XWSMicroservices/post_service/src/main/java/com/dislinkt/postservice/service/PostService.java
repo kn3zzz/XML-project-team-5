@@ -30,7 +30,7 @@ public class PostService  extends PostServiceGrpc.PostServiceImplBase {
             dateCreated = new Date();
         }
         postRepository.save( new Post(
-              3,
+              request.getPostId(),
               request.getUserId(),
               request.getPostText(),
               request.getImageString(),
@@ -77,7 +77,6 @@ public class PostService  extends PostServiceGrpc.PostServiceImplBase {
 
     @Override
     public void getPosts( GetPosts request, StreamObserver<GetPostListResponse> responseObserver){
-        GetPostListResponse.Builder res = GetPostListResponse.newBuilder();
         List<PostProto> postsProto = new ArrayList<>();
         for (Post p : postRepository.findAll()) {
             if(p.getUserId()==request.getUserId()) {
@@ -85,8 +84,7 @@ public class PostService  extends PostServiceGrpc.PostServiceImplBase {
                 for (Comment c : p.getComments()) {
                     commentsProto.add(CommentProto.newBuilder().setUserId(c.getUserId()).setDateCreated(c.getDate().toString()).setPostId(p.getId()).setContent(c.getContent()).build());
                 }
-
-                postsProto.add(PostProto.newBuilder()
+                PostProto postProto = PostProto.newBuilder()
                         .setId(p.getId())
                         .setUserId(p.getUserId())
                         .setPostText(p.getPostText())
@@ -95,12 +93,16 @@ public class PostService  extends PostServiceGrpc.PostServiceImplBase {
                         .addAllLikedPostUsers(p.getLikedPostUsers())
                         .addAllDislikedPostUsers(p.getDislikedPostUsers())
                         .setDateCreated(p.getDate().toString())
-                        .build());
+                        .build();
+
+                postsProto.add(postProto);
             }
         }
-        res.addAllPosts(postsProto);
+        GetPostListResponse res = GetPostListResponse.newBuilder()
+                .addAllPosts(postsProto)
+                .build();
         System.out.println(res);
-        responseObserver.onNext(res.build());
+        responseObserver.onNext(res);
         responseObserver.onCompleted();
     }
 
