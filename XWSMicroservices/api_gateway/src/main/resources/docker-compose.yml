@@ -1,8 +1,0 @@
-version: "3"
-services:
-  api_gateway:
-    image: api_gateway.jar
-    container_name: API_GATEWAY
-    ports:
-      - 8000:8000
-      - 9090:9090
