@@ -5,16 +5,16 @@ option java_multiple_files = true;
 option java_package = "com.dislinkt.grpc";
 
 message ConnectionEntity{
-    int64 id = 1;
-    int64 sender = 2;
-    int64 receiver = 3;
-    string state = 4;
+  int64 id = 1;
+  int64 sender = 2;
+  int64 receiver = 3;
+  string state = 4;
 }
 
 message CreateConnection{
-    int64 sender = 1;
-    int64 receiver = 2;
-    string state = 3;
+  int64 sender = 1;
+  int64 receiver = 2;
+  string state = 3;
 }
 
 message ConnectionResponse{
@@ -40,4 +40,5 @@ service ConnectionService{
   rpc getConnections(GetConnections) returns (GetConnectionsResponse){}
   rpc deleteConnection(ConnectionId) returns (ConnectionResponse){}
   rpc updateConnection(ConnectionEntity) returns (ConnectionResponse){}
+
 }

@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.NoSuchElementException;
 import java.util.SimpleTimeZone;
 
 @EnableMongoRepositories("com.dislinkt.connectionservice.repository")
@@ -22,7 +23,7 @@ public class ConnectionService extends ConnectionServiceGrpc.ConnectionServiceIm
     @Override
     public void createConnection(CreateConnection request, StreamObserver<ConnectionResponse> responseObserver) {
 
-        connectionRepository.save(new Connection(2, request.getSender(), request.getReceiver(), request.getState()));
+        connectionRepository.save(new Connection(this.generateConnectionId(), request.getSender(), request.getReceiver(), request.getState()));
         ConnectionResponse res = ConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
@@ -80,6 +81,16 @@ public class ConnectionService extends ConnectionServiceGrpc.ConnectionServiceIm
         res = ConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
+    }
+    private long generateConnectionId() {
+        for (long i = 1; i < 1000000000; i++) {
+            try {
+                connectionRepository.findById(i).get();
+            } catch (NoSuchElementException e){
+                return i;
+            }
+        }
+        return 0;
     }
 
 }
