@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import Swal from 'sweetalert2'
+import { PostService } from '../services/post.service';
+import { CreatePostDTO } from './post.dto';
+import {CommentDTO} from './comment.dto'
 
 @Component({
   selector: 'app-homepage',
@@ -8,8 +11,12 @@ import Swal from 'sweetalert2'
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
+  public newPost : CreatePostDTO;
+  public newComment : CommentDTO;
 
-  constructor() {
+  constructor(private postServise: PostService) {
+    this.newPost = new CreatePostDTO();
+    this.newComment = new CommentDTO();
    }
 
   ngOnInit(): void {
@@ -29,6 +36,23 @@ export class HomepageComponent implements OnInit {
 
   removeImgSrc() {
     this.imgSrc = "";
+  }
+  createPost():void{
+    this.postServise.CreatePost(this.newPost).subscribe((d:any) =>{
+      alert('Post created');
+    })
+  }
+  likePost(id:String):void{
+    this.postServise.LikePost(this.newPost,id).subscribe((d:any) =>{
+    })
+  }
+  dislikePost(id:String):void{
+    this.postServise.DislikePost(this.newPost,id).subscribe((d:any) =>{
+    })
+  }
+  commentPost(id:String):void{
+    this.postServise.CommentPost(this.newComment,id).subscribe((d:any) =>{
+    })
   }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Document("posts")
@@ -22,9 +23,10 @@ public class Post {
     private ArrayList<Comment> comments;
     private ArrayList<Long> likedPostUsers;
     private ArrayList<Long> dislikedPostUsers;
+    private Date date;
 
 
-    public Post(long id, long userId, String postText, String imageString) {
+    public Post(long id, long userId, String postText, String imageString,Date date) {
         this.id = id;
         this.userId = userId;
         this.postText = postText;
@@ -32,6 +34,7 @@ public class Post {
         this.comments = new ArrayList<Comment>();
         this.dislikedPostUsers = new ArrayList<Long>();
         this.likedPostUsers = new ArrayList<Long>();
+        this.date =  date;
     }
 
 
@@ -97,8 +100,8 @@ public class Post {
     public void addDislikeId(long userId){
         this.dislikedPostUsers.add(userId);
     }
-    public void addComment(long postId, long userId, String content){
-        Comment comment = new Comment(postId,userId,content);
+    public void addComment(long postId, long userId, String content,Date commentDate){
+        Comment comment = new Comment(postId,userId,content,commentDate);
         this.comments.add(comment);
     }
 }

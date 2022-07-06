@@ -4,14 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CommentDTO {
-    public long postId;
+public class UserIdDTO {
     public long userId;
-    public String content;
-    public String dateCreated;
 }

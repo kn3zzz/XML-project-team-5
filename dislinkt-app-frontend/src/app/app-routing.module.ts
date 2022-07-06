@@ -8,6 +8,7 @@ import { MyInfoComponent } from './my-info/my-info.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { SearchProfilesComponent } from './search-profiles/search-profiles.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },

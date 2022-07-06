@@ -1,14 +1,18 @@
 package com.dislinkt.postservice.model;
 
+import java.util.Date;
+
 public class Comment {
     private long postId;
     private long userId;
     private String content;
+    private Date date;
 
-    public Comment(long postId, long userId, String content) {
+    public Comment(long postId, long userId, String content, Date date) {
         this.postId = postId;
         this.userId = userId;
         this.content = content;
+        this.date = date;
     }
 
     public long getPostId() {
@@ -33,5 +37,13 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

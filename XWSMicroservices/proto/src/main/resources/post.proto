@@ -10,6 +10,7 @@ message PostCreate {
   int64 userId = 2;
   string postText = 3;
   string imageString = 4;
+  string dateCreated = 5;
 }
 message PostCreateResponse {
   bool success = 1;
@@ -40,11 +41,55 @@ message PostComment {
   int64 postId = 1;
   int64 userId = 2;
   string content = 3;
+  string dateCreated = 4;
 }
 message PostCommentResponse {
   bool success = 1;
   string message = 2;
 }
+message Post{
+  int64 id = 1;
+  int64  userId = 2;
+  string postText = 3;
+  string imageString = 4;
+  repeated Comment comments = 5;
+  repeated int64 likedPostUsers = 6;
+  repeated int64 dislikedPostUsers = 7;
+  string dateCreated = 8;
+}
+
+message PostProto{
+  int64 id = 1;
+  int64  userId = 2;
+  string postText = 3;
+  string imageString = 4;
+  repeated CommentProto comments = 5;
+  repeated int64 likedPostUsers = 6;
+  repeated int64 dislikedPostUsers = 7;
+  string dateCreated = 8;
+}
+message Comment{
+  int64 postId = 1;
+  int64 userId = 2;
+  string content = 3;
+  string dateCreated = 4;
+}
+message CommentProto{
+  int64 postId = 1;
+  int64 userId = 2;
+  string content = 3;
+  string dateCreated = 4;
+}
+
+message GetPosts {
+  int64 userId = 1;
+}
+message GetPostListResponse{
+  repeated PostProto posts = 1;
+}
+
+
+
 
 //kreiranje posta, lajkovanje, dislajkovanje, komentarisanje
 service PostService {
@@ -52,5 +97,5 @@ service PostService {
   rpc likePost(LikePost) returns (LikePostResponse){}
   rpc dislikePost(DisLikePost) returns (DisLikePostResponse){}
   rpc commentPost(PostComment) returns (PostCommentResponse){}
-
+  rpc getPosts(GetPosts) returns (GetPostListResponse){}
 }
