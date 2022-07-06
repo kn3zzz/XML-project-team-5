@@ -14,7 +14,7 @@ public class PostProtoDTO {
         long userId;
         String postText;
         String imageString;
-        List<CommentDTO> comments;
+        List<CommentUserDTO> comments;
         List<Long> likedPostUsers;
         List<Long> dislikedPostUsers;
         String dateCreated;

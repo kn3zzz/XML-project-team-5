@@ -4,6 +4,7 @@ import com.dislinkt.apigateway.dto.*;
 import com.dislinkt.grpc.*;
 import com.google.protobuf.Descriptors;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -15,7 +16,8 @@ import java.util.Map;
 public class PostService {
     @GrpcClient("post-grpc-service")
     PostServiceGrpc.PostServiceBlockingStub postStub;
-
+    @Autowired
+    AuthenticationService authenticationService ;
     public Map<Descriptors.FieldDescriptor, Object> createPost(@RequestBody CreatePostDTO post) {
         PostCreate req = PostCreate.newBuilder()
                 .setPostId(post.postId)
@@ -55,24 +57,35 @@ public class PostService {
         return res.getAllFields();
     }
 
-    public List<PostProtoDTO> getPosts(long id) {
+    public List<PostUserDTO> getPosts(long id) {
         GetPosts req = GetPosts.newBuilder().setUserId(id).build();
         GetPostListResponse res = postStub.getPosts(req);
         return formatPosts(res);
     }
 
-    private List<PostProtoDTO> formatPosts(GetPostListResponse res) {
+    private List<PostUserDTO> formatPosts(GetPostListResponse res) {
         List<PostProtoDTO> posts = new ArrayList<>();
+        List<PostUserDTO> postsNew = new ArrayList<>();
         for (PostProto pp : res.getPostsList()){
             List<CommentDTO> comments = new ArrayList<>();
+            List<CommentUserDTO> newComments = new ArrayList<>();
             List<Long> likes = new ArrayList<>();
             List<Long> dislikes = new ArrayList<>();
             for (CommentProto c : pp.getCommentsList()){
-                comments.add(new CommentDTO(c.getPostId(), c.getUserId(), c.getContent(), c.getDateCreated()));
+                CommentDTO comment = new CommentDTO(c.getPostId(), c.getUserId(), c.getContent(), c.getDateCreated());
+                String username = authenticationService.getUser(c.getUserId()).getUsername();
+                CommentUserDTO newComment = new CommentUserDTO(comment,username);
+                newComments.add(newComment);
             }
-            posts.add(new PostProtoDTO(pp.getId(), pp.getUserId(), pp.getPostText(), pp.getImageString(),
-                    comments, pp.getLikedPostUsersList(), pp.getDislikedPostUsersList(), pp.getDateCreated()));
+            PostProtoDTO post = new PostProtoDTO(pp.getId(), pp.getUserId(), pp.getPostText(), pp.getImageString(),
+                    newComments, pp.getLikedPostUsersList(), pp.getDislikedPostUsersList(), pp.getDateCreated());
+            System.out.println(pp.getUserId());
+            System.out.println(authenticationService.getUser(pp.getUserId()));
+            String username = authenticationService.getUser(pp.getUserId()).getUsername();
+            PostUserDTO newPost = new PostUserDTO(post,username);
+            System.out.println(newPost);
+            postsNew.add(newPost);
         }
-        return posts;
+        return postsNew;
     }
 }

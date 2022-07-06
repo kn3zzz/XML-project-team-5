@@ -30,7 +30,7 @@ public class PostService  extends PostServiceGrpc.PostServiceImplBase {
             dateCreated = new Date();
         }
         postRepository.save( new Post(
-              request.getPostId(),
+              this.getMaxId(),
               request.getUserId(),
               request.getPostText(),
               request.getImageString(),
@@ -39,6 +39,19 @@ public class PostService  extends PostServiceGrpc.PostServiceImplBase {
         PostCreateResponse res = PostCreateResponse.newBuilder().setMessage("Success").setSuccess(true).build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
+    }
+
+    public long getMaxId(){
+        long max=0;
+       List<Post> posts = postRepository.findAll();
+       if(posts == null){
+           return 0;
+       }
+       for(Post p:posts){
+           if(p.getId() > max)
+               max = p.getId();
+       }
+       return ++max;
     }
     @Override
     public void likePost(LikePost request, StreamObserver<LikePostResponse> responseObserver){

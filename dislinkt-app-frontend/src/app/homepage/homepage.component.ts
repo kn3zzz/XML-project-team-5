@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostService } from '../services/post.service';
 import { CreatePostDTO } from './post.dto';
 import {CommentDTO} from './comment.dto'
+import { PostInfoDTO } from './postInfo.dto';
 
 @Component({
   selector: 'app-homepage',
@@ -11,13 +12,30 @@ import {CommentDTO} from './comment.dto'
 export class HomepageComponent implements OnInit {
   public newPost : CreatePostDTO;
   public newComment : CommentDTO;
+  public allPosts : PostInfoDTO[];
 
   constructor(private postServise: PostService) {
     this.newPost = new CreatePostDTO();
     this.newComment = new CommentDTO();
+    this.allPosts = [];
    }
 
   ngOnInit(): void {
+    this.postServise.GetFeed(0).subscribe((data:any) =>{
+      for(const p of (data as any)){
+        this.allPosts.push({
+          "postId" : p.id,
+          "username":p.username,
+          "userId" : p.userId,
+          "postText" : p.postText,
+          "imageString" : p.imageString,
+          "comments" : p.comments,
+          "likedUsers" : p.likedPostUsers,
+          "dislikedUsers": p.dislikedPostUsers,
+          "dateCreated" : p.dateCreated
+        });
+      }
+    });
   }
 
   imgSrc = "";
@@ -35,22 +53,53 @@ export class HomepageComponent implements OnInit {
   removeImgSrc() {
     this.imgSrc = "";
   }
+  reloadPage() {
+    window.location.reload();
+  }
   createPost():void{
     this.postServise.CreatePost(this.newPost).subscribe((d:any) =>{
-      alert('Post created');
+      alert('Post created');  
+      this.reloadPage();
+    }) 
+  }
+  likePost(id:number):void{
+    this.postServise.LikePost(id,id).subscribe((d:any) =>{
+      this.reloadPage();
+
     })
   }
-  likePost(id:String):void{
-    this.postServise.LikePost(this.newPost,id).subscribe((d:any) =>{
+  dislikePost(id:number):void{
+    this.postServise.DislikePost(id,id).subscribe((d:any) =>{
+      this.reloadPage();
+
     })
   }
-  dislikePost(id:String):void{
-    this.postServise.DislikePost(this.newPost,id).subscribe((d:any) =>{
-    })
-  }
-  commentPost(id:String):void{
+  commentPost(id:number):void{
     this.postServise.CommentPost(this.newComment,id).subscribe((d:any) =>{
+      this.reloadPage();
+
     })
   }
+
+  handleFileSelect(evt: any){
+    var files = evt.target.files;
+    var file = files[0];
+
+  if (files && file) {
+      var reader = new FileReader();
+
+      reader.onload =this._handleReaderLoaded.bind(this);
+
+      reader.readAsBinaryString(file);
+  
+    }
+    
+}
+_handleReaderLoaded(readerEvt: any) {
+  var binaryString = readerEvt.target.result;
+         this.newPost.imageString= "data:image/jpeg;base64," + btoa(binaryString);
+         console.log(btoa(binaryString));
+ }
+
 
 }
