@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Company } from '../model/company';
+import { CompanyService } from '../service/company.service';
 
 @Component({
   selector: 'app-user-home',
@@ -11,20 +13,22 @@ export class UserHomeComponent implements OnInit {
 
   email: string = '';
   user: any;
+  allCompanies: Company []
 
-  displayedColumns: string[] = ['subject', 'validPeriod', 'viewCert', 'download', 'state', "revoke"];
-
-
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient, private companyService: CompanyService) { }
 
 
   ngOnInit(): void {
-    this.email = localStorage.getItem('user') || ""
-    this.http.get('http://localhost:9000/api/users/getByEmail/' + this.email)
-    .subscribe(data => {
-      this.user = data
-      this.email = this.user.email
-    })
+    this.loadAllCompanies();
+  }
 
+
+  loadAllCompanies(){
+    this.companyService.getAll().subscribe(
+      (data: Company[]) => {
+        this.allCompanies = data;
+        console.log(this.allCompanies)
+      }
+    )
   }
 }

@@ -15,6 +15,10 @@ export class CompanyService {
     return this._http.post<any>(`${this.companyPath}/save`, request);
   }
 
+  getCompanyById(id: number){
+    return this._http.get<Company>(`${this.companyPath}/`+ id)    
+  }
+
   getAll(){
     return this._http.get<any>(`${this.companyPath}/`);
   }
