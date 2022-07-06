@@ -61,7 +61,7 @@ public class Application implements CommandLineRunner {
 		companyOwnerRole.setPermissions(companyOwnerPermissions);
 		userTypeRepository.save(companyOwnerRole);
 
-		Company newCo = new Company(1L, "Knjaz", "Voda", "+381623456", "o@gmail.com", true, false);
+		Company newCo = new Company(1L, "Knjaz", "Voda", "+381623456", null, null, null, null, "o@gmail.com", true, false);
 		companyRepository.save(newCo);
 
 		User admin = new User(1, "neki@gmail.com", passwordEncoder.encode("123"), adminRole, null, true, 0, Timestamp.from(Instant.now()));

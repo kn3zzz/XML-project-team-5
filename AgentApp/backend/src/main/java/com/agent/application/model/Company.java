@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @NoArgsConstructor
 @Table(name = "companies")
@@ -32,6 +33,18 @@ public class Company {
     @Column(name = "phone_number", nullable = false)
     @NotBlank(message = "Phone number of company is mandatory!")
     private String phoneNumber;
+
+    @OneToMany(mappedBy="company")
+    private Set<JobOffer> jobOffers;
+
+    @OneToMany(mappedBy="company")
+    private Set<Comment> comments;
+
+    @OneToMany(mappedBy="company")
+    private Set<CommentSalary> commentSalaries;
+
+    @OneToMany(mappedBy="company")
+    private Set<CommentInterview> commentInterviews;
 
     private String ownerEmail;
 

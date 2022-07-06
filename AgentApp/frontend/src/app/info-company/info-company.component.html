@@ -1,0 +1,39 @@
+<div class="row mx-5 my-3">
+    <div class="btn-group" role="group" aria-label="First group">
+      <button type="button" class="btn btn-outline-primary" (click)="state = 'jobs'"> Jobs </button>
+      <button type="button" class="btn btn-outline-primary" (click)="state = 'comments'"> Comments </button>
+      <button type="button" class="btn btn-outline-primary" (click)="state = 'salary'"> Salary </button>
+      <button type="button" class="btn btn-outline-primary" (click)="state = 'interview'"> Interview Proccess </button>
+      <button type="button" class="btn btn-outline-primary" *ngIf="isOwner" (click)="state = 'dislinkt'"> Dislinkt
+      </button>
+    </div>
+  </div>
+  <div class="row mx-5">
+    <div class="card shadow-sm">
+      <app-dialog-jobs *ngIf="state == 'jobs'"></app-dialog-jobs>
+      <div class="d-flex justify-content-center my-5" *ngIf="state == 'comments'">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#commentModal"
+          *ngIf="!isOwner"> Add Comment </button>
+      </div>
+      <div class="d-flex justify-content-center mb-5" *ngIf="state == 'comments'">
+        <!-- <app-company-comments></app-company-comments> -->
+      </div>
+      <div class="d-flex justify-content-center my-5" *ngIf="state == 'salary'">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#salaryModal"
+          *ngIf="!isOwner"> Add Your Experience </button>
+      </div>
+      <div class="d-flex justify-content-center mb-5" *ngIf="state == 'salary'">
+        <!-- <app-company-salary></app-company-salary> -->
+      </div>
+      <div class="d-flex justify-content-center my-5" *ngIf="state == 'interview'">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#interviewModal"
+          *ngIf="!isOwner"> Add Your Experience </button>
+      </div>
+      <div class="d-flex justify-content-center mb-5" *ngIf="state == 'interview'">
+        <!-- <app-company-interviews></app-company-interviews> -->
+      </div>
+      <div class="d-flex justify-content-center" *ngIf="state == 'dislinkt'">
+        <!-- <app-company-dislinkt></app-company-dislinkt> -->
+      </div>
+    </div>
+  </div>
