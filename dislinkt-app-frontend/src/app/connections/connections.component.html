@@ -46,7 +46,7 @@
                                             </div>
                                             <div class="media-body">
                                               <div class="pull-right">
-                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light" (click)="ChangeConnectionState(c, 'unfollow')">Unfollow</button>
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light" (click)="ChangeConnectionState(c, 'idle')">Unfollow</button>
                                               </div>
                                               <div><a class="name" href="javascript:void(0)">{{GetUserByConnection(c).name}}</a></div>
                                               <small>@{{GetUserByConnection(c).username}}</small>
@@ -87,7 +87,7 @@
                                             </div>
                                             <div class="media-body">
                                               <div class="pull-right">
-                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light" (click)="ChangeConnectionState(c, 'unblock')">Unblock</button>
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light" (click)="ChangeConnectionState(c, 'connect')">Unblock</button>
                                               </div>
                                               <div><a class="name" href="javascript:void(0)">{{GetUserByConnection(c).name}}</a></div>
                                               <small>@{{GetUserByConnection(c).username}}</small>
@@ -126,8 +126,10 @@
                                               </a>
                                             </div>
                                             <div class="media-body">
-                                              <div class="pull-right">
-                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light">Nesto</button>
+                                              <div class="pull-right" *ngIf="c.receiver == userId">
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light" (click)="ChangeConnectionState(c, 'connect')">Accept</button>
+                                                
+                                                <button type="button" class="btn btn-info btn-sm waves-effect waves-light" (click)="ChangeConnectionState(c, 'idle')">Cancel</button>
                                               </div>
                                               <div><a class="name" href="javascript:void(0)">{{GetUserByConnection(c).name}}</a></div>
                                               <small>@{{GetUserByConnection(c).username}}</small>

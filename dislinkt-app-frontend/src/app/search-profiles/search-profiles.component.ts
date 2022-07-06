@@ -81,6 +81,30 @@ export class SearchProfilesComponent implements OnInit {
   }
 
   sendFollow(id: number) {
+    const body = {
+      id: 2, //id is generated on backend, 2 is a joke.
+      sender: localStorage.getItem("id"),
+      receiver: id,
+      connectionState: "PENDING"
+    }
+    axios.post(environment.api + "/connections/addConnection", body).then(response => {
+      if(response.data == true){
+        Swal.fire({
+          icon: 'success',
+          title: 'Request sent.',
+          showConfirmButton: false,
+          timer: 500
+        })
 
+      }
+      else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Something went wrong',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    })
   }
 }

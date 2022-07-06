@@ -106,7 +106,7 @@ export class ConnectionsComponent implements OnInit {
   ChangeConnectionState(connection: ConnectionDTO, action: string){
     console.log("changing state");
     switch(action){
-      case "unfollow":
+      case "idle":
         this.UpdateConnection(connection, "IDLE")
         this.ChangeConnectionLocally(connection, "IDLE")
         break;
@@ -114,21 +114,13 @@ export class ConnectionsComponent implements OnInit {
         this.UpdateConnection(connection, "PENDING")
         this.ChangeConnectionLocally(connection, "PENDING")
         break;
-      case "unblock":
+      case "connect":
         this.UpdateConnection(connection, "CONNECTED")
         this.ChangeConnectionLocally(connection, "CONNECTED")
         break; 
       case "block":
         this.UpdateConnection(connection, "BLOCKED")
         this.ChangeConnectionLocally(connection, "BLOCKED")
-        break;
-      case "accept":
-        this.UpdateConnection(connection, "CONNECTED")
-        this.ChangeConnectionLocally(connection, "CONNECTED")
-        break;
-      case "reject":
-        this.UpdateConnection(connection, "IDLE")
-        this.ChangeConnectionLocally(connection, "IDLE")
         break;
       default:
         break;
