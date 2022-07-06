@@ -4,7 +4,7 @@
         </div>
 
         <div class="col-md-7 pt-5 z-depth-3">
-            <h2 class="text-center">{{ company.name }}</h2>
+            <h1 style="font-weight: bold" class="text-center">{{ company.name }}</h1>
             <div class="row">
                 <p class="font-weight-bold">Company name: </p>
                 <p class="text-muted" [ngClass]="edit ? 'is-active' : 'is-not-active'">{{ company.name }}</p>
@@ -101,6 +101,7 @@
               </div>
             </div>
         </div>
+        <app-info-company class="mt-5"></app-info-company>
         
     </div>
 </div>

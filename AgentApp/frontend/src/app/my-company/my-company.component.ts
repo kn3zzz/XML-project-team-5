@@ -27,21 +27,22 @@ export class MyCompanyComponent implements OnInit {
 
     this.id = this.route.snapshot.params['id'];
 
-    if(!this.id){
-      if (username != undefined){
-        this.userService.findByEmail(username).subscribe(
-          (user: any) => {
-          this.user = user;
-          this.company = user.company
-          console.log(user.company)
-        })
+    this.userService.findByEmail(username!).subscribe(
+      (user: any) => {
+      this.user = user;
+      if(!this.id){
+        if (username != undefined){
+            this.company = user.company
+        }
+      }else{ 
+        this.companyService.getCompanyById(this.id).subscribe(
+          (data: Company) => {
+            this.company = data;
+          })
       }
-    }else{ 
-      this.companyService.getCompanyById(this.id).subscribe(
-        (data: Company) => {
-          this.company = data;
-        })
-    }
+    })
+
+    
     
     this.loadAllCompanies
   }
@@ -147,6 +148,7 @@ export class MyCompanyComponent implements OnInit {
                   this.companyService.saveJobOffer(this.jobOffer).subscribe(  // cuvanje JobOffer-a u agentskoj bazi
                   (data: any) => {
                     alert("New job offer successfully created!")
+                    window.location.reload();
                   });  
                 //}
 

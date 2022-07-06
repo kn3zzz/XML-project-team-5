@@ -31,6 +31,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { NewCompanyComponent } from './new-company/new-company.component';
 import { MyCompanyComponent } from './my-company/my-company.component';
+import { InfoCompanyComponent } from './info-company/info-company.component';
+import { DialogJobsComponent } from './info-company/dialog-jobs/dialog-jobs.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { MyCompanyComponent } from './my-company/my-company.component';
     PasswordRecoveryComponent,
     NewCompanyComponent,
     MyCompanyComponent,
+    InfoCompanyComponent,
+    DialogJobsComponent,
   ],
   imports: [
     BrowserModule,
