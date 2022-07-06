@@ -1,5 +1,21 @@
 <div>
     <section class="background d-flex flex-column justify-content-center">
-      <div class="container"></div>
+      <div class="container"><h1>Companies</h1>
+        <div class="containerr mt-5">
+          <div class="row ">
+              <div class="col-sm" *ngFor="let company of allCompanies" >
+                  <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h2 class="card-title">{{ company.name }}</h2>
+                      <p class="card-text">{{ company.description | slice:0:200 }}{{company.description.length > 200 ? '...' : ''}}</p>
+                      <p class="card-text">{{company.phoneNumber }}</p>
+                      <a href="company/{{company.id}}" class="btn btn-primary w-100">See more</a>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
     </section>
 </div>
+

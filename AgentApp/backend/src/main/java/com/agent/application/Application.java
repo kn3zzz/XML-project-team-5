@@ -3,16 +3,15 @@ package com.agent.application;
 
 import com.agent.application.model.Company;
 import com.agent.application.model.Permission;
+import com.agent.application.model.User;
 import com.agent.application.model.UserType;
 import com.agent.application.repository.CompanyRepository;
+import com.agent.application.repository.UserRepository;
 import com.agent.application.repository.UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.agent.application.model.User;
-import com.agent.application.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Timestamp;
@@ -71,7 +70,7 @@ public class Application implements CommandLineRunner {
 		User user = new User(2, "user@gmail.com", passwordEncoder.encode("123"), userRole, null, true, 0, Timestamp.from(Instant.now()));
 		userRepository.save(user);
 
-		User owner = new User(2, "o@gmail.com", passwordEncoder.encode("123"), companyOwnerRole, newCo, true, 0, Timestamp.from(Instant.now()));
+		User owner = new User(3, "o@gmail.com", passwordEncoder.encode("123"), companyOwnerRole, newCo, true, 0, Timestamp.from(Instant.now()));
 		userRepository.save(owner);
 	}
 

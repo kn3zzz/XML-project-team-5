@@ -10,6 +10,8 @@ public interface CompanyService {
 
     List<Company> findAll();
 
+    Company findCompanyById(Long id);
+
     boolean approveRequest(Long requestId);
 
     boolean rejectRequest(Long requestId);

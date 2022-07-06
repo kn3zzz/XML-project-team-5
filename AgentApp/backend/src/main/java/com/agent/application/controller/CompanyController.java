@@ -62,6 +62,11 @@ public class CompanyController {
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> getCompanyById(@PathVariable Long id) {
+        return new ResponseEntity(this.companyService.findCompanyById(id), HttpStatus.OK);
+    }
+
     @PostMapping ( value = "/{companyId}/job_offer")
     public ResponseEntity<?> saveJobOffer(@Valid @RequestBody JobOfferDTO dto, @PathVariable Long companyId) {
         dto.setCompanyId(companyId);

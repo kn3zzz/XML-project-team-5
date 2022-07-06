@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from '../model/company';
 import { JobOffer } from '../model/job-offer';
 import { User } from '../model/user';
@@ -18,23 +18,41 @@ export class MyCompanyComponent implements OnInit {
   jobOffer: JobOffer = new JobOffer;
   promoteJobOffer: boolean = false;
   allCompanies: Company[] = [];
+  id: any;
 
-  constructor(private userService: UserService, private companyService: CompanyService) { }
+  constructor(private route: ActivatedRoute, private userService: UserService, private companyService: CompanyService) { }
 
   ngOnInit(): void {
     let username =  localStorage.getItem("user");
 
-    if (username != undefined){
-      this.userService.findByEmail(username).subscribe(
-        (user: any) => {
-        this.user = user;
-        this.company = user.company
-        console.log(user.company)
-      })
-    }
+    this.id = this.route.snapshot.params['id'];
 
+    if(!this.id){
+      if (username != undefined){
+        this.userService.findByEmail(username).subscribe(
+          (user: any) => {
+          this.user = user;
+          this.company = user.company
+          console.log(user.company)
+        })
+      }
+    }else{ 
+      this.companyService.getCompanyById(this.id).subscribe(
+        (data: Company) => {
+          this.company = data;
+        })
+    }
+    
     this.loadAllCompanies
   }
+
+  isCompanyOwner(){
+    if(localStorage.getItem('role') == "ROLE_COMPANY_OWNER"){
+      return true;
+    } else {
+      return false;
+    }
+  } 
 
   doEditPost(){
     if (this.company.name.trim() != "" && this.company.description.trim() != "" && this.company.phoneNumber.trim() != ""){

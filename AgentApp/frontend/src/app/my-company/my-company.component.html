@@ -21,8 +21,8 @@
         </div>
 
         <div class="col-md-3 mt-5 ml-5 pt-5 z-depth-3">
-            <button class="btn btn-outline-primary btn-block w-50 mb-3" (click)='doEdit()'>Edit</button><br>
-            <button class="btn btn-primary btn-block w-50 mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">New job</button>
+            <button class="btn btn-outline-primary btn-block w-50 mb-3" *ngIf="isCompanyOwner()" (click)='doEdit()'>Edit</button><br>
+            <button class="btn btn-primary btn-block w-50 mb-3" *ngIf="isCompanyOwner()" data-bs-toggle="modal" data-bs-target="#exampleModal">New job</button>
             <button class="btn btn-primary mt-3 btn-block w-50 mb-3" (click)='doEditPost()' [ngClass]="edit ? 'is-not-active' : 'is-active'">Save</button>
             <button class="btn btn-danger btn-block w-50 mb-3" [ngClass]="edit ? 'is-not-active' : 'is-active'" (click)='doEdit()'>Cancel</button>
         </div>

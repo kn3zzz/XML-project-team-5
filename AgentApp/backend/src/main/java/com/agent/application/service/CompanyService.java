@@ -48,6 +48,11 @@ public class CompanyService implements com.agent.application.service.intereface.
     }
 
     @Override
+    public Company findCompanyById(Long id) {
+        return this.companyRepository.findCompanyById(id);
+    }
+
+    @Override
     public boolean approveRequest(Long requestId) {
         Company request = this.companyRepository.findCompanyById(requestId);
         if(request != null){
