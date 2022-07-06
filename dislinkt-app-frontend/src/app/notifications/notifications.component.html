@@ -1,47 +1,35 @@
 <div class="container-fluid">
-    <br><br>
+    <br>
     <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <h4 class="card-title">22.06.2022.</h4>
-                        </div>
-                        <div class="col-sm-7"><h4>Korisnik Milos Markovic je objavio novi post ;)</h4></div>
-                        <div class="col-sm-2">
-                            <button class="btn btn-outline-primary">Mark as read</button>
-                        </div>
-                        <div class="col-sm-1">
-                            <button style="margin-left: 3%;" type="button" class="btn btn-primary">Delete</button>
-                        </div> 
-                    </div>
-                    </div>
-              </div>
+        <div class="col-sm-5">
         </div>
-        <div class="col-sm-1"></div>
+        <div class="col-sm-7">
+            <h2 style="color: grey; margin-left: 2%;">NOTIFICATIONS</h2>
+        </div>
+       
     </div>
-    <br><br>
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
-            <div class="card">
+            <div *ngFor="let notification of notifications;" class="card" style="margin-top: 3%;">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-2">
-                            <h4 class="card-title">22.06.2022.</h4>
+                            <h4 class="card-title">{{notification.dateCreated}}</h4>
                         </div>
-                        <div class="col-sm-7"><h4>Korisnik Milos Markovic je objavio novi post ;)</h4></div>
+                        <div class="col-sm-6"><h4>{{notification.text}}</h4></div>
+                        <div class="col-sm-1">
+                            <img *ngIf="!notification.seen" height="35" width="40" src="../../assets/neww.png" alt="" srcset="">
+                        </div>
                         <div class="col-sm-2">
-                            <button class="btn btn-outline-primary">Mark as read</button>
+                            <button *ngIf="!notification.seen" (click)="markAsRead(notification.notificationsId)" class="btn btn-outline-primary">Mark as read</button>
                         </div>
                         <div class="col-sm-1">
-                            <button style="margin-left: 3%;" type="button" class="btn btn-primary">Delete</button>
+                            <button (click)="delete(notification.notificationsId)" type="button" class="btn btn-primary">Delete</button>
                         </div> 
                     </div>
-                    </div>
-              </div>
+                </div>
+            </div>
         </div>
         <div class="col-sm-1"></div>
     </div>

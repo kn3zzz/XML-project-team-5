@@ -8,6 +8,8 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,15 +39,17 @@ public class NotificationService extends NotificationServiceGrpc.NotificationSer
     @Override
     public void getUserNotifications(UserIDNotification request, StreamObserver<NotificationsResponseList> responseObserver) {
         NotificationsResponseList.Builder res = NotificationsResponseList.newBuilder();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy. hh:mm:ss");
         boolean seen = false;
         for (Notification n : notificationRepository.findAll()) {
             seen = false;
             if (n.getSeenIdList().contains(request.getId()))
                 seen = true;
+
             if (n.getConnectionIdList().contains(request.getId())) {
                 res.addNotifications(NotificationsForUser.newBuilder()
                         .setNotificationsId(n.getId())
-                        .setDateCreated(n.getDateAndTimeCreated().toString())
+                        .setDateCreated(dateFormat.format(n.getDateAndTimeCreated()))
                         .setSeen(seen)
                         .setText(n.getText())
                         .build());
