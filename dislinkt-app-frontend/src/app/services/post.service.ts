@@ -28,23 +28,23 @@ export class PostService {
       console.log(body);
       return this.http.post<any>(this.url + '/createPost', body);
     }
-    LikePost(reactionInfo:ReactionDTO,id:String) : Observable<any> {
-        reactionInfo.userId = Number(localStorage.getItem('id'));
+    LikePost(userId:Number,id:Number) : Observable<any> {
+        userId = Number(localStorage.getItem('id'));
         const body = {
             postId:id,
-            userId : reactionInfo.userId ,
+            userId : userId ,
           };
         return this.http.post<any>(this.url + '/likePost', body);
     }
-    DislikePost(reactionInfo:ReactionDTO,id:String) : Observable<any> {
-        reactionInfo.userId = Number(localStorage.getItem('id'));
+    DislikePost(userId:Number,id:Number) : Observable<any> {
+        userId = Number(localStorage.getItem('id'));
         const body = {
             postId: id,
-            userId : reactionInfo.userId ,
+            userId : userId ,
           };
         return this.http.post<any>(this.url + '/dislikePost', body);
     }
-    CommentPost(commentInfo:CommentDTO,id:String) : Observable<any> {
+    CommentPost(commentInfo:CommentDTO,id:Number) : Observable<any> {
         commentInfo.userId = Number(localStorage.getItem('id'));
         const body = {
             postId: id,
@@ -53,5 +53,9 @@ export class PostService {
             dateCreated:commentInfo.dateCreated
           };
         return this.http.post<any>(this.url + '/commentPost', body);
+    }
+    GetFeed(id:Number): Observable<any> {
+     id = Number(localStorage.getItem('id'))
+      return this.http.get<any>(this.url + '/getAllPosts/' + id);
     }
   }

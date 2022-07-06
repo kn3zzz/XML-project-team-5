@@ -15,12 +15,10 @@
                 <div class="card-body">
                     <textarea class="form-control"  [(ngModel)]="newPost.postText" placeholder="Write post here..." id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
-                <img *ngIf="imgSrc != ''" [src]="imgSrc" class="card-img-bottom" alt="...">
-                <hr>
                 <div class="row">
                     <div class="col-sm-1"></div>
                     <div class="col-sm-4">
-                        <input class="form-control" type="file" accept="image/png, image/jpeg" (change)="onselectFile($event)" id="formFile">
+                        <input class="form-control" src={{newPost.imageString}} type="file" accept="image/png, image/jpeg" (change)="handleFileSelect($event)" id="formFile">
                     </div>
                     <div class="col-sm-2">
                         <button style="margin-bottom: 5%;" (click)="removeImgSrc()" class="btn btn-outline-danger" type="button">
@@ -40,24 +38,24 @@
         <div class="col-sm-3"></div>
     </div>
     <br><br>
-    <div class="row">
+    <div class="row" *ngFor = 'let post of allPosts'>
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
             <div class="card" style="border-radius: 2%;">
                 <div class="card-body">
-                  <h5 class="card-title">Mihailo Majstorovic - mihailo47</h5>
-                  <p class="card-text">Bane najjaci lik</p>
-                  <p class="card-text"><small class="text-muted">28.06.2022 - 14:26</small></p>
+                  <h5 class="card-title">{{post.username}}</h5>
+                  <p class="card-text">{{post.postText}}</p>
+                  <p class="card-text"><small class="text-muted">{{post.dateCreated}}</small></p>
                 </div>
-                <img src="../../assets/gospoda.jpg" class="card-img-bottom" alt="...">
+                <img mat-card-lg-image src={{post.imageString}} >
                 <hr>
                 <div class="row">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-2">
-                        <button class="btn" style="color: green;" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
+                        <button class="btn" style="color: green;" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true" (click)="likePost(post.postId)"></i> <p class="text-box"><small class="text-muted">{{post.likedUsers.length}}</small></p></button>
                     </div>
                     <div class="col-sm-4">
-                        <button class="btn" style="color: red;" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
+                        <button class="btn" style="color: red;" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true" (click)="dislikePost(post.postId)"></i><p class="text-box"><small class="text-muted">{{post.dislikedUsers.length}}</small></p></button>
                     </div>
                     <div class="col">
                             <button style="margin-bottom: 5%;" class="btn btn-lg btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -66,24 +64,25 @@
                     </div>
                 <hr>
                 </div>
-                  <div class="collapse" id="collapseExample">
+                  <div class="collapse" id="collapseExample"  >
                     <div class="container-fluid" style="margin-bottom: 2%;">
                         <div class="row">
                             <div class="col-sm-8">
-                                <textarea class="form-control" placeholder="Write comment here..." id="exampleFormControlTextarea1" rows="2"></textarea>
+                                <textarea class="form-control" placeholder="Write comment here..." id="exampleFormControlTextarea1" [(ngModel)]="newComment.content" rows="2"></textarea>
                             </div>
                             <div class="col-sm-1"></div>
                             <div class="col-sm-3">
-                                <button class="btn btn-outline-primary" style="margin-top: 5%;" type="button">
+                                <button class="btn btn-outline-primary" style="margin-top: 5%;" (click) = "commentPost(post.postId)" type="button">
                                     Leave a comment
                                 </button>
                             </div>
                         </div>
                         
                         <hr>
-                        <div class="card card-body">
-                            <h5 class="card-title">Mihailo Majstorovic - mihailo47</h5>
-                            <p class="card-text">Bane najjaci lik</p>
+                        <div class="card card-body" *ngFor = 'let comment of post.comments'>
+                            <h5 class="card-title">{{comment.username}}</h5>
+                            <p class="card-text">{{comment.content}}</p>
+                            <p class="card-text">{{comment.dateCreated}}</p>
                           </div>
                     </div>
                   </div>
