@@ -145,7 +145,7 @@ export class ConnectionsComponent implements OnInit {
   }
 
   UpdateConnection(connection: ConnectionDTO, state: string){
-    let body = {
+    const body = {
       id: connection.id,
       sender: connection.sender,
       receiver: connection.receiver,
