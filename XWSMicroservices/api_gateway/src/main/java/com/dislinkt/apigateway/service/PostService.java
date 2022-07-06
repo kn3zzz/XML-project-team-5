@@ -21,8 +21,7 @@ public class PostService {
     NotificationService notificationService;
     @GrpcClient("post-grpc-service")
     PostServiceGrpc.PostServiceBlockingStub postStub;
-    @Autowired
-    AuthenticationService authenticationService ;
+
     public Map<Descriptors.FieldDescriptor, Object> createPost(@RequestBody CreatePostDTO post) {
         PostCreate req = PostCreate.newBuilder()
                 .setPostId(post.postId)

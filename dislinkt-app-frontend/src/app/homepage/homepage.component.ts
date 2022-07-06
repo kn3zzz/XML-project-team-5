@@ -23,21 +23,7 @@ export class HomepageComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.postServise.GetFeed(0).subscribe((data:any) =>{
-      for(const p of (data as any)){
-        this.allPosts.push({
-          "postId" : p.id,
-          "username":p.username,
-          "userId" : p.userId,
-          "postText" : p.postText,
-          "imageString" : p.imageString,
-          "comments" : p.comments,
-          "likedUsers" : p.likedPostUsers,
-          "dislikedUsers": p.dislikedPostUsers,
-          "dateCreated" : p.dateCreated
-        });
-      }
-    });
+    this.getPosts()
   }
 
   imgSrc = "";
@@ -61,26 +47,45 @@ export class HomepageComponent implements OnInit {
   createPost():void{
     this.postServise.CreatePost(this.newPost).subscribe((d:any) =>{
       alert('Post created');  
-      this.reloadPage();
+      this.getPosts()
     }) 
   }
   likePost(id:number):void{
     this.postServise.LikePost(id,id).subscribe((d:any) =>{
-      this.reloadPage();
+      this.getPosts()
 
     })
   }
   dislikePost(id:number):void{
     this.postServise.DislikePost(id,id).subscribe((d:any) =>{
-      this.reloadPage();
+      this.getPosts()
 
     })
   }
   commentPost(id:number):void{
     this.postServise.CommentPost(this.newComment,id).subscribe((d:any) =>{
-      this.reloadPage();
+      this.getPosts()
 
     })
+  }
+
+  getPosts() {
+    this.postServise.GetFeed(0).subscribe((data:any) =>{
+      this.allPosts = []
+      for(const p of (data as any)){
+        this.allPosts.push({
+          "postId" : p.id,
+          "username":p.username,
+          "userId" : p.userId,
+          "postText" : p.postText,
+          "imageString" : p.imageString,
+          "comments" : p.comments,
+          "likedUsers" : p.likedPostUsers,
+          "dislikedUsers": p.dislikedPostUsers,
+          "dateCreated" : p.dateCreated
+        });
+      }
+    });
   }
 
   handleFileSelect(evt: any){

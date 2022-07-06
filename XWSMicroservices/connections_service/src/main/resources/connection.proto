@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package com.dislinkt.grpc;
+option java_multiple_files = true;
+option java_package = "com.dislinkt.grpc";
+
+message ConnectionEntity{
+  int64 id = 1;
+  int64 sender = 2;
+  int64 receiver = 3;
+  string state = 4;
+}
+
+message CreateConnection{
+  int64 sender = 1;
+  int64 receiver = 2;
+  string state = 3;
+}
+
+message ConnectionResponse{
+  string message = 1;
+  bool success = 2;
+}
+
+message GetConnections{
+  int64 userId = 1;
+}
+
+message GetConnectionsResponse{
+  repeated ConnectionEntity connections = 1;
+}
+
+message ConnectionId{
+  int64 connectionId = 1;
+}
+
+
+service ConnectionService{
+  rpc createConnection(CreateConnection) returns (ConnectionResponse){}
+  rpc getConnections(GetConnections) returns (GetConnectionsResponse){}
+  rpc deleteConnection(ConnectionId) returns (ConnectionResponse){}
+  rpc updateConnection(ConnectionEntity) returns (ConnectionResponse){}
+
+}

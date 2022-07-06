@@ -32,12 +32,12 @@ export class NavbarComponent implements OnInit {
       })
       .catch(e => {
         this.notificationsAmount = 0
-        Swal.fire({
+       /* Swal.fire({
           icon: 'error',
           title: 'Something went wrong. Please, try again.',
           showConfirmButton: false,
           timer: 2000
-        })
+        })*/
       })
   }
 
