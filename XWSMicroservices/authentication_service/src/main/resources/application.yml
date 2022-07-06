@@ -1,12 +1,15 @@
 grpc:
   server:
     port: 9001
-    
+
 server:
   port: 8001
 
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017
+      host: mongodb
+      uri: mongodb://127.0.0.1:27017
       database: users
+      repositories:
+        enabled: true

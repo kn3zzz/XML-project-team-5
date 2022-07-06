@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <br>
+    <div class="row">
+        <div class="col-sm-5">
+        </div>
+        <div class="col-sm-7">
+            <h2 style="color: grey; margin-left: 2%;">NOTIFICATIONS</h2>
+        </div>
+       
+    </div>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <div *ngFor="let notification of notifications;" class="card" style="margin-top: 3%;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <h4 class="card-title">{{notification.dateCreated}}</h4>
+                        </div>
+                        <div class="col-sm-6"><h4>{{notification.text}}</h4></div>
+                        <div class="col-sm-1">
+                            <img *ngIf="!notification.seen" height="35" width="40" src="../../assets/neww.png" alt="" srcset="">
+                        </div>
+                        <div class="col-sm-2">
+                            <button *ngIf="!notification.seen" (click)="markAsRead(notification.notificationsId)" class="btn btn-outline-primary">Mark as read</button>
+                        </div>
+                        <div class="col-sm-1">
+                            <button (click)="delete(notification.notificationsId)" type="button" class="btn btn-primary">Delete</button>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+</div>
+
+
+<style>
+    
+</style>

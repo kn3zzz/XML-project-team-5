@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>post_service</artifactId>
+    <artifactId>notification_service</artifactId>
 
     <properties>
         <java.version>11</java.version>
@@ -45,11 +45,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.6.0</version>
-        </dependency>
-        <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-stub</artifactId>
             <version>1.35.0</version>
@@ -80,6 +75,10 @@
             <groupId>com.dislinkt</groupId>
             <artifactId>proto</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 
@@ -123,7 +122,6 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>post_service</finalName>
+        <finalName>authentication_service</finalName>
     </build>
-
 </project>

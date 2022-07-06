@@ -14,6 +14,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { FormsModule } from '@angular/forms';
 import { ConnectionsComponent } from './connections/connections.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     SearchProfilesComponent,
     ProfileComponent,
     ConnectionsComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,

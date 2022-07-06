@@ -16,6 +16,11 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @GetMapping("/hello")
+    public ResponseEntity<?> hello(){
+        return new ResponseEntity<>("HI", HttpStatus.OK);
+    }
+
     @PostMapping("/addUser")
     public ResponseEntity<Boolean> saveUser(@RequestBody NewUserDTO user){
         return new ResponseEntity<Boolean>(authenticationService.registerUser(user), HttpStatus.CREATED);

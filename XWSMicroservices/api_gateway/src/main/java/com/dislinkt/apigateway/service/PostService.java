@@ -4,6 +4,7 @@ import com.dislinkt.apigateway.dto.*;
 import com.dislinkt.grpc.*;
 import com.google.protobuf.Descriptors;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -13,6 +14,11 @@ import java.util.Map;
 
 @Service
 public class PostService {
+
+    @Autowired
+    AuthenticationService authenticationService;
+    @Autowired
+    NotificationService notificationService;
     @GrpcClient("post-grpc-service")
     PostServiceGrpc.PostServiceBlockingStub postStub;
 
@@ -24,7 +30,18 @@ public class PostService {
                 .setImageString(post.imageString)
                 .setDateCreated(post.dateCreated)
                 .build();
+        UserInfoChangeDTO userRes;
+        List<Long> users = new ArrayList<>();
         PostCreateResponse res = postStub.createPost(req);
+        String notificationText = "";
+        if (res.getSuccess()){
+            userRes = authenticationService.getUser(post.userId);
+            notificationText = userRes.getUsername() + " - " + userRes.getName() + " " + userRes.getLastname() + " just added a new post !";
+            users = new ArrayList<>();
+            users.add(2L);
+            users.add(3L);
+            notificationService.sendNotification(users, notificationText);
+        }
         return  res.getAllFields();
 
     }

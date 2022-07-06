@@ -5,6 +5,7 @@ import { FollowRequestsComponent } from './follow-requests/follow-requests.compo
 import { HomepageComponent } from './homepage/homepage.component';
 import { LoginComponent } from './login/login.component';
 import { MyInfoComponent } from './my-info/my-info.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { SearchProfilesComponent } from './search-profiles/search-profiles.component';
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'follow-requests', component: FollowRequestsComponent},
   { path: 'search-profiles', component: SearchProfilesComponent},
   { path: 'profile', component: ProfileComponent},
-  { path: 'connections', component: ConnectionsComponent}
+  { path: 'connections', component: ConnectionsComponent},
+  { path: 'notifications', component: NotificationsComponent}
 
 
 ];

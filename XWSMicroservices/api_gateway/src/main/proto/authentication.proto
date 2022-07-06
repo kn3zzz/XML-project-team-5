@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+package com.dislinkt.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.dislinkt.grpc";
+
+message UserRegister {
+  string name = 1;
+  string lastname = 2;
+  string username = 3;
+  string password = 4;
+  string email = 5;
+  string phoneNumber = 6;
+  string gender = 7;
+  string birthDate = 8;
+  bool privateProfile = 9;
+}
+
+message UserRegisterResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message UserLoginResponse {
+  string role = 1;
+  bool notificationsOn = 2;
+  string username = 3;
+  int64 id = 4;
+}
+
+message UserLogin {
+  string username = 1;
+  string password = 2;
+}
+
+message SearchProfile {
+  string searchQuery = 1;
+}
+
+message SearchProfileEntity {
+  string name = 1;
+  string lastname = 2;
+  string username = 3;
+  string skills = 4;
+  string interests = 5;
+  string email = 6;
+  string phoneNumber = 7;
+  string gender = 8;
+  string birthDate = 9;
+  int64 id = 10;
+  string biography = 11;
+  string workingExperience = 12;
+  string education = 13;
+}
+
+message SearchProfileResponse {
+  repeated SearchProfileEntity profiles = 1;
+}
+
+message UserInfoChange {
+  string name = 1;
+  string lastname = 2;
+  string username = 3;
+  string email = 4;
+  string phoneNumber = 5;
+  string gender = 6;
+  string birthDate = 7;
+  string biography = 8;
+  string workingExperience = 9;
+  string education = 10;
+  string skills = 11;
+  string interests = 12;
+  bool privateProfile = 13;
+  bool notificationsOn = 14;
+  int64 id = 15;
+}
+
+message UserInfoChangeResponse {
+  string message = 1;
+  bool success = 2;
+}
+
+message UserID {
+  int64 id = 1;
+}
+
+message UserResponse {
+  string name = 1;
+  string lastname = 2;
+  string username = 3;
+  string email = 4;
+  string phoneNumber = 5;
+  string gender = 6;
+  string birthDate = 7;
+  string biography = 8;
+  string workingExperience = 9;
+  string education = 10;
+  string skills = 11;
+  string interests = 12;
+  bool privateProfile = 13;
+  bool notificationsOn = 14;
+  int64 id = 15;
+}
+
+service AuthenticationService {
+  rpc registerUser(UserRegister) returns (UserRegisterResponse){}
+  rpc login(UserLogin) returns (UserLoginResponse){}
+  rpc searchProfile(SearchProfile) returns (SearchProfileResponse){}
+  rpc changeUserInfo(UserInfoChange) returns (UserInfoChangeResponse){}
+  rpc getUser(UserID) returns (UserResponse){}
+}

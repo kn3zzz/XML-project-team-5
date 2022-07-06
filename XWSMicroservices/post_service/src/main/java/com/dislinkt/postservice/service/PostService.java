@@ -5,6 +5,7 @@ import com.dislinkt.postservice.model.Comment;
 import com.dislinkt.postservice.model.Post;
 import com.dislinkt.postservice.repository.PostRepository;
 import io.grpc.stub.StreamObserver;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -20,6 +21,10 @@ import java.util.List;
 public class PostService  extends PostServiceGrpc.PostServiceImplBase {
     @Autowired
     private PostRepository postRepository;
+    @GrpcClient("notification-grpc-service")
+    NotificationServiceGrpc.NotificationServiceBlockingStub notificationStub;
+    @GrpcClient("authentication-grpc-service")
+    AuthenticationServiceGrpc.AuthenticationServiceBlockingStub authStub;
 
     @Override
     public void createPost(PostCreate request, StreamObserver<PostCreateResponse> responseObserver){
@@ -31,6 +36,7 @@ public class PostService  extends PostServiceGrpc.PostServiceImplBase {
         }
         postRepository.save( new Post(
               request.getPostId(),
+                postRepository.findAll().size() + 10,
               request.getUserId(),
               request.getPostText(),
               request.getImageString(),
