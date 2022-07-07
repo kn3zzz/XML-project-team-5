@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "dislinkt-a279e": {
+      "hosting": {
+        "dislinkt-app-frontend": [
+          "dislinkt-a279e"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "dislinkt-a279e"
+  }
+}

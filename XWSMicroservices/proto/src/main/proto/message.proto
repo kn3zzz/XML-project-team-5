@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package com.dislinkt.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.dislinkt.grpc";
+
+message NewMessage {
+  int64 senderId = 1;
+  int64 receiverId = 2;
+  string text = 3;
+}
+
+message GetMessages {
+  int64 senderId = 1;
+  int64 receiverId = 2;
+}
+
+message MessageResponse {
+  int64 senderId = 1;
+  int64 receiverId = 2;
+  string text = 3;
+  string dateCreated = 4;
+}
+
+message GetMessagesResponse {
+  repeated MessageResponse messages = 1;
+}
+
+message NewMessageResponse {
+  string message = 1;
+  bool success = 2;
+}
+
+service MessageService {
+  rpc sendMessage(NewMessage) returns (NewMessageResponse){}
+  rpc getMessages(GetMessages) returns (GetMessagesResponse){}
+}
