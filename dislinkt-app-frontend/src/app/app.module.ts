@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { ConnectionsComponent } from './connections/connections.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { MessagingComponent } from './messaging/messaging.component';
 
 @NgModule({
   declarations: [
@@ -28,15 +29,17 @@ import { NotificationsComponent } from './notifications/notifications.component'
     SearchProfilesComponent,
     ProfileComponent,
     ConnectionsComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    MessagingComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

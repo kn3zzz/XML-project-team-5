@@ -12,6 +12,9 @@ grpc:
     notification-grpc-service:
       address: static://localhost:9004
       negotiationType: plaintext
+    message-grpc-service:
+      address: static://localhost:9005
+      negotiationType: plaintext
 
 server:
   port: 8000

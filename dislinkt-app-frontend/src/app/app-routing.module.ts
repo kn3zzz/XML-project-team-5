@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { SearchProfilesComponent } from './search-profiles/search-profiles.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MessagingComponent } from './messaging/messaging.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -20,9 +21,8 @@ const routes: Routes = [
   { path: 'search-profiles', component: SearchProfilesComponent},
   { path: 'profile', component: ProfileComponent},
   { path: 'connections', component: ConnectionsComponent},
-  { path: 'notifications', component: NotificationsComponent}
-
-
+  { path: 'notifications', component: NotificationsComponent},
+  { path: 'messaging', component: MessagingComponent}
 ];
 
 @NgModule({

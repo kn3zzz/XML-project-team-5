@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getNotifications()
+    setInterval(()=> { this.getNotifications() }, 5 * 1000);
   }
 
   getNotifications() {

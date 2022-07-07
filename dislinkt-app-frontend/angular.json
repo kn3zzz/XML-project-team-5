@@ -97,9 +97,22 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@ctrl/ngx-emoji-mart/picker.css", 
+              "src/cometchat-pro-angular-ui-kit/CometChatWorkspace/projects/angular-chat-ui-kit/src/css/styles.scss", 
               "src/styles.css"
+              
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "dislinkt-app-frontend:build:production",
+            "firebaseProject": "dislinkt-a279e",
+            "firebaseHostingSite": "dislinkt-a279e"
           }
         }
       }
