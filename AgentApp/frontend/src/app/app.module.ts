@@ -33,6 +33,7 @@ import { NewCompanyComponent } from './new-company/new-company.component';
 import { MyCompanyComponent } from './my-company/my-company.component';
 import { InfoCompanyComponent } from './info-company/info-company.component';
 import { DialogJobsComponent } from './info-company/dialog-jobs/dialog-jobs.component';
+import { DialogCommentsComponent } from './info-company/dialog-comments/dialog-comments.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { DialogJobsComponent } from './info-company/dialog-jobs/dialog-jobs.comp
     MyCompanyComponent,
     InfoCompanyComponent,
     DialogJobsComponent,
+    DialogCommentsComponent,
   ],
   imports: [
     BrowserModule,
