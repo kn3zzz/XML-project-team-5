@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'home', component: HomepageComponent},
   { path: 'follow-requests', component: FollowRequestsComponent},
   { path: 'search-profiles', component: SearchProfilesComponent},
-  { path: 'profile', component: ProfileComponent},
+  { path: 'profile/:id', component: ProfileComponent},
   { path: 'connections', component: ConnectionsComponent},
   { path: 'notifications', component: NotificationsComponent},
   { path: 'messaging', component: MessagingComponent}

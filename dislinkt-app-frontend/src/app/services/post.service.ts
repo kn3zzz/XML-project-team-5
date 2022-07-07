@@ -29,7 +29,6 @@ export class PostService {
       return this.http.post<any>(this.url + '/createPost', body);
     }
     LikePost(userId:Number,id:Number) : Observable<any> {
-        userId = Number(localStorage.getItem('id'));
         const body = {
             postId:id,
             userId : userId ,
@@ -37,7 +36,7 @@ export class PostService {
         return this.http.post<any>(this.url + '/likePost', body);
     }
     DislikePost(userId:Number,id:Number) : Observable<any> {
-        userId = Number(localStorage.getItem('id'));
+      console.log(userId)
         const body = {
             postId: id,
             userId : userId ,
@@ -56,6 +55,9 @@ export class PostService {
     }
     GetFeed(id:Number): Observable<any> {
      id = Number(localStorage.getItem('id'))
-      return this.http.get<any>(this.url + '/getAllPosts/' + id);
+      return this.http.get<any>(this.url + '/getFeed/' + id);
     }
+    GetPosts(id:Number): Observable<any> {
+       return this.http.get<any>(this.url + '/getPosts/' + id);
+     }
   }

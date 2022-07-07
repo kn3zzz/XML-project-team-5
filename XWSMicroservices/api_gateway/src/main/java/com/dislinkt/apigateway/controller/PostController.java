@@ -32,8 +32,12 @@ public class PostController {
     public ResponseEntity<?> commentPost(@RequestBody CommentDTO post){
         return new ResponseEntity<>(postService.commentPost(post), HttpStatus.OK);
     }
-    @GetMapping("/getAllPosts/{id}")
+    @GetMapping("/getPosts/{id}")
     public ResponseEntity<?> getPosts(@PathVariable("id") long id){
         return new ResponseEntity<>(postService.getPosts(id),HttpStatus.OK);
+    }
+    @GetMapping("/getFeed/{id}")
+    public ResponseEntity<?> getFeed(@PathVariable("id") long id){
+        return new ResponseEntity<>(postService.getFeed(id),HttpStatus.OK);
     }
 }

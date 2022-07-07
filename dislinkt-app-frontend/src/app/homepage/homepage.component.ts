@@ -51,13 +51,13 @@ export class HomepageComponent implements OnInit {
     }) 
   }
   likePost(id:number):void{
-    this.postServise.LikePost(id,id).subscribe((d:any) =>{
+    this.postServise.LikePost(Number(localStorage.getItem('id')),id).subscribe((d:any) =>{
       this.getPosts()
 
     })
   }
   dislikePost(id:number):void{
-    this.postServise.DislikePost(id,id).subscribe((d:any) =>{
+    this.postServise.DislikePost(Number(localStorage.getItem('id')),id).subscribe((d:any) =>{
       this.getPosts()
 
     })
