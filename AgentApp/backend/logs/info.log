@@ -99,3 +99,14 @@
 {level:"INFO", timestamp:"2022-07-07 04:18:28,754", file:"AuthController.java", line:"105", message:"Successful login. User: user@gmail.com"}
 {level:"INFO", timestamp:"2022-07-07 04:18:56,554", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
 {level:"INFO", timestamp:"2022-07-07 04:20:23,064", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-07 04:48:14,835", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-07 04:49:24,070", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-07 04:54:42,071", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-07 05:02:38,728", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-07 05:10:01,996", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-07 14:23:14,232", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-07 15:22:00,925", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-07 15:42:18,071", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-07 15:45:26,280", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-07 15:52:33,046", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}
+{level:"INFO", timestamp:"2022-07-07 16:25:17,858", file:"AuthController.java", line:"105", message:"Successful login. User: o@gmail.com"}

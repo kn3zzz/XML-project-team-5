@@ -1,5 +1,7 @@
 package com.agent.application.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,7 @@ public class CommentSalary {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "company_id")
     private Company company;
@@ -36,10 +39,6 @@ public class CommentSalary {
     @Column(name="is_former_employee", nullable = false)
     @NotNull(message = "CommentSalary isFormerEmployee is required")
     private Boolean isFormerEmployee;  // bivsi ili trenutni zaposleni
-
-    @Column(name="bonus", nullable = false)
-    @NotNull(message = "CommentSalary bonus is required")
-    private Boolean bonus;
 
     @Column(name="fair_pay", nullable = false)
     @NotNull(message = "CommentSalary fairPay is required")

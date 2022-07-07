@@ -34,6 +34,8 @@ import { MyCompanyComponent } from './my-company/my-company.component';
 import { InfoCompanyComponent } from './info-company/info-company.component';
 import { DialogJobsComponent } from './info-company/dialog-jobs/dialog-jobs.component';
 import { DialogCommentsComponent } from './info-company/dialog-comments/dialog-comments.component';
+import { DialogInterviewComponent } from './info-company/dialog-interview/dialog-interview.component';
+import { DialogSalaryComponent } from './info-company/dialog-salary/dialog-salary.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { DialogCommentsComponent } from './info-company/dialog-comments/dialog-c
     InfoCompanyComponent,
     DialogJobsComponent,
     DialogCommentsComponent,
+    DialogInterviewComponent,
+    DialogSalaryComponent,
   ],
   imports: [
     BrowserModule,

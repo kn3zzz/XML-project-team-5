@@ -1,6 +1,9 @@
 package com.agent.application.service.impl;
 
 import com.agent.application.dto.AddCommentDTO;
+import com.agent.application.dto.AddInterviewCommentDTO;
+import com.agent.application.dto.CommentSalaryDTO;
+import com.agent.application.mapper.CommentInterviewMapper;
 import com.agent.application.mapper.CommentMapper;
 import com.agent.application.model.*;
 import com.agent.application.repository.CommentInterviewRepository;
@@ -84,12 +87,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void addCommentInterview(CommentInterview req) throws Exception {
-        Company company = companyRepository.findCompanyById(req.getCompany().getId());
+    public void addCommentInterview(AddInterviewCommentDTO reqDto) throws Exception {
+        CommentInterview comment = new CommentInterviewMapper().mapAddCommentInterviewToCommentInterview(reqDto);
+        Company company = companyRepository.findCompanyById(reqDto.getCompanyId());
         if(!company.isActive())
             throw new Exception("Company is not active");
-        req.setCompany(company);
-        commentInterviewRepository.save(req);
+        comment.setCompany(company);
+        commentInterviewRepository.save(comment);
     }
 
     @Override

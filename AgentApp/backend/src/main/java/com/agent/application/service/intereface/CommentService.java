@@ -1,6 +1,7 @@
 package com.agent.application.service.intereface;
 
 import com.agent.application.dto.AddCommentDTO;
+import com.agent.application.dto.AddInterviewCommentDTO;
 import com.agent.application.dto.CompanyRegistrationDTO;
 import com.agent.application.model.Comment;
 import com.agent.application.model.CommentInterview;
@@ -20,7 +21,7 @@ public interface CommentService {
 
     List<CommentSalary> getAllSalaryCommentsByCompanyId(Long companyId);
 
-    void addCommentInterview(CommentInterview req) throws Exception;
+    void addCommentInterview(AddInterviewCommentDTO req) throws Exception;
 
     List<CommentInterview> getAllInterviewCommentsByCompanyId(Long companyId);
 }
