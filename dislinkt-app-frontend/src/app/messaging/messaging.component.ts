@@ -109,7 +109,8 @@ export class MessagingComponent implements OnInit {
         setTimeout(() => {
             this.scrollToLastMessage()
       }, 200);
-      })
+      this.messageText = ""  
+    })
       .catch(e => {
         Swal.fire({
           icon: 'error',
