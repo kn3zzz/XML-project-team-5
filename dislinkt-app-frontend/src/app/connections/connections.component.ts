@@ -40,21 +40,6 @@ export class ConnectionsComponent implements OnInit {
           console.log(response.data);
           this.connections = response.data;
 
-          //manually adding some data DELETE LATER
-          // this.connections.push({
-          //   "id": 1,
-          //   "sender": 4,
-          //   "receiver": 2,
-          //   "connectionState" : "CONNECTED",
-          // });
-
-          // this.connections.push({
-          //   "id": 3,
-          //   "sender": 3,
-          //   "receiver": 2,
-          //   "connectionState" : "PENDING",
-          // });
-          
           console.log(this.connections);
         });
   }
@@ -65,32 +50,6 @@ export class ConnectionsComponent implements OnInit {
           console.log(response.data);
           this.users = response.data;
 
-          //manually adding some data DELETE LATER
-          // this.users.push({
-          //   "username": "p.username4",
-          //   "name": "p.name4",
-          //   "lastname": "p.lastname4",
-          //   "biography" : "p.biography4",
-          //   "interests": "p.interests4",
-          //   "id": 4,
-          // });
-          // this.users.push({
-          //   "username": "p.username3",
-          //   "name": "p.name3",
-          //   "lastname": "p.lastname3",
-          //   "biography" : "p.biography3",
-          //   "interests": "p.interests3",
-          //   "id": 3,
-          // });
-
-          // this.users.push({
-          //   "username": "p.username1",
-          //   "name": "p.name1",
-          //   "lastname": "p.lastname1",
-          //   "biography" : "p.biography1",
-          //   "interests": "p.interests1",
-          //   "id": 1,
-          // });
         });       
   }
 
@@ -107,8 +66,8 @@ export class ConnectionsComponent implements OnInit {
     console.log("changing state");
     switch(action){
       case "idle":
-        this.UpdateConnection(connection, "IDLE")
-        this.ChangeConnectionLocally(connection, "IDLE")
+        this.DeleteConnection(connection)
+        this.DeleteConnectionLocally(connection)
         break;
       case "follow":
         this.UpdateConnection(connection, "PENDING")
@@ -136,6 +95,13 @@ export class ConnectionsComponent implements OnInit {
     })
   }
 
+  DeleteConnectionLocally(connection: ConnectionDTO){
+    const index = this.connections.indexOf(connection);
+    if(index !== -1){
+      this.connections.splice(index, 1);
+    }
+  }
+
   UpdateConnection(connection: ConnectionDTO, state: string){
     const body = {
       id: connection.id,
@@ -149,7 +115,7 @@ export class ConnectionsComponent implements OnInit {
           icon: 'success',
           title: 'Done.',
           showConfirmButton: false,
-          timer: 1500
+          timer: 1000
         })
 
       }
@@ -158,7 +124,7 @@ export class ConnectionsComponent implements OnInit {
           icon: 'error',
           title: 'Something went wrong',
           showConfirmButton: false,
-          timer: 1500
+          timer: 1000
         })
       }
     })
@@ -169,6 +135,29 @@ export class ConnectionsComponent implements OnInit {
     console.log("unfollowing..");
     this.UpdateConnection(connection, "IDLE");
     this.ChangeConnectionLocally(connection, "IDLE");
+  }
+
+  DeleteConnection(connection: ConnectionDTO){
+    axios.delete(environment.api + "/connections/delete/" + connection.id).then(response => {
+      if(response.data == true){
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'Done.',
+          showConfirmButton: false,
+          timer: 1000
+        })
+
+      }
+      else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Something went wrong',
+          showConfirmButton: false,
+          timer: 1000
+        })
+      }
+    })
   }
 
 }

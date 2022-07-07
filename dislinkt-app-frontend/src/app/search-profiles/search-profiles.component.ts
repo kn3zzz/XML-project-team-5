@@ -4,6 +4,8 @@ import Swal from 'sweetalert2'
 import axios from 'axios';
 import { Router } from '@angular/router';
 import { ProfilesData } from './search-profiles.dto';
+import { ConnectionsService } from '../services/connections.service';
+import { ConnectionDTO } from '../connections/connection.dto';
 
 
 @Component({
@@ -13,11 +15,15 @@ import { ProfilesData } from './search-profiles.dto';
 })
 export class SearchProfilesComponent implements OnInit {
 
+  public connections: ConnectionDTO[]
   public profiles: ProfilesData[]
   query = ""
 
-  constructor(private router: Router) { 
+  constructor(private router: Router, private connectionsService: ConnectionsService) { 
     this.profiles = [];
+    this.connections = [];
+
+    this.GetConnections();
   }
 
   ngOnInit(): void {
@@ -83,11 +89,19 @@ export class SearchProfilesComponent implements OnInit {
   }
 
   sendFollow(id: number) {
+
+    let state = this.GetProfile(id)?.privateProfile ? "PENDING" : "CONNECTED";
+    this.AddConnection(id, state);
+    
+    
+  }
+
+  AddConnection(id: number, state: string){
     const body = {
       id: 2, //id is generated on backend, 2 is a joke.
       sender: localStorage.getItem("id"),
       receiver: id,
-      connectionState: "PENDING"
+      connectionState: state
     }
     axios.post(environment.api + "/connections/addConnection", body).then(response => {
       if(response.data == true){
@@ -95,9 +109,9 @@ export class SearchProfilesComponent implements OnInit {
           icon: 'success',
           title: 'Request sent.',
           showConfirmButton: false,
-          timer: 500
+          timer: 1000
         })
-
+        this.GetConnections();
       }
       else{
         Swal.fire({
@@ -108,5 +122,35 @@ export class SearchProfilesComponent implements OnInit {
         })
       }
     })
+  }
+
+  GetProfile(id: number): ProfilesData | undefined{
+    return this.profiles.find(x => x.id == id);
+  }
+
+  GetConnections(){
+    this.connectionsService.GetConnections(JSON.parse(localStorage.getItem("id") || "{}")).subscribe((data:any) =>{
+      this.connections = [];
+      for(const d of data){
+        this.connections.push(d);
+      }
+      console.log(this.connections);
+      
+    });
+  }
+
+  ConnectionExists(id: number): boolean{
+    
+    for(const c of this.connections){
+      if (c.receiver == id || c.sender == id)
+        return true;
+    }
+    return false;
+  }
+
+  IsNotMe(id: number): boolean{
+    if(id == JSON.parse(localStorage.getItem("id") || "{}"))
+      return false;
+    else return true;
   }
 }

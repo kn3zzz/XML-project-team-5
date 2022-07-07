@@ -94,6 +94,7 @@ AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImp
                         .setSkills(u.getSkills())
                         .setUsername(u.getUsername())
                         .setWorkingExperience(u.getWorkingExperience())
+                        .setPrivateProfile(u.isProfilePrivacy())
                         .build());
             }
         }
