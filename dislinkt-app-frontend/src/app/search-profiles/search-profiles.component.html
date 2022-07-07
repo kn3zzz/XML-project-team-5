@@ -19,12 +19,14 @@
         <div class="col-sm-2"></div>
         <div class="col-sm-8">
             <div *ngFor="let profile of profiles;" class="card" style="margin-top: 5%;">
-                <div class="card-body">
+                <div class="card-body" *ngIf="IsNotMe(profile.id)">
                   <h5 class="card-title">{{profile.name}} {{profile.lastname}} - {{profile.username}}</h5>
                   <p class="card-text">{{profile.biography}}</p>
                   <p class="card-text">{{profile.interests}}</p>
-                  <a class="btn btn-outline-primary" href="/profile/{{profile.id}}">Visit profile</a>
-                  <button style="margin-left: 3%;" type="button" (click)="sendFollow(profile.id)" class="btn btn-primary">Send follow request</button>
+
+                  <a class="btn btn-outline-primary" *ngIf="!profile.privateProfile" href="/profile/{{profile.id}}">Visit profile</a>
+                  <button *ngIf="!ConnectionExists(profile.id)" style="margin-left: 3%;" type="button" (click)="sendFollow(profile.id)" class="btn btn-primary">Send follow request</button>
+
                 </div>
               </div>
 

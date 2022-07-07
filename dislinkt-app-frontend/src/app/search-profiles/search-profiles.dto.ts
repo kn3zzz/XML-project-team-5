@@ -4,7 +4,8 @@ export class ProfilesData{
     lastname: string;
     biography : string;
     interests : string;
-    id: number
+    id: number;
+    privateProfile: boolean;
 
     constructor(){
         this.name = '';
@@ -13,5 +14,6 @@ export class ProfilesData{
         this.biography = '';
         this.interests = '';
         this.id = 0;
+        this.privateProfile = false;
     }
 }

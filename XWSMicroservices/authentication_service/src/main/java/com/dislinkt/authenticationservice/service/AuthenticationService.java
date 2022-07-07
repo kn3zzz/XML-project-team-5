@@ -94,6 +94,7 @@ public class AuthenticationService extends AuthenticationServiceGrpc.Authenticat
                         .setSkills(u.getSkills())
                         .setUsername(u.getUsername())
                         .setWorkingExperience(u.getWorkingExperience())
+                        .setPrivateProfile(u.isProfilePrivacy())
                         .build());
             }
         }

@@ -86,7 +86,7 @@ public class AuthenticationService {
         List<SearchProfileResponseDTO> retList = new ArrayList<SearchProfileResponseDTO>();
         for (int i = 0; i < responses.getProfilesCount(); i++) {
             SearchProfileEntity res = responses.getProfiles(i);
-            retList.add(new SearchProfileResponseDTO(res.getUsername(), res.getName(), res.getLastname(), res.getBiography(), res.getInterests(), res.getId()));
+            retList.add(new SearchProfileResponseDTO(res.getUsername(), res.getName(), res.getLastname(), res.getBiography(), res.getInterests(), res.getId(), res.getPrivateProfile()));
         }
         return retList;
     }
