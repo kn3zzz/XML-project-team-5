@@ -37,6 +37,7 @@ export class SearchProfilesComponent implements OnInit {
             "biography" : p.biography,
             "interests": p.interests,
             "id": p.id,
+            "privateProfile": p.privateProfile
           });
         }
         console.log(this.profiles)
@@ -66,6 +67,7 @@ export class SearchProfilesComponent implements OnInit {
             "biography" : p.biography,
             "interests": p.interests,
             "id": p.id,
+            "privateProfile": p.privateProfile
           });
         }
         console.log(this.profiles)

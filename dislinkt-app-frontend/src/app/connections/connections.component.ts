@@ -66,31 +66,31 @@ export class ConnectionsComponent implements OnInit {
           this.users = response.data;
 
           //manually adding some data DELETE LATER
-          this.users.push({
-            "username": "p.username4",
-            "name": "p.name4",
-            "lastname": "p.lastname4",
-            "biography" : "p.biography4",
-            "interests": "p.interests4",
-            "id": 4,
-          });
-          this.users.push({
-            "username": "p.username3",
-            "name": "p.name3",
-            "lastname": "p.lastname3",
-            "biography" : "p.biography3",
-            "interests": "p.interests3",
-            "id": 3,
-          });
+          // this.users.push({
+          //   "username": "p.username4",
+          //   "name": "p.name4",
+          //   "lastname": "p.lastname4",
+          //   "biography" : "p.biography4",
+          //   "interests": "p.interests4",
+          //   "id": 4,
+          // });
+          // this.users.push({
+          //   "username": "p.username3",
+          //   "name": "p.name3",
+          //   "lastname": "p.lastname3",
+          //   "biography" : "p.biography3",
+          //   "interests": "p.interests3",
+          //   "id": 3,
+          // });
 
-          this.users.push({
-            "username": "p.username1",
-            "name": "p.name1",
-            "lastname": "p.lastname1",
-            "biography" : "p.biography1",
-            "interests": "p.interests1",
-            "id": 1,
-          });
+          // this.users.push({
+          //   "username": "p.username1",
+          //   "name": "p.name1",
+          //   "lastname": "p.lastname1",
+          //   "biography" : "p.biography1",
+          //   "interests": "p.interests1",
+          //   "id": 1,
+          // });
         });       
   }
 

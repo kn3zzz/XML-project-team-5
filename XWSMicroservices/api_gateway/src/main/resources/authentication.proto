@@ -52,6 +52,7 @@ message SearchProfileEntity {
   string biography = 11;
   string workingExperience = 12;
   string education = 13;
+  bool privateProfile = 14;
 }
 
 message SearchProfileResponse {

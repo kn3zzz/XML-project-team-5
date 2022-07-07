@@ -14,4 +14,5 @@ public class SearchProfileResponseDTO {
     public String biography;
     public String interests;
     public long id;
+    public boolean privateProfile;
 }
