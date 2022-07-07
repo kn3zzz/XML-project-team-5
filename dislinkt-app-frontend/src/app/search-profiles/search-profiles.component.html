@@ -23,7 +23,7 @@
                   <h5 class="card-title">{{profile.name}} {{profile.lastname}} - {{profile.username}}</h5>
                   <p class="card-text">{{profile.biography}}</p>
                   <p class="card-text">{{profile.interests}}</p>
-                  <button class="btn btn-outline-primary">Visit profile</button>
+                  <a class="btn btn-outline-primary" href="/profile/{{profile.id}}">Visit profile</a>
                   <button style="margin-left: 3%;" type="button" (click)="sendFollow(profile.id)" class="btn btn-primary">Send follow request</button>
                 </div>
               </div>

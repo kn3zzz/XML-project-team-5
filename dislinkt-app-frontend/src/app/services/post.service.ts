@@ -58,7 +58,6 @@ export class PostService {
       return this.http.get<any>(this.url + '/getFeed/' + id);
     }
     GetPosts(id:Number): Observable<any> {
-      id = Number(localStorage.getItem('id'))
        return this.http.get<any>(this.url + '/getPosts/' + id);
      }
   }

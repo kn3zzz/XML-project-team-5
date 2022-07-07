@@ -10,9 +10,9 @@ import axios from 'axios';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  constructor(private router: Router) { }
-
+  public userId: number;
+  constructor(private router: Router) { this.userId = Number(localStorage.getItem("id"));}
+  
   notificationsAmount = 0;
   
 
