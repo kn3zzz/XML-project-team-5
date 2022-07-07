@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   public posts : PostInfoDTO[];
   public newComment : CommentDTO;
   public user : UserDTO;
+  loggedIn = false;
   constructor(private route:ActivatedRoute,public router: Router,private postService:PostService, private userService : UserService ) {
     this.id = 0;
     this.posts = [];
@@ -27,6 +28,8 @@ export class ProfileComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    if(localStorage.getItem("id")!=null)
+      this.loggedIn = true;
     this.id = this.route.snapshot.params['id'];
     this.getUser(this.id);
     this.getPosts(this.id) 

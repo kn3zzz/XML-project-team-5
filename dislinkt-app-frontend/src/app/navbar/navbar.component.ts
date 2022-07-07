@@ -11,18 +11,26 @@ import axios from 'axios';
 })
 export class NavbarComponent implements OnInit {
   public userId: number;
-  constructor(private router: Router) { this.userId = Number(localStorage.getItem("id"));}
+   loggedIn = false;
+  constructor(private router: Router) { this.userId = 0;}
   
   notificationsAmount = 0;
   
 
   ngOnInit(): void {
-    this.getNotifications()
-    setInterval(()=> { this.getNotifications() }, 5 * 1000);
+    
+    if(localStorage.getItem("id") != null){
+      this.getNotifications()
+      setInterval(()=> { this.getNotifications() }, 2 * 1000);
+      this.loggedIn = true;
+    }
+    
+    
   }
 
   getNotifications() {
     const id = localStorage.getItem('id');
+    this.userId = Number(localStorage.getItem("id"));
     axios.get(environment.api + '/notifications/getNotifications/' + id)
       .then(response => {
         this.notificationsAmount = 0

@@ -25,7 +25,7 @@
                   <p class="card-text">{{profile.interests}}</p>
 
                   <a class="btn btn-outline-primary" *ngIf="!profile.privateProfile" href="/profile/{{profile.id}}">Visit profile</a>
-                  <button *ngIf="!ConnectionExists(profile.id)" style="margin-left: 3%;" type="button" (click)="sendFollow(profile.id)" class="btn btn-primary">Send follow request</button>
+                  <button *ngIf="!ConnectionExists(profile.id) && loggedIn" style="margin-left: 3%;" type="button" (click)="sendFollow(profile.id)" class="btn btn-primary">Send follow request</button>
 
                 </div>
               </div>

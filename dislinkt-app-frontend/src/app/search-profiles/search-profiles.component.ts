@@ -18,16 +18,19 @@ export class SearchProfilesComponent implements OnInit {
   public connections: ConnectionDTO[]
   public profiles: ProfilesData[]
   query = ""
-
+  loggedIn = false;
   constructor(private router: Router, private connectionsService: ConnectionsService) { 
     this.profiles = [];
     this.connections = [];
-
+    
     this.GetConnections();
   }
 
   ngOnInit(): void {
     this.getAllProfiles();
+    if(localStorage.getItem("id")!=null){
+      this.loggedIn = true;
+  }
   }
 
   search() {
