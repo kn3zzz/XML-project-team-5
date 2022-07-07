@@ -14,6 +14,8 @@ import java.util.List;
 public class AuthenticationService {
     @GrpcClient("authentication-grpc-service")
     AuthenticationServiceGrpc.AuthenticationServiceBlockingStub authStub;
+    @GrpcClient("connection-grpc-service")
+    ConnectionServiceGrpc.ConnectionServiceBlockingStub connectionStub;
 
     public Boolean registerUser(NewUserDTO user) {
         System.out.println(user);
@@ -114,5 +116,26 @@ public class AuthenticationService {
                 res.getPrivateProfile(),
                 res.getNotificationsOn(),
                 res.getId());
+    }
+
+    public List<MessagesUserDTO> getMessagesUsers(long id) {
+        List<UserID> ids = new ArrayList<>();
+        GetConnectionsResponse resCon = connectionStub.getConnections(GetConnections.newBuilder().setUserId(id).build());
+        for (ConnectionEntity ce : resCon.getConnectionsList()){
+            if (ce.getState().equalsIgnoreCase("CONNECTED"))
+                if (ce.getReceiver() == id)
+                    ids.add(UserID.newBuilder().setId(ce.getSender()).build());
+                else if (ce.getSender() == id)
+                    ids.add(UserID.newBuilder().setId(ce.getReceiver()).build());
+        }
+        MessagesUsers res = authStub.getMessagesUsers(ConnectedUsers.newBuilder().addAllUserIds(ids).build());
+        return convertToMessagesUsersDTO(res);
+    }
+
+    private List<MessagesUserDTO> convertToMessagesUsersDTO(MessagesUsers res) {
+        List<MessagesUserDTO> users = new ArrayList<>();
+        for (MessagesUser mu : res.getUsersList())
+            users.add(new MessagesUserDTO(mu.getId(), mu.getName(), mu.getLastname(), mu.getUsername()));
+        return users;
     }
 }

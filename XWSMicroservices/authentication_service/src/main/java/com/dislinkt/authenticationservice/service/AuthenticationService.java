@@ -1,6 +1,5 @@
 package com.dislinkt.authenticationservice.service;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.dislinkt.authenticationservice.enums.Gender;
 import com.dislinkt.authenticationservice.enums.Role;
 import com.dislinkt.authenticationservice.model.User;
@@ -13,14 +12,15 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
 @EnableMongoRepositories("com.dislinkt.authenticationservice.repository")
 @GrpcService
-public class
-AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImplBase {
+public class AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImplBase {
     @Autowired
     private UserRepository userRepository;
 
@@ -171,6 +171,23 @@ AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImp
             responseObserver.onNext(res);
             responseObserver.onCompleted();
         }
+        responseObserver.onNext(res);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getMessagesUsers(ConnectedUsers request, StreamObserver<MessagesUsers> responseObserver) {
+        List<MessagesUser> users = new ArrayList<>();
+        for (UserID id : request.getUserIdsList()) {
+            User u = userRepository.findById(id.getId()).get();
+            users.add(MessagesUser.newBuilder()
+                    .setId(u.getId())
+                    .setName(u.getName())
+                    .setLastname(u.getLastname())
+                    .setUsername(u.getUsername())
+                    .build());
+        }
+        MessagesUsers res = MessagesUsers.newBuilder().addAllUsers(users).build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
     }

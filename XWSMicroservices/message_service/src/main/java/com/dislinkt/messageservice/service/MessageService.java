@@ -6,7 +6,9 @@ import com.dislinkt.messageservice.model.Chat;
 import com.dislinkt.messageservice.model.Message;
 import com.dislinkt.messageservice.repository.MessageRepository;
 import io.grpc.stub.StreamObserver;
+import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@EnableMongoRepositories("com.dislinkt.messageservice.repository")
+@GrpcService
 public class MessageService extends MessageServiceGrpc.MessageServiceImplBase {
 
     @Autowired

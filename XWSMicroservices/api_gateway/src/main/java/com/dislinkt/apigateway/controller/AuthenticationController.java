@@ -51,4 +51,9 @@ public class AuthenticationController {
         return new ResponseEntity<>(authenticationService.getUser(id), HttpStatus.OK);
     }
 
+    @GetMapping("/getMessagesUsers/{id}")
+    public ResponseEntity<?> getMessagesUsers(@PathVariable("id") long id){
+        return new ResponseEntity<>(authenticationService.getMessagesUsers(id), HttpStatus.OK);
+    }
+
 }

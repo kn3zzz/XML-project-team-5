@@ -103,10 +103,26 @@ message UserResponse {
   int64 id = 15;
 }
 
+message MessagesUser {
+  int64 id = 1;
+  string name = 2;
+  string lastname = 3;
+  string username = 4;
+}
+
+message MessagesUsers {
+  repeated MessagesUser users = 1;
+}
+
+message ConnectedUsers {
+  repeated UserID userIds = 1;
+}
+
 service AuthenticationService {
   rpc registerUser(UserRegister) returns (UserRegisterResponse){}
   rpc login(UserLogin) returns (UserLoginResponse){}
   rpc searchProfile(SearchProfile) returns (SearchProfileResponse){}
   rpc changeUserInfo(UserInfoChange) returns (UserInfoChangeResponse){}
   rpc getUser(UserID) returns (UserResponse){}
+  rpc getMessagesUsers(ConnectedUsers) returns (MessagesUsers){}
 }
