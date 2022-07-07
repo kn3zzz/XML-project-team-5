@@ -84,7 +84,13 @@ message CommentProto{
 message GetPosts {
   int64 userId = 1;
 }
+message GetFeed {
+  repeated int64 userId = 1;
+}
 message GetPostListResponse{
+  repeated PostProto posts = 1;
+}
+message GetFeedResponse{
   repeated PostProto posts = 1;
 }
 
@@ -98,4 +104,6 @@ service PostService {
   rpc dislikePost(DisLikePost) returns (DisLikePostResponse){}
   rpc commentPost(PostComment) returns (PostCommentResponse){}
   rpc getPosts(GetPosts) returns (GetPostListResponse){}
+  rpc work(GetFeed) returns (GetPostListResponse){}
+
 }

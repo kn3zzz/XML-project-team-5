@@ -19,6 +19,8 @@ public class PostService {
     AuthenticationService authenticationService;
     @Autowired
     NotificationService notificationService;
+    @Autowired
+    ConnectionService connectionService;
     @GrpcClient("post-grpc-service")
     PostServiceGrpc.PostServiceBlockingStub postStub;
 
@@ -46,6 +48,7 @@ public class PostService {
 
     }
     public Map<Descriptors.FieldDescriptor, Object> likePost(@RequestBody ReactionPostDTO post) {
+
         LikePost req = LikePost.newBuilder()
                 .setPostId(post.postId)
                 .setUserId(post.userId)
@@ -98,9 +101,22 @@ public class PostService {
             System.out.println(authenticationService.getUser(pp.getUserId()));
             String username = authenticationService.getUser(pp.getUserId()).getUsername();
             PostUserDTO newPost = new PostUserDTO(post,username);
-            System.out.println(newPost);
             postsNew.add(newPost);
         }
         return postsNew;
+    }
+
+    public List<PostUserDTO> getFeed(long id) {
+        List<ConnectionDTO> connections = connectionService.getConnections(id);
+        List<Long> ids = new ArrayList<>();
+        for(ConnectionDTO con : connections){
+            if(con.receiver!=id)
+                ids.add(con.receiver);
+            if(con.sender!=id)
+                ids.add(con.sender);
+        }
+        GetFeed req = GetFeed.newBuilder().addAllUserId(ids).build();
+        GetPostListResponse res = postStub.work(req);
+        return formatPosts(res);
     }
 }

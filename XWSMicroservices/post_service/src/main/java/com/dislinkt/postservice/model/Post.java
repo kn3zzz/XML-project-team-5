@@ -97,6 +97,12 @@ public class Post {
     public void addLikeId(long userId){
         this.likedPostUsers.add(userId);
     }
+    public void removeLikeId(int index){
+        this.likedPostUsers.remove(index);
+    }
+    public void removeDislikeId(int index){
+        this.dislikedPostUsers.remove(index);
+    }
     public void addDislikeId(long userId){
         this.dislikedPostUsers.add(userId);
     }

@@ -60,22 +60,69 @@ public class PostService  extends PostServiceGrpc.PostServiceImplBase {
     }
     @Override
     public void likePost(LikePost request, StreamObserver<LikePostResponse> responseObserver){
-        Post post = postRepository.findById(request.getPostId()).get();
-        post.addLikeId(request.getUserId());
-        postRepository.save(post);
-        LikePostResponse res = LikePostResponse.newBuilder().setMessage("Success").setSuccess(true).build();
-        responseObserver.onNext(res);
-        responseObserver.onCompleted();
+            Post post = postRepository.findById(request.getPostId()).get();
+            List<Long> likedUsersIds = post.getLikedPostUsers();
+            List<Long> dislikedUsersIds = post.getDislikedPostUsers();
+        int flag = 0;
+        int flag2 = 0;
+        for (int j = 0; j < likedUsersIds.size(); j++) {
+            if (request.getUserId() == likedUsersIds.get(j)) {
+                post.removeLikeId(j);
+                flag = 1;
+                flag2 = 1;
+            }
+        }
+        if(flag2 == 0) {
+            for (int j = 0; j < dislikedUsersIds.size(); j++) {
+                if (request.getUserId() == dislikedUsersIds.get(j)) {
+                    post.removeDislikeId(j);
+                    post.addLikeId(request.getUserId());
+                    flag = 1;
+                }
+            }
+        }
+            if(flag == 0)
+                post.addLikeId(request.getUserId());
+
+            postRepository.save(post);
+            LikePostResponse res = LikePostResponse.newBuilder().setMessage("Success").setSuccess(true).build();
+            responseObserver.onNext(res);
+            responseObserver.onCompleted();
+
     }
     @Override
-    public void dislikePost(DisLikePost request, StreamObserver<DisLikePostResponse> responseObserver){
+    public void dislikePost(DisLikePost request, StreamObserver<DisLikePostResponse> responseObserver) {
         Post post = postRepository.findById(request.getPostId()).get();
-        post.addDislikeId(request.getUserId());
-        postRepository.save(post);
-        DisLikePostResponse res = DisLikePostResponse.newBuilder().setMessage("Success").setSuccess(true).build();
-        responseObserver.onNext(res);
-        responseObserver.onCompleted();
-    }
+        List<Long> likedUsersIds = post.getLikedPostUsers();
+        List<Long> dislikedUsersIds = post.getDislikedPostUsers();
+        System.out.println(request.getUserId());
+        int flag = 0;
+        int flag2 = 0;
+        for (int j = 0; j < dislikedUsersIds.size(); j++) {
+            if (request.getUserId() == dislikedUsersIds.get(j)) {
+                post.removeDislikeId(j);
+                flag = 1;
+                flag2 = 1;
+            }
+        }
+        if(flag2 == 0) {
+            for (int j = 0; j < likedUsersIds.size(); j++) {
+                if (request.getUserId() == likedUsersIds.get(j)) {
+                    post.removeLikeId(j);
+                    post.addDislikeId(request.getUserId());
+                    flag = 1;
+                }
+            }
+        }
+            if (flag == 0)
+                post.addDislikeId(request.getUserId());
+
+            postRepository.save(post);
+            DisLikePostResponse res = DisLikePostResponse.newBuilder().setMessage("Success").setSuccess(true).build();
+            responseObserver.onNext(res);
+            responseObserver.onCompleted();
+        }
+
 
     @Override
     public void commentPost(PostComment request, StreamObserver<PostCommentResponse> responseObserver) {
@@ -119,7 +166,39 @@ public class PostService  extends PostServiceGrpc.PostServiceImplBase {
         GetPostListResponse res = GetPostListResponse.newBuilder()
                 .addAllPosts(postsProto)
                 .build();
-        System.out.println(res);
+        responseObserver.onNext(res);
+        responseObserver.onCompleted();
+    }
+    @Override
+    public void work( GetFeed request, StreamObserver<GetPostListResponse> responseObserver){
+        List<PostProto> postsProto = new ArrayList<>();
+        List<Long> userIds = new ArrayList<>();
+        userIds = request.getUserIdList();
+        for (Post p : postRepository.findAll()) {
+            for (long id : userIds) {
+                if (p.getUserId() == id) {
+                    List<CommentProto> commentsProto = new ArrayList<>();
+                    for (Comment c : p.getComments()) {
+                        commentsProto.add(CommentProto.newBuilder().setUserId(c.getUserId()).setDateCreated(c.getDate().toString()).setPostId(p.getId()).setContent(c.getContent()).build());
+                    }
+                    PostProto postProto = PostProto.newBuilder()
+                            .setId(p.getId())
+                            .setUserId(p.getUserId())
+                            .setPostText(p.getPostText())
+                            .setImageString(p.getImageString())
+                            .addAllComments(commentsProto)
+                            .addAllLikedPostUsers(p.getLikedPostUsers())
+                            .addAllDislikedPostUsers(p.getDislikedPostUsers())
+                            .setDateCreated(p.getDate().toString())
+                            .build();
+
+                    postsProto.add(postProto);
+                }
+            }
+        }
+        GetPostListResponse res = GetPostListResponse.newBuilder()
+                .addAllPosts(postsProto)
+                .build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
     }
