@@ -80,11 +80,14 @@ public class Application implements CommandLineRunner {
 		Permission findAll = new Permission("findAll");
 		userPermissions.add(findAll);
 
-//		Permission downloadCertificate = new Permission("downloadCertificate");
-//		userPermissions.add(downloadCertificate);
-//
-//		Permission issueCertificate = new Permission("issueCertificate");
-//		userPermissions.add(issueCertificate);
+		Permission addSalaryComment = new Permission("addSalaryComment");
+		userPermissions.add(addSalaryComment);
+
+		Permission addInterviewComment = new Permission("addInterviewComment");
+		userPermissions.add(addInterviewComment);
+
+		Permission addCompanyComment = new Permission("addCompanyComment");
+		userPermissions.add(addCompanyComment);
 //
 //		Permission revokeCerificate = new Permission("revokeCerificate");
 //		userPermissions.add(revokeCerificate);
@@ -98,11 +101,8 @@ public class Application implements CommandLineRunner {
 		Permission findAll = new Permission("findAll");
 		companyOwnerPermissions.add(findAll);
 
-//		Permission downloadCertificate = new Permission("downloadCertificate");
-//		userPermissions.add(downloadCertificate);
-//
-//		Permission issueCertificate = new Permission("issueCertificate");
-//		userPermissions.add(issueCertificate);
+		Permission saveJobOffer = new Permission("saveJobOffer");
+		companyOwnerPermissions.add(saveJobOffer);
 //
 //		Permission revokeCerificate = new Permission("revokeCerificate");
 //		userPermissions.add(revokeCerificate);

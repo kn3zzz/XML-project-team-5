@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('addCompanyComment')")
     public ResponseEntity<?> addCompanyComment(@RequestBody @Valid AddCommentDTO dto) throws Exception {
         try {
             commentService.addComment(dto);
@@ -47,6 +49,7 @@ public class CommentController {
 
 
     @PostMapping(value = "/salary" )
+    @PreAuthorize("hasAuthority('addSalaryComment')")
     public ResponseEntity<?> addSalaryComment(@RequestBody @Valid CommentSalaryDTO reqDto) throws Exception {
 
         try {
@@ -65,6 +68,7 @@ public class CommentController {
     }
 
     @PostMapping(value = "/interview" )
+    @PreAuthorize("hasAuthority('addInterviewComment')")
     public ResponseEntity<?> addInterviewComment(@RequestBody @Valid AddInterviewCommentDTO reqDto) throws Exception {
         try {
             commentService.addCommentInterview(reqDto);
