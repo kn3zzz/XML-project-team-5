@@ -10,26 +10,22 @@
   </div>
   <div class="row mx-5">
     <div class="card shadow-sm">
-      <app-dialog-jobs *ngIf="state == 'jobs'"></app-dialog-jobs>
-      <div class="d-flex justify-content-center my-5" *ngIf="state == 'comments'">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal"
-          *ngIf="!isOwner"> Add Comment </button>
-      </div>
-      <app-dialog-comments *ngIf="state == 'comments'"></app-dialog-comments>
-      <div class="d-flex justify-content-center my-5" *ngIf="state == 'salary'">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#salaryModal"
-          *ngIf="!isOwner"> Add Your Experience </button>
-      </div>
-      <div class="d-flex justify-content-center mb-5" *ngIf="state == 'salary'">
-        <!-- <app-company-salary></app-company-salary> -->
-      </div>
-      <div class="d-flex justify-content-center my-5" *ngIf="state == 'interview'">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#interviewModal"
-          *ngIf="!isOwner"> Add Your Experience </button>
-      </div>
-      <div class="d-flex justify-content-center mb-5" *ngIf="state == 'interview'">
-        <!-- <app-company-interviews></app-company-interviews> -->
-      </div>
+        <app-dialog-jobs *ngIf="state == 'jobs'"></app-dialog-jobs>
+        <div class="d-flex justify-content-center my-5" *ngIf="state == 'comments'">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal"
+            *ngIf="!isOwner"> Add Comment </button>
+        </div>
+        <app-dialog-comments *ngIf="state == 'comments'"></app-dialog-comments>
+        <div class="d-flex justify-content-center my-5" *ngIf="state == 'salary'">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#salaryModal"
+            *ngIf="!isOwner"> Add Your Experience </button>
+        </div>
+        <app-dialog-salary *ngIf="state == 'salary'"></app-dialog-salary>
+        <div class="d-flex justify-content-center my-5" *ngIf="state == 'interview'">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#interviewModal"
+            *ngIf="!isOwner"> Add Your Experience </button>
+        </div>
+        <app-dialog-interview *ngIf="state == 'interview'"></app-dialog-interview>
       <div class="d-flex justify-content-center" *ngIf="state == 'dislinkt'">
         <!-- <app-company-dislinkt></app-company-dislinkt> -->
       </div>
@@ -84,4 +80,109 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="interviewModal" tabindex="-1" role="dialog" aria-labelledby="interviewModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h2 class="modal-title" id="interviewModalLabel">Leave an impression from the interview</h2>
+              </div>
+              <div class="modal-body">
+                  <mat-form-field appearance="fill" style="margin-left: 25px; justify-content: center; background-color: none; width: 400px; ">
+                      <mat-label>Title</mat-label>
+                      <input matInput [(ngModel)]="commentIterview.title" name="title" style="margin: auto; background-color: none; width: 400px;" [formControl]="titleFormControl">
+                      <mat-error *ngIf="titleFormControl.hasError('required')"> Title is <strong>required</strong>
+                      </mat-error>
+                  </mat-form-field><br>
+                  <mat-form-field appearance="fill" style="margin-left: 25px; justify-content: center; background-color: none; width: 400px; ">
+                      <mat-label>Position</mat-label>
+                      <mat-select [(ngModel)]="commentIterview.position" name="food" [formControl]="positionFormControl">
+                          <mat-option *ngFor="let food of positions" [value]="food">
+                              {{food}}
+                          </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="positionFormControl.hasError('required')">
+                      Position is <strong>required</strong>
+                      </mat-error>
+                  </mat-form-field><br>
+                  <mat-form-field appearance="fill" style="margin: auto; margin-left: 25px; justify-content: center; background-color: none; width: 400px; ">
+                      <mat-label>Technical interview</mat-label>
+                      <textarea matInput [(ngModel)]="commentIterview.technicalInterview" name="content" style="margin: auto; background-color: none; width: 400px; height: 180px;" [formControl]="contentFormControl"></textarea>
+                      <mat-error *ngIf="contentFormControl.hasError('required')">
+                        Technical interview is <strong>required</strong>
+                      </mat-error>
+                  </mat-form-field><br>
+                  <mat-form-field appearance="fill" style="margin: auto; margin-left: 25px; justify-content: center; background-color: none; width: 400px; ">
+                      <mat-label>Rate</mat-label>
+                      <select matNativeControl required [(ngModel)]="commentIterview.rating" name="rate">
+                        <option *ngFor="let rate of rates" [value]="rate"> {{ rate }} </option>
+                      </select>
+                      <mat-error *ngIf="starsError" style="margin: auto; display: flex; justify-content: center; margin-bottom: 5-x">
+                          Rating is required
+                      </mat-error>
+                  </mat-form-field>
+                  
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger " data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="saveCommentInterview()" >Save</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+  <div class="modal fade" id="salaryModal" tabindex="-1" role="dialog" aria-labelledby="salaryModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="salaryModalLabel">Leave salary information</h2>
+            </div>
+            <div class="modal-body">
+                <mat-form-field appearance="fill" style="margin-left: 25px; justify-content: center; background-color: none; width: 400px; ">
+                    <mat-label>Pay(in EUR)</mat-label>
+                    <input matInput [(ngModel)]="commentSalary.pay" name="title" style="margin: auto; background-color: none; width: 400px;" [formControl]="titleFormControl">
+                    <mat-error *ngIf="titleFormControl.hasError('required')"> Pay is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field><br>
+                <mat-form-field appearance="fill" style="margin-left: 25px; justify-content: center; background-color: none; width: 400px; ">
+                    <mat-label>Position</mat-label>
+                    <mat-select [(ngModel)]="commentSalary.position" name="food" [formControl]="positionFormControl">
+                        <mat-option *ngFor="let food of positions" [value]="food">
+                            {{food}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="positionFormControl.hasError('required')">
+                    Position is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field><br>
+                <mat-form-field appearance="fill" style="margin: auto; margin-left: 25px; justify-content: center; background-color: none; width: 400px; ">
+                    <mat-label>Employee</mat-label>
+                    <mat-select name="food" [(ngModel)]="commentSalary.isFormerEmployee" [formControl]="isFormerEmployeeFormControl">
+                        <mat-option [value]="true">Former</mat-option>
+                        <mat-option [value]="false">Current</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="contentFormControl.hasError('required')">
+                      Employee is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field><br>
+                <mat-form-field appearance="fill" style="margin: auto; margin-left: 25px; justify-content: center; background-color: none; width: 400px; ">
+                    <mat-label>Do you think the salary is fair?</mat-label>
+                        <mat-select name="food3" [(ngModel)]="commentSalary.fairPay" [formControl]="fairPayFormControl">
+                            <mat-option [value]="true">Yes</mat-option>
+                            <mat-option [value]="false">No</mat-option>
+                        </mat-select>
+                    <mat-error *ngIf="starsError" style="margin: auto; display: flex; justify-content: center; margin-bottom: 5-x">
+                        Rating is required
+                    </mat-error>
+                </mat-form-field>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger " data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="saveCommentSalary()" >Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>

@@ -1,6 +1,9 @@
 package com.agent.application.controller;
 
 import com.agent.application.dto.AddCommentDTO;
+import com.agent.application.dto.AddInterviewCommentDTO;
+import com.agent.application.dto.CommentSalaryDTO;
+import com.agent.application.mapper.CommentSalaryMapper;
 import com.agent.application.model.Comment;
 import com.agent.application.model.CommentInterview;
 import com.agent.application.model.CommentSalary;
@@ -44,24 +47,25 @@ public class CommentController {
 
 
     @PostMapping(value = "/salary" )
-    public ResponseEntity<?> addSalaryComment(@RequestBody @Valid CommentSalary reqDto) throws Exception {
+    public ResponseEntity<?> addSalaryComment(@RequestBody @Valid CommentSalaryDTO reqDto) throws Exception {
 
         try {
-            commentService.addCommentSalary(reqDto, reqDto.getCompany().getId());
+            CommentSalary comment = new CommentSalaryMapper().mapAddCommentDtoToComment(reqDto);
+            commentService.addCommentSalary(comment, reqDto.getCompanyId());
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/salary/company/{companyId}")
+    @GetMapping( value = "/salary/company/{companyId}")
     public ResponseEntity<?> getAllSalaryCommentsByCompanyId(@PathVariable Long companyId) throws Exception {
         List<CommentSalary> commentsDto = commentService.getAllSalaryCommentsByCompanyId(companyId);
         return new ResponseEntity<>(commentsDto, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST,value = "/interview" )
-    public ResponseEntity<?> addInterviewComment(@RequestBody @Valid CommentInterview reqDto) throws Exception {
+    @PostMapping(value = "/interview" )
+    public ResponseEntity<?> addInterviewComment(@RequestBody @Valid AddInterviewCommentDTO reqDto) throws Exception {
         try {
             commentService.addCommentInterview(reqDto);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -70,7 +74,7 @@ public class CommentController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/interview/company/{companyId}")
+    @GetMapping(value = "/interview/company/{companyId}")
     public ResponseEntity<?> getAllInterviewCommentsByCompanyId(@PathVariable Long companyId) throws Exception {
         List<CommentInterview> commentsDto = commentService.getAllInterviewCommentsByCompanyId(companyId);
         return new ResponseEntity<>(commentsDto, HttpStatus.OK);

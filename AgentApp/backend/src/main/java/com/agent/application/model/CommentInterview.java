@@ -1,5 +1,6 @@
 package com.agent.application.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class CommentInterview {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "company_id")
     private Company company;
@@ -32,10 +34,6 @@ public class CommentInterview {
     @Column(name="title", nullable = false)
     @NotBlank(message = "CommentInterview title is required")
     private String title;
-
-    @Column(name="hr_interview", nullable = false, columnDefinition = "text")
-    @NotBlank(message = " CommentInterview HR interview is required")
-    private String hrInterview;
 
     @Column(name="technical_interview", nullable = false, columnDefinition = "text")
     @NotBlank(message = "CommentInterview technical interview is required")
