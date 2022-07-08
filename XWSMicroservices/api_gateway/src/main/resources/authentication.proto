@@ -126,4 +126,5 @@ service AuthenticationService {
   rpc changeUserInfo(UserInfoChange) returns (UserInfoChangeResponse){}
   rpc getUser(UserID) returns (UserResponse){}
   rpc getMessagesUsers(ConnectedUsers) returns (MessagesUsers){}
+  rpc getUsersWithNotificationOn(ConnectedUsers) returns (ConnectedUsers){}
 }
