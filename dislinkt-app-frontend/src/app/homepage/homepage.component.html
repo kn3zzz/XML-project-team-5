@@ -44,8 +44,12 @@
         <div class="col-sm-6">
             <div class="card" style="border-radius: 2%;">
                 <div class="card-body">
-                  <h5 class="card-title">{{linkify(post.username)}}</h5>
-                  <p class="card-text">{{linkify(post.postText)}}</p>
+                  <h5 class="card-title">{{post.username}}</h5>
+                  <p class="card-text" *ngFor="let word of splitByLink(post.postText)">
+                    <span *ngIf="word.type == 'text'">{{word.text}}</span>
+                    <a *ngIf="word.type == 'link'" href="word.text"> {{word.text}} </a>
+
+                  </p>
                   <p class="card-text"><small class="text-muted">{{post.dateCreated}}</small></p>
                 </div>
                 <img mat-card-lg-image src={{post.imageString}} >

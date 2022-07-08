@@ -91,4 +91,25 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  splitByLink(textToCheck: string) {
+ 
+    var expression = /(https?:\/\/)?[\w\-~]+(\.[\w\-~]+)+(\/[\w\-~@:%]*)*(#[\w\-]*)?(\?[^\s]*)?/gi;
+    var regex = new RegExp(expression);
+    var match; 
+    var splitText = []; 
+    var startIndex = 0;
+    while ((match = regex.exec(textToCheck)) != null) {
+            
+      splitText.push({text: textToCheck.substring(startIndex, (match.index + startIndex)), type: 'text'});
+                  
+      var cleanedLink = textToCheck.substring(match.index, (match.index + match[0].length));
+      cleanedLink = cleanedLink.replace(/^https?:\/\//,'');
+      splitText.push({text: cleanedLink, type: 'link'});
+                    
+      startIndex = match.index + (match[0].length);               
+    }
+    if (startIndex < textToCheck.length) splitText.push({text: textToCheck.substring(startIndex), type: 'text'});
+    return splitText;
+  }
+
 }

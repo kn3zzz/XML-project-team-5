@@ -45,6 +45,7 @@ export class HomepageComponent implements OnInit {
     window.location.reload();
   }
   createPost():void{
+    //this.newPost.postText = this.linkify(this.newPost.postText);
     this.postServise.CreatePost(this.newPost).subscribe((d:any) =>{
       alert('Post created');  
       this.getPosts()
@@ -108,11 +109,37 @@ _handleReaderLoaded(readerEvt: any) {
          console.log(btoa(binaryString));
  }
 
-  linkify(text: string) {
+linkify(text: string) : string{
   var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
   return text.replace(urlRegex, function(url) {
       return '<a href="' + url + '">' + url + '</a>';
   });
+}
+
+linkAndLog(text: string): string{
+    console.log(this.linkify(text));
+    return this.linkify(text);
+}
+
+splitByLink(textToCheck: string) {
+ 
+  var expression = /(https?:\/\/)?[\w\-~]+(\.[\w\-~]+)+(\/[\w\-~@:%]*)*(#[\w\-]*)?(\?[^\s]*)?/gi;
+  var regex = new RegExp(expression);
+  var match; 
+  var splitText = []; 
+  var startIndex = 0;
+  while ((match = regex.exec(textToCheck)) != null) {
+          
+    splitText.push({text: textToCheck.substring(startIndex, (match.index + startIndex)), type: 'text'});
+                
+    var cleanedLink = textToCheck.substring(match.index, (match.index + match[0].length));
+    cleanedLink = cleanedLink.replace(/^https?:\/\//,'');
+    splitText.push({text: cleanedLink, type: 'link'});
+                  
+    startIndex = match.index + (match[0].length);               
+  }
+  if (startIndex < textToCheck.length) splitText.push({text: textToCheck.substring(startIndex), type: 'text'});
+  return splitText;
 }
 
 
