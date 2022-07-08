@@ -20,7 +20,10 @@ const routes: Routes = [
   { path: 'profile/:id', component: ProfileComponent},
   { path: 'connections', component: ConnectionsComponent},
   { path: 'notifications', component: NotificationsComponent},
-  { path: 'messaging', component: MessagingComponent}
+  { path: 'messaging', component: MessagingComponent},
+
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({
