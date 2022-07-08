@@ -12,9 +12,15 @@ import Swal from 'sweetalert2'
 export class LoginComponent implements OnInit {
 
   constructor(private router : Router) {
+    
+    if(localStorage.getItem("id") != null){
+      this.router.navigate(['/home']);
+    }
+
   }
 
   ngOnInit(): void {
+    
   }
   loginData = {username: "", password: ""}
 
