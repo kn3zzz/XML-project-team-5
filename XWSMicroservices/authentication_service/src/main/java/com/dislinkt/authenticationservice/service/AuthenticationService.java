@@ -20,7 +20,7 @@ import java.util.NoSuchElementException;
 
 @EnableMongoRepositories("com.dislinkt.authenticationservice.repository")
 @GrpcService
-public class AuthenticationService extends AuthenticationServiceGrpc.AuthenticationServiceImplBase {
+public class AuthenticationService extends com.dislinkt.grpc.AuthenticationServiceGrpc.AuthenticationServiceImplBase {
     @Autowired
     private UserRepository userRepository;
 

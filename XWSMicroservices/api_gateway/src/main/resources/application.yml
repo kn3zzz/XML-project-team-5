@@ -1,7 +1,9 @@
 grpc:
   client:
     authentication-grpc-service:
-      address: static://localhost:9001
+      address: 'static://authentication-grpc-service:9001'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
       negotiationType: plaintext
     connection-grpc-service:
       address: static://localhost:9002
