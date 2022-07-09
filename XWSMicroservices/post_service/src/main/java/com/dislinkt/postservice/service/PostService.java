@@ -21,10 +21,6 @@ import java.util.List;
 public class PostService  extends PostServiceGrpc.PostServiceImplBase {
     @Autowired
     private PostRepository postRepository;
-    @GrpcClient("notification-grpc-service")
-    NotificationServiceGrpc.NotificationServiceBlockingStub notificationStub;
-    @GrpcClient("authentication-grpc-service")
-    AuthenticationServiceGrpc.AuthenticationServiceBlockingStub authStub;
 
     @Override
     public void createPost(PostCreate request, StreamObserver<PostCreateResponse> responseObserver){
