@@ -1,29 +1,116 @@
 version: "3"
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    ports:
-      - 27017:27017
   authentication_service:
-    image: authentication_service.jar
     container_name: authentication_service
-    build: .
-    environment:
-      - spring.data.mongodb.host=mongodb
-      - spring.data.mongodb.database=users
-      - grpc.server.port=9001
+    hostname: authentication-grpc-service
+    networks:
+      - mongo_database_net
+      - backend_net
+    build:
+      context: ./authentication_service
+      dockerfile: ./Dockerfile
     depends_on:
       - mongodb
     ports:
-      - "9001:9001"
-  api_gateway:
-    image: api_gateway.jar
-    container_name: api_gateway
-    build: .
-    environment:
-      AUTH_HOST: authentication_service
-      AUTH_GRPC_PORT: 9001
+      - 8001:8001
+      - 9001:9001
+  connections_service:
+    container_name: connections_service
+    hostname: connection-grpc-service
+    networks:
+      - mongo_database_net
+      - backend_net
+    build:
+      context: ./connections_service
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mongodb
     ports:
-      - "8000:8000"
+      - 8002:8002
+      - 9002:9002
+  job_offer_service:
+    container_name: job_offer_service
+    hostname: job-offer-grpc-service
+    networks:
+      - mongo_database_net
+      - backend_net
+    build:
+      context: ./jobOffer_service
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mongodb
+    ports:
+      - 8006:8006
+      - 9006:9006
+  message_service:
+    container_name: message_service
+    hostname: message-grpc-service
+    networks:
+      - mongo_database_net
+      - backend_net
+    build:
+      context: ./message_service
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mongodb
+    ports:
+      - 8005:8005
+      - 9005:9005
+  notification_service:
+    container_name: notification_service
+    hostname: notification-grpc-service
+    networks:
+      - mongo_database_net
+      - backend_net
+    build:
+      context: ./notification_service
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mongodb
+    ports:
+      - 8004:8004
+      - 9004:9004
+  post_service:
+    container_name: post_service
+    hostname: post-grpc-service
+    networks:
+      - mongo_database_net
+      - backend_net
+    build:
+      context: ./post_service
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mongodb
+    ports:
+      - 8003:8003
+      - 9003:9003
+  api_gateway:
+    container_name: api_gateway
+    networks:
+      - backend_net
+    build:
+      context: ./api_gateway
+      dockerfile: ./Dockerfile
+    ports:
+      - 8000:8000
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    networks:
+      - mongo_database_net
+    ports:
+      - 27017:27017
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      - MYSQL_DATABASE=security
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3000:3306
 
+networks:
+  backend_net:
+    driver: bridge
+  mongo_database_net:
+    driver: bridge

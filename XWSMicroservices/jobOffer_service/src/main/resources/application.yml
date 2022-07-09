@@ -9,5 +9,5 @@ spring:
   data:
     mongodb:
       host: mongodb
-      uri: mongodb://127.0.0.1:27017
+      port: 27017
       database: job_offers
