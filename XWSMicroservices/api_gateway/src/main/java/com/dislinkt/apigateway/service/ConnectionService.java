@@ -100,5 +100,14 @@ public class ConnectionService {
         }
         return ids;
     }
+    public List<UserInfoChangeDTO> getRecommendations(Long id){
+        ConnectionRecommendation req = ConnectionRecommendation.newBuilder().setUserID(id).build();
+        ConnectionRecommendationResponse res = authStub.getRecommendations(req);
+        List<UserInfoChangeDTO> users = new ArrayList<>();
+        for(Long l :res.getUserIdsList()) {
+            users.add(authenticationService.getUser(l));
+        }
+        return users;
+    }
 
 }

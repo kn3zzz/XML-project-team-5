@@ -48,6 +48,7 @@ export class HomepageComponent implements OnInit {
     //this.newPost.postText = this.linkify(this.newPost.postText);
     this.postServise.CreatePost(this.newPost).subscribe((d:any) =>{
       alert('Post created');  
+      this.newPost.postText = "";
       this.getPosts()
     }) 
   }
@@ -112,7 +113,8 @@ _handleReaderLoaded(readerEvt: any) {
 linkify(text: string) : string{
   var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
   return text.replace(urlRegex, function(url) {
-      return '<a href="' + url + '">' + url + '</a>';
+    console.log(url)
+      return '<a href="' + urlRegex + '">' + url + '</a>';
   });
 }
 

@@ -35,6 +35,9 @@ public class ConnectionController {
     public ResponseEntity<?> updateConnection(@RequestBody ConnectionDTO connection){
         return new ResponseEntity<>(connectionService.updateConnection(connection), HttpStatus.OK);
     }
-
+    @GetMapping("/getRecommendations/{userId}")
+    public ResponseEntity<?> getRecommendations(@PathVariable("userId") long userId){
+        return new ResponseEntity<>(connectionService.getRecommendations(userId), HttpStatus.OK);
+    }
 
 }

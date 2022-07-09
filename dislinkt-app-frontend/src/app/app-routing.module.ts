@@ -21,12 +21,12 @@ const routes: Routes = [
   { path: 'home', component: HomepageComponent, canActivate: [AuthGuard]},
   { path: 'search-profiles', component: SearchProfilesComponent},
   { path: 'profile/:id', component: ProfileComponent},
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login', pathMatch: 'full' },
   { path: 'connections', component: ConnectionsComponent,  canActivate: [AuthGuard]},
   { path: 'notifications', component: NotificationsComponent,  canActivate: [AuthGuard]},
   { path: 'messaging', component: MessagingComponent,  canActivate: [AuthGuard]},
-  { path: 'job-offers', component: JobOffersComponent,  canActivate: [AuthGuard]}
+  { path: 'job-offers', component: JobOffersComponent,  canActivate: [AuthGuard]},
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' }
 
 ];
 

@@ -34,6 +34,12 @@ message GetConnectionsResponse{
 message ConnectionId{
   int64 connectionId = 1;
 }
+message ConnectionRecommendation{
+  int64 userID = 1;
+}
+message ConnectionRecommendationResponse{
+  repeated int64 userIds = 1;
+}
 
 
 service ConnectionService{
@@ -41,5 +47,6 @@ service ConnectionService{
   rpc getConnections(GetConnections) returns (GetConnectionsResponse){}
   rpc deleteConnection(ConnectionId) returns (ConnectionResponse){}
   rpc updateConnection(ConnectionEntity) returns (ConnectionResponse){}
-
+  rpc getRecommendations(ConnectionRecommendation) returns (ConnectionRecommendationResponse){}
+  
 }
