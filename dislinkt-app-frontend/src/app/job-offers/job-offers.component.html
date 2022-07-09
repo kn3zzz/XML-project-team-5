@@ -1,0 +1,84 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-2"></div>
+        <div class="col-sm-6">
+            <br>
+            <h2 style="color: grey; margin-left: 50%;">JOB OFFERS</h2>
+            <br><br>
+            <input class="form-control form-control-lg" [(ngModel)]="query" type="text" placeholder="Search query" aria-label=".form-control-lg example">
+            <br>
+        </div>
+        <div class="col-sm-2">
+            <br><br><br><br><br>
+            <button type="button" style="margin-left: 20%;" (click)="search()" class="btn btn-lg btn-outline-primary">Search job offers</button>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6">
+                            <h3>New job offer</h3>
+                        </div>
+                       
+                        <div class="col-sm-3">
+                                <button style="margin-bottom: 5%;" class="btn btn-lg btn-primary" (click)="createJobOffer()" type="button">
+                                    Save
+                                </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6"><input class="form-control form-control-lg" [(ngModel)]="newOffer.company" type="text" placeholder="Company" aria-label=".form-control-lg example"></div>
+                        <div class="col-sm-6"><input class="form-control form-control-lg" [(ngModel)]="newOffer.position" type="text" placeholder="Position" aria-label=".form-control-lg example"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-4"><textarea class="form-control form-control-lg"  [(ngModel)]="newOffer.jobDescription" placeholder="Job description" id="exampleFormControlTextarea1" rows="4"></textarea></div>
+                        <div class="col-sm-4"><textarea class="form-control form-control-lg"  [(ngModel)]="newOffer.dailyActivities" placeholder="Daily activities" id="exampleFormControlTextarea1" rows="4"></textarea></div>
+                        <div class="col-sm-4"><textarea class="form-control form-control-lg"  [(ngModel)]="newOffer.preconditions" placeholder="Preconditions" id="exampleFormControlTextarea1" rows="4"></textarea></div>
+                    </div>
+                </div>
+              </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div *ngFor="let offer of jobOffers;" class="card text-center" style="margin-top: 5%;">
+                <div style="border-radius: 1%;" class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <span class="input-group-text desk">Company</span>
+                            <p type="text" id="name" class="form-control">{{offer.company}}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="input-group-text desk">Position</span>
+                            <p type="text" id="name" class="form-control">{{offer.position}}</p>
+                        </div>                    </div>
+                    <div class="row">
+                        <div class="col-sm-4"><span class="input-group-text desk" >Job description</span><p class="form-control form-control">{{offer.jobDescription}}</p></div>
+                        <div class="col-sm-4"><span class="input-group-text desk">Daily activities</span><p class="form-control form-control">{{offer.dailyActivities}}</p></div>
+                        <div class="col-sm-4"><span class="input-group-text desk">Preconditions</span><p class="form-control form-control">{{offer.preconditions}}</p></div>
+                    </div>
+                </div>
+              </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
+<br>
+</div>
+
+
+<style>
+    .desk {
+  display: flex;
+  justify-content: center;
+}
+</style>

@@ -11,6 +11,7 @@
         <module>post_service</module>
         <module>notification_service</module>
         <module>message_service</module>
+        <module>jobOffer_service</module>
     </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>

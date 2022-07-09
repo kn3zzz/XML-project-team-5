@@ -193,6 +193,25 @@ public class AuthenticationService extends AuthenticationServiceGrpc.Authenticat
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void getUsersWithNotificationOn(ConnectedUsers request, StreamObserver<ConnectedUsers> responseObserver) {
+        List<UserID> users = new ArrayList<>();
+        try {
+            for (UserID uid : request.getUserIdsList()) {
+                User u = userRepository.findById(uid.getId()).get();
+                if (u.isNotificationsOn())
+                    users.add(UserID.newBuilder().setId(u.getId()).build());
+            }
+            ConnectedUsers res = ConnectedUsers.newBuilder().addAllUserIds(users).build();
+            responseObserver.onNext(res);
+            responseObserver.onCompleted();
+        } catch (NoSuchElementException e) {
+            ConnectedUsers res = ConnectedUsers.newBuilder().addAllUserIds(users).build();
+            responseObserver.onNext(res);
+            responseObserver.onCompleted();
+        }
+    }
+
     private long generateUserId() {
         for (long i = 1; i < 1000000000; i++) {
             try {
@@ -202,5 +221,24 @@ public class AuthenticationService extends AuthenticationServiceGrpc.Authenticat
             }
         }
         return 0;
+    }
+
+    @Override
+    public void findUserEmail(UserEmail request, StreamObserver<UserEmailResponse> responseObserver) {
+        try {
+            User u = userRepository.getUserByEmail(request.getEmail());
+            if (u != null) {
+                responseObserver.onNext(UserEmailResponse.newBuilder().setExists(true).build());
+                responseObserver.onCompleted();
+            } else {
+                responseObserver.onNext(UserEmailResponse.newBuilder().setExists(false).build());
+                responseObserver.onCompleted();
+            }
+        }
+            catch (Exception e){
+            responseObserver.onNext(UserEmailResponse.newBuilder().setExists(false).build());
+            responseObserver.onCompleted();
+        }
+
     }
 }

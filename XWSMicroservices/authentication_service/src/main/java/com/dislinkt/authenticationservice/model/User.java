@@ -198,4 +198,6 @@ public class User{
         this.notificationsOn = true;
         this.interests = "";
     }
+
+
 }

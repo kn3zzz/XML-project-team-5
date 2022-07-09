@@ -23,7 +23,7 @@
         <app-dialog-salary *ngIf="state == 'salary'"></app-dialog-salary>
         <div class="d-flex justify-content-center my-5" *ngIf="state == 'interview'">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#interviewModal"
-            *ngIf="!isOwner"> Add Your Experience </button>
+            *ngIf="!isOwner"> Add Your Interview Process </button>
         </div>
         <app-dialog-interview *ngIf="state == 'interview'"></app-dialog-interview>
       <div class="d-flex justify-content-center" *ngIf="state == 'dislinkt'">

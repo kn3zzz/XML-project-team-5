@@ -126,7 +126,7 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>authentication_service</finalName>
+        <finalName>message_service</finalName>
     </build>
 
 </project>

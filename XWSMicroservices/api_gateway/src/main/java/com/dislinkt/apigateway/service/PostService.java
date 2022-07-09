@@ -34,19 +34,35 @@ public class PostService {
                 .setDateCreated(post.dateCreated)
                 .build();
         UserInfoChangeDTO userRes;
-        List<Long> users = new ArrayList<>();
         PostCreateResponse res = postStub.createPost(req);
         String notificationText = "";
-        if (res.getSuccess()){
+        if (res.getSuccess()) {
+            long id = req.getUserId();
             userRes = authenticationService.getUser(post.userId);
-            notificationText = userRes.getUsername() + " - " + userRes.getName() + " " + userRes.getLastname() + " just added a new post !";
-            users = new ArrayList<>();
-            users.add(2L);
-            users.add(3L);
-            notificationService.sendNotification(users, notificationText);
+            List<ConnectionDTO> connections = connectionService.getConnections(id);
+            List<UserID> ids = new ArrayList<>();
+            for (ConnectionDTO con : connections) {
+                if (con.connectionState.equalsIgnoreCase("CONNECTED")) {
+                    if (con.receiver != id)
+                        ids.add(UserID.newBuilder().setId(con.receiver).build());
+                    if (con.sender != id)
+                        ids.add(UserID.newBuilder().setId(con.sender).build());
+                }
+                ConnectedUsers usersFinal = authenticationService.authStub.getUsersWithNotificationOn(ConnectedUsers.newBuilder().addAllUserIds(ids).build());
+                notificationText = userRes.getUsername() + " - " + userRes.getName() + " " + userRes.getLastname() + " just added a new post !";
+                notificationService.sendNotification(convertToLongId(usersFinal), notificationText);
+            }
+            return res.getAllFields();
         }
-        return  res.getAllFields();
+        return res.getAllFields();
+    }
 
+    private List<Long> convertToLongId(ConnectedUsers users){
+       List <Long> ids = new ArrayList<>();
+       for (UserID id : users.getUserIdsList()){
+           ids.add(id.getId());
+       }
+       return ids;
     }
     public Map<Descriptors.FieldDescriptor, Object> likePost(@RequestBody ReactionPostDTO post) {
 

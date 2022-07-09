@@ -24,7 +24,7 @@ public class ConnectionService extends ConnectionServiceGrpc.ConnectionServiceIm
     public void createConnection(CreateConnection request, StreamObserver<ConnectionResponse> responseObserver) {
 
         connectionRepository.save(new Connection(this.generateConnectionId(), request.getSender(), request.getReceiver(), request.getState()));
-        ConnectionResponse res = ConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).build();
+        ConnectionResponse res = ConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).setState(request.getState()).build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
     }
@@ -54,7 +54,7 @@ public class ConnectionService extends ConnectionServiceGrpc.ConnectionServiceIm
 
         Connection entity = connectionRepository.findById(request.getConnectionId()).get();
         connectionRepository.delete(entity);
-        ConnectionResponse res = ConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).build();
+        ConnectionResponse res = ConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).setState(entity.getConnectionStateString()).build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
     }
@@ -73,12 +73,12 @@ public class ConnectionService extends ConnectionServiceGrpc.ConnectionServiceIm
             System.out.println(c);
 
         } catch (Exception e){
-            res = ConnectionResponse.newBuilder().setMessage("Failed").setSuccess(false).build();
+            res = ConnectionResponse.newBuilder().setMessage("Failed").setSuccess(false).setState(request.getState()).build();
             responseObserver.onNext(res);
             responseObserver.onCompleted();
             return;
         }
-        res = ConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).build();
+        res = ConnectionResponse.newBuilder().setMessage("Success").setSuccess(true).setState(request.getState()).build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
     }
