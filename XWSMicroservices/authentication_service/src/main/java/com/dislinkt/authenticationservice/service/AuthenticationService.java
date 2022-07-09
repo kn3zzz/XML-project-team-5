@@ -222,4 +222,23 @@ public class AuthenticationService extends AuthenticationServiceGrpc.Authenticat
         }
         return 0;
     }
+
+    @Override
+    public void findUserEmail(UserEmail request, StreamObserver<UserEmailResponse> responseObserver) {
+        try {
+            User u = userRepository.getUserByEmail(request.getEmail());
+            if (u != null) {
+                responseObserver.onNext(UserEmailResponse.newBuilder().setExists(true).build());
+                responseObserver.onCompleted();
+            } else {
+                responseObserver.onNext(UserEmailResponse.newBuilder().setExists(false).build());
+                responseObserver.onCompleted();
+            }
+        }
+            catch (Exception e){
+            responseObserver.onNext(UserEmailResponse.newBuilder().setExists(false).build());
+            responseObserver.onCompleted();
+        }
+
+    }
 }

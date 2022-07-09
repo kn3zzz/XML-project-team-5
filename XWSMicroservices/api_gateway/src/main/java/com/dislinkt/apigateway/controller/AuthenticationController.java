@@ -16,9 +16,12 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @GetMapping("/hello")
-    public ResponseEntity<?> hello(){
-        return new ResponseEntity<>("HI", HttpStatus.OK);
+    @PostMapping("/findEmailAgent")
+    public ResponseEntity<?> findEmailAgent(@RequestBody String email,  @RequestHeader("Authorization") String token){
+        if (token.split(" ")[1].equals("dislinktsecretAPIkey"))
+            return new ResponseEntity<>(authenticationService.findEmailAgent(email), HttpStatus.OK);
+        else
+            return new ResponseEntity<Boolean>(false, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @PostMapping("/addUser")

@@ -119,6 +119,14 @@ message ConnectedUsers {
   repeated UserID userIds = 1;
 }
 
+message UserEmail {
+  string email = 1;
+}
+
+message UserEmailResponse {
+  bool exists = 1;
+}
+
 service AuthenticationService {
   rpc registerUser(UserRegister) returns (UserRegisterResponse){}
   rpc login(UserLogin) returns (UserLoginResponse){}
@@ -127,4 +135,5 @@ service AuthenticationService {
   rpc getUser(UserID) returns (UserResponse){}
   rpc getMessagesUsers(ConnectedUsers) returns (MessagesUsers){}
   rpc getUsersWithNotificationOn(ConnectedUsers) returns (ConnectedUsers){}
+  rpc findUserEmail(UserEmail) returns (UserEmailResponse){}
 }

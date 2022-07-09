@@ -138,4 +138,10 @@ public class AuthenticationService {
             users.add(new MessagesUserDTO(mu.getId(), mu.getName(), mu.getLastname(), mu.getUsername()));
         return users;
     }
+
+    public Boolean findEmailAgent(String email) {
+        UserEmail req = UserEmail.newBuilder().setEmail(email).build();
+        UserEmailResponse res = authStub.findUserEmail(req);
+        return res.getExists();
+    }
 }

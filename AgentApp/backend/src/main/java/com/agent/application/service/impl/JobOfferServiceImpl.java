@@ -37,7 +37,11 @@ public class JobOfferServiceImpl implements JobOfferService {
             JobOffer jobOffer = new JobOfferMapper().mapJobOfferDtoToJobOffer(dto);
             jobOffer.setCompany(company);
             this.jobOfferRepository.save(jobOffer);
-            System.out.println(createPostWithObject(dto, company));
+            Boolean check = doesEmailExits(company.getOwnerEmail());
+            if (check) {
+                System.out.println(createPostWithObject(dto, company));
+            } else
+                System.out.println("FALSE");
             return true;
         }
         return false;
@@ -58,6 +62,21 @@ public class JobOfferServiceImpl implements JobOfferService {
 
         // build the request
         HttpEntity<JobOfferDislinktDTO> entity = new HttpEntity<>(post, headers);
+
+        // send POST request
+        return restTemplate().postForObject(url, entity, Boolean.class);
+    }
+
+    public Boolean doesEmailExits(String email) {
+        String url = "http://localhost:8000/users/findEmailAgent";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth("dislinktsecretAPIkey");
+        // create a post object
+
+        // build the request
+        HttpEntity<String> entity = new HttpEntity<>(email, headers);
 
         // send POST request
         return restTemplate().postForObject(url, entity, Boolean.class);
