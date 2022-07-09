@@ -28,6 +28,10 @@
                     </a>
                 </li>
                 <li class="nav-item" *ngIf = "loggedIn">
+                    <a class="nav-link" href="/job-offers">Job Offers
+                    </a>
+                </li>
+                <li class="nav-item" *ngIf = "loggedIn">
                     <a class="nav-link" href="/notifications">Notifications
                         <span *ngIf="notificationsAmount != 0" class="badge badge-danger">{{notificationsAmount}}</span>
                     </a>

@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package com.dislinkt.grpc;
+option java_multiple_files = true;
+option java_package = "com.dislinkt.grpc";
+
+message NewJobOffer {
+  string company = 1;
+  string position = 2;
+  string jobDescription = 3;
+  string dailyActivities = 4;
+  string preconditions = 5;
+}
+
+message SearchJobOffers {
+  string query = 1;
+}
+
+message GetJobOffersResponse {
+  repeated NewJobOffer jobOffers = 1;
+}
+
+message NewJobOfferResponse {
+  string message = 1;
+  bool success = 2;
+}
+
+service JobOfferService {
+  rpc saveJobOffer(NewJobOffer) returns (NewJobOfferResponse){}
+  rpc getJobOffers(SearchJobOffers) returns (GetJobOffersResponse){}
+  rpc searchJobOffers(SearchJobOffers) returns (GetJobOffersResponse){}
+}

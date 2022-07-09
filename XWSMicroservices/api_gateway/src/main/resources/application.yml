@@ -15,6 +15,9 @@ grpc:
     message-grpc-service:
       address: static://localhost:9005
       negotiationType: plaintext
+    job-offer-grpc-service:
+      address: static://localhost:9006
+      negotiationType: plaintext
 
 server:
   port: 8000

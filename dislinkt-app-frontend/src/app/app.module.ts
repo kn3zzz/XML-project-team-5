@@ -16,6 +16,7 @@ import { ConnectionsComponent } from './connections/connections.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { MessagingComponent } from './messaging/messaging.component';
+import { JobOffersComponent } from './job-offers/job-offers.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MessagingComponent } from './messaging/messaging.component';
     ConnectionsComponent,
     NotificationsComponent,
     MessagingComponent,
+    JobOffersComponent,
   ],
   imports: [
     BrowserModule,
