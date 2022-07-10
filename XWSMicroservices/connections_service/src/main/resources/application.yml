@@ -11,5 +11,8 @@ spring:
       uri: mongodb://localhost:27017
       database: connections
     neo4j:
-      uri: bolt://localhost:7687
-      username: neo4j
+      uri: neo4j://localhost:7687
+      database: neo4j
+      authentication:
+        username: neo4j
+        password: firma4

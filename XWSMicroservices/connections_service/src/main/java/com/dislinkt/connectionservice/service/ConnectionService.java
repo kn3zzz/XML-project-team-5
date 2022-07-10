@@ -2,15 +2,17 @@ package com.dislinkt.connectionservice.service;
 
 import com.dislinkt.connectionservice.enums.ConnectionState;
 import com.dislinkt.connectionservice.model.Connection;
+import com.dislinkt.connectionservice.model.ConnectionGraph;
 import com.dislinkt.connectionservice.model.User;
 import com.dislinkt.connectionservice.repository.ConnectionGraphRepository;
 import com.dislinkt.connectionservice.repository.ConnectionRepository;
+import com.dislinkt.connectionservice.repository.UserGraphRepository;
 import com.dislinkt.grpc.*;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.neo4j.springframework.data.repository.config.EnableNeo4jRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 
 
 import java.text.SimpleDateFormat;
@@ -24,6 +26,8 @@ public class ConnectionService extends ConnectionServiceGrpc.ConnectionServiceIm
     private ConnectionRepository connectionRepository;
     @Autowired
     private ConnectionGraphRepository connectionGraphRepository;
+    @Autowired
+    private UserGraphRepository userGraphRepository;
 
     @Override
     public void createConnection(CreateConnection request, StreamObserver<ConnectionResponse> responseObserver) {
@@ -102,11 +106,30 @@ public class ConnectionService extends ConnectionServiceGrpc.ConnectionServiceIm
         List<Connection> connections = connectionRepository.findAll();
         if(connectionGraphRepository.count()>0)
             connectionGraphRepository.deleteAll();
+        if(userGraphRepository.count()>0)
+            userGraphRepository.deleteAll();
+
+        User user1 = new User(1,null);
+        User user2 = new User(2,null);
+        User user3 = new User(3,null);
+
+
+        userGraphRepository.save(user1);
+        userGraphRepository.save(user2);
+        userGraphRepository.save(user3);
+
         for(Connection c : connections){
+            System.out.println(c.getSender() + c.getReceiver() + c.getConnectionStateString());
             connectionGraphRepository.saveConnection(c.getSender(),c.getReceiver(),c.getConnectionStateString());
         }
+
         List<Long> recommendationIds = new ArrayList<Long>();
-        for(User user : connectionGraphRepository.findSecondLevelConnections(request.getUserID())){
+        System.out.println(request.getUserID());
+        List<User> users =  connectionGraphRepository.findSecondLevelConnections(request.getUserID());
+       // users.add(new User(3,null))
+        System.out.println(users.size());
+        for(User user : users){
+            System.out.println(user + "braaaco");
             if(connectionGraphRepository.getConnection(request.getUserID(), user.getId()) == null)
                 recommendationIds.add(user.getId());
         }

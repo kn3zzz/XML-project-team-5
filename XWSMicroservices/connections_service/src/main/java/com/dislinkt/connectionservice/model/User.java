@@ -1,29 +1,32 @@
 package com.dislinkt.connectionservice.model;
 
-import com.dislinkt.connectionservice.enums.Gender;
-import com.dislinkt.connectionservice.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.neo4j.springframework.data.core.schema.Node;
-import org.neo4j.springframework.data.core.schema.Relationship;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Property;
+import org.springframework.data.neo4j.core.schema.Relationship;
 
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Node
+@Node("User")
 public class User{
     @Id
     private long id;
     @Relationship(type = "CONNECTED", direction = Relationship.Direction.INCOMING)
-    private Map<User,Connection> connections;
+    private Map<User, ConnectionGraph> connections;
+
+    public User() {
+        super();
+        this.connections = new HashMap<>();
+    }
 
     public long getId() {
         return id;
@@ -33,11 +36,12 @@ public class User{
         this.id = id;
     }
 
-    public Map<User, Connection> getConnections() {
+    public Map<User, ConnectionGraph> getConnections() {
         return connections;
     }
 
-    public void setConnections(Map<User, Connection> connections) {
+    public void setConnections(Map<User, ConnectionGraph> connections) {
         this.connections = connections;
     }
+
 }

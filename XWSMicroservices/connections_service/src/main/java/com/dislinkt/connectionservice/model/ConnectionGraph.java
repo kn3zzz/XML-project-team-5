@@ -1,25 +1,23 @@
 package com.dislinkt.connectionservice.model;
 
 import com.dislinkt.connectionservice.enums.ConnectionState;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Generated;
-import lombok.NoArgsConstructor;
-import org.neo4j.springframework.data.core.schema.GeneratedValue;
-import org.neo4j.springframework.data.core.schema.Property;
-import org.neo4j.springframework.data.core.schema.RelationshipProperties;
+
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
+import org.springframework.data.neo4j.core.schema.Property;
+import org.springframework.data.neo4j.core.schema.RelationshipProperties;
+import org.springframework.data.neo4j.core.schema.TargetNode;
 
 
-
-@NoArgsConstructor
-@AllArgsConstructor
 @RelationshipProperties
+
 public class ConnectionGraph {
     @Id
     @GeneratedValue
+    @TargetNode
     private long id;
-    @Property("connectionStatus")
+    @Property("connectionState")
     private ConnectionState connectionState;
 
     public long getId() {
@@ -28,6 +26,8 @@ public class ConnectionGraph {
 
     public void setId(long id) {
         this.id = id;
+    }
+    public ConnectionGraph() {
     }
 
     public ConnectionState getConnectionState() {
@@ -42,7 +42,7 @@ public class ConnectionGraph {
 
     public void setConnectionStateString(String connectionState) {this.connectionState = this.stringToState(connectionState); }
 
-    public ConnectionGraph(long id, long sender, long receiver, String connectionState){
+    public ConnectionGraph(long id,  String connectionState){
         this.id = id;
         this.connectionState = this.stringToState(connectionState);
     }
