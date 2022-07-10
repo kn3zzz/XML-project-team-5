@@ -85,6 +85,11 @@ export class JobOffersComponent implements OnInit {
       .then(response => {
         if (response.data) {
           this.getAllJobOffers();
+          this.newOffer.company='';
+          this.newOffer.dailyActivities='';
+          this.newOffer.jobDescription='';
+          this.newOffer.position='';
+          this.newOffer.preconditions='';
         Swal.fire({
           icon: 'success',
           title: 'You have successfully added new job offer !',

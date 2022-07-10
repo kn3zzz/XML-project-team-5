@@ -67,7 +67,8 @@
                   <h5 class="card-title">{{post.username}}</h5>
                   <p class="card-text" *ngFor="let word of splitByLink(post.postText)">
                     <span *ngIf="word.type == 'text'">{{word.text}}</span>
-                    <a *ngIf="word.type == 'link'" href="word.text"> {{word.text}} </a>
+                    <a *ngIf="word.type == 'link' && word.text.startsWith('www')" :href="https://{{word.text}}"> {{word.text}} </a>
+                    <a *ngIf="word.type == 'link' && !word.text.startsWith('www')" :href="https://www.{{word.text}}"> {{word.text}} </a>
 
                   </p>
                   <p class="card-text"><small class="text-muted">{{post.dateCreated}}</small></p>

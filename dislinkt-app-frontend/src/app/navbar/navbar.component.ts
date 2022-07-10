@@ -20,8 +20,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     
     if(localStorage.getItem("id") != null){
-     // this.getNotifications()
-      //setInterval(()=> { this.getNotifications() }, 2 * 1000);
+      this.getNotifications()
+      setInterval(()=> { this.getNotifications() }, 2 * 1000);
       this.loggedIn = true;
     }
     

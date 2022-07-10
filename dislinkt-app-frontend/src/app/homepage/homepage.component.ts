@@ -49,6 +49,7 @@ export class HomepageComponent implements OnInit {
     this.postServise.CreatePost(this.newPost).subscribe((d:any) =>{
       alert('Post created');  
       this.getPosts()
+      this.newPost.postText="";
     }) 
   }
   likePost(id:number):void{
@@ -66,6 +67,7 @@ export class HomepageComponent implements OnInit {
   commentPost(id:number):void{
     this.postServise.CommentPost(this.newComment,id).subscribe((d:any) =>{
       this.getPosts()
+      this.newComment.content = "";
 
     })
   }
